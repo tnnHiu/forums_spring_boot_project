@@ -1,0 +1,37 @@
+:root {
+    --orange-dark: #F07900;
+    --orange-light: #F8A145;
+}
+.btn-custom-outline {
+    color: var(--orange-dark);
+    border: 2px solid var(--orange-dark);
+    transition: all 0.3s ease;
+}
+.btn-custom-outline:hover {
+    background-color: var(--orange-dark);
+    color: white;
+}
+.btn-custom {
+    background-color: var(--orange-dark);
+    border: none;
+    color: white;
+    transition: all 0.3s ease;
+}
+.btn-custom:hover {
+    background-color: var(--orange-light);
+}
+.border-custom {
+    border: 2px solid var(--orange-dark) !important;
+}
+.badge-custom {
+    background-color: var(--orange-dark) !important;
+}
+.btn-back {
+    background-color: var(--orange-light);
+    color: white;
+    transition: all 0.3s ease;
+}
+.btn-back:hover {
+    background-color: var(--orange-dark);
+    color: white;
+}
