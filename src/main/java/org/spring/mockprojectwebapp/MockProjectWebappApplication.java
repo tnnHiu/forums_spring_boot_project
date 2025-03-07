@@ -14,5 +14,4 @@ public class MockProjectWebappApplication {
     public static void main(String[] args) {
         SpringApplication.run(MockProjectWebappApplication.class, args);
     }
-
 }
