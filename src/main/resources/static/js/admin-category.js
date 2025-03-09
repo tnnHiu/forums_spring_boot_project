@@ -144,8 +144,52 @@ function saveCategory() {
         });
 }
 
+function performSearch() {
+    const searchInput = document.getElementById("searchInput").value;
+    const url = `/admin/categories?keyword=${searchInput}&page=0`;
+
+    fetch(url, {
+        method: "GET"
+    })
+        .then(response => {
+            if (response.ok) {
+                return response.text(); // Trả về HTML dưới dạng text
+            } else {
+                throw new Error("Có lỗi xảy ra khi tìm kiếm.");
+            }
+        })
+        .then(data => {
+            // Tạo một div tạm thời để chứa HTML trả về
+            const tempDiv = document.createElement('div');
+            tempDiv.innerHTML = data;
+            // Lấy phần nội dung cần cập nhật
+            const newContent = tempDiv.querySelector('.main-content').innerHTML;
+            // Cập nhật nội dung của .main-content
+            document.querySelector('.main-content').innerHTML = newContent;
+
+
+        })
+        .catch(error => {
+            console.error("Error:", error);
+            showToast("Không thể tìm kiếm danh mục.", "error");
+        });
+}
 
 
 
+function performSort(column, order) {
+    const url = new URL(window.location.href);
+    url.searchParams.set('sortBy', column);
+    url.searchParams.set('sortOrder', order);
+    window.location.href = url.toString();
+}
 
+const sortIcons = document.querySelectorAll('.sort-icon'); // Assuming icons have a class of 'sort-icon'
+sortIcons.forEach(icon => {
+    icon.addEventListener('click', function() {
+        const column = this.getAttribute('data-column');
+        const order = this.getAttribute('data-order');
+        performSort(column, order);
+    });
+});
 
