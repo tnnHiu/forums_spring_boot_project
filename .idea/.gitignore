@@ -8,29 +8,17 @@
 /dataSources.local.xml
 
 # Thư mục của IntelliJ IDEA
-.idea/
+../.idea/
 
 # Thư mục build của Maven
-target/
-
+../target/
 # Tệp cấu hình môi trường cục bộ
 *.iml
 *.log
 
 # Tệp chạy Maven Wrapper
-mvnw
-mvnw.cmd
+../mvnw
+../mvnw.cmd
 
 # Thư mục của Maven Wrapper
-.mvn/
-
-# Tệp cấu hình database cục bộ
-dataSources.local.xml
-
-# Các tệp hệ điều hành tạo ra
-*.DS_Store
-Thumbs.db
-
-
-
-
+../.mvn/
