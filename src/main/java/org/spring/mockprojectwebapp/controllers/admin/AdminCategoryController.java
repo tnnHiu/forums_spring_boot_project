@@ -14,7 +14,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
 
-
 @Controller
 @RequestMapping("/admin")
 public class AdminCategoryController {
@@ -28,12 +27,7 @@ public class AdminCategoryController {
 
 
     @GetMapping("/categories")
-    public String showCategoriesPage(
-            @RequestParam(value = "keyword", required = false) String keyword,
-            @RequestParam(value = "page", defaultValue = "0") int page,
-            @RequestParam(value = "size", defaultValue = "8") int size,
-            Model model,
-            HttpServletRequest request) {
+    public String showCategoriesPage(@RequestParam(value = "keyword", required = false) String keyword, @RequestParam(value = "page", defaultValue = "0") int page, @RequestParam(value = "size", defaultValue = "8") int size, Model model, HttpServletRequest request) {
 
         Pageable pageable = PageRequest.of(page, size);
         Page<Category> categoryPage = categoryServiceImpl.getCategories(keyword, pageable);
@@ -48,52 +42,6 @@ public class AdminCategoryController {
         return "admin/category/index";
     }
 
-
-//    @GetMapping("/categories")
-//    public String showCategoriesPage(
-//            @RequestParam(value = "keyword", required = false) String keyword,
-//            @RequestParam(value = "page", defaultValue = "0") int page,
-//            @RequestParam(value = "size", defaultValue = "5") int size,
-//            @RequestParam(value = "sortBy", defaultValue = "id") String sortBy,
-//            @RequestParam(value = "sortOrder", defaultValue = "asc") String sortOrder,
-//            Model model) {
-//
-//        // Kiểm tra tính hợp lệ của sortBy
-//        List<String> validSortFields = List.of("categoryName", "descrition", "createdAt");
-//        if (!validSortFields.contains(sortBy)) {
-//            sortBy = "name"; // Mặc định sắp xếp theo id nếu trường không hợp lệ
-//        }
-//
-//        // Kiểm tra tính hợp lệ của sortOrder
-//        if (!sortOrder.equalsIgnoreCase("asc") && !sortOrder.equalsIgnoreCase("desc")) {
-//            sortOrder = "asc"; // Mặc định sắp xếp tăng dần nếu thứ tự không hợp lệ
-//        }
-//
-//        // Tạo Pageable với phân trang và sắp xếp
-//        Pageable pageable = PageRequest.of(page, size,
-//                sortOrder.equalsIgnoreCase("asc") ? Sort.by(sortBy).ascending() : Sort.by(sortBy).descending());
-//
-//        try {
-//            // Gọi service để lấy dữ liệu
-//            Page<Category> categoryPage = categoryServiceImpl.getCategories(keyword, pageable);
-//
-//            // Đưa dữ liệu vào model
-//            model.addAttribute("categories", categoryPage.getContent());
-//            model.addAttribute("currentPage", page);
-//            model.addAttribute("totalPages", categoryPage.getTotalPages());
-//            model.addAttribute("keyword", keyword);
-//            model.addAttribute("sortBy", sortBy);
-//            model.addAttribute("sortOrder", sortOrder);
-//            model.addAttribute("title", "Quản lý danh mục");
-//
-//        } catch (Exception e) {
-//            // Xử lý ngoại lệ
-//            model.addAttribute("error", "Có lỗi xảy ra khi tải dữ liệu danh mục.");
-//        }
-//
-//        // Trả về template
-//        return "admin/category/index";
-//    }
 
     @PostMapping("/category/add")
     @ResponseBody
@@ -139,9 +87,7 @@ public class AdminCategoryController {
 
     @PostMapping("/categories/update/{id}")
     @ResponseBody
-    public ResponseEntity<?> updateCategory(
-            @PathVariable int id,
-            @RequestBody Category category) {
+    public ResponseEntity<?> updateCategory(@PathVariable int id, @RequestBody Category category) {
         try {
             Category existingCategory = categoryServiceImpl.findById(id);
             if (existingCategory == null) {
@@ -152,8 +98,7 @@ public class AdminCategoryController {
             categoryServiceImpl.update(id, existingCategory);
             return ResponseEntity.ok("Cập nhật danh mục thành công!");
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body("Có lỗi xảy ra khi cập nhật danh mục.");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Có lỗi xảy ra khi cập nhật danh mục.");
         }
     }
 
