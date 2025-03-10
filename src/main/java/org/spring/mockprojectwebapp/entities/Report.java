@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import java.time.LocalDateTime;
 
@@ -21,17 +23,25 @@ public class Report {
     @Column(name = "report_id")
     private int reportId;
 
-    @Column(name = "reporting_user_id", nullable = false)
-    private int reportingUserId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JoinColumn(name = "reporter_id", nullable = false)
+    private User reporter;
 
-    @Column(name = "reported_post_id")
-    private Integer reportedPostId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JoinColumn(name = "reported_post_id")
+    private Post reportedPost;
 
-    @Column(name = "reported_comment_id")
-    private Integer reportedCommentId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JoinColumn(name = "reported_comment_id")
+    private Comment reportedComment;
 
-    @Column(name = "reported_user_id")
-    private Integer reportedUserId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JoinColumn(name = "reported_user_id")
+    private User reportedUser;
 
     @Column(name = "reason", nullable = false, length = 255)
     private String reason;
@@ -40,14 +50,22 @@ public class Report {
     @Column(name = "status", nullable = false)
     private Status status;
 
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "report_type")
+    private ReportType reportType;
+
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
 
-    @Column(name = "updated_at", nullable = false)
+    @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
+    public enum ReportType {
+        USER, POST, COMMENT
+    }
+
     public enum Status {
-        PENDING,
-        RESOLVED
+        PENDING, RESOLVED
     }
 }
