@@ -1,4 +1,3 @@
-
 // Lưu trạng thái sidebar
 const sidebar = document.querySelector('.sidebar');
 const toggleSidebarButton = document.getElementById('toggleSidebar');
