@@ -1,0 +1,37 @@
+<div class="sidebar border-end vh-100" th:fragment="sidebar">
+    <div class="p-3 text-center">
+        <h4>Logo Icons</h4>
+    </div>
+    <ul class="nav flex-column">
+        <li class="nav-item">
+            <a th:href="@{/admin}" th:classappend="${currentUri == '/admin' ? 'active' : ''}"  class="nav-link">
+                <i class="bi bi-house-door"></i> <span>DASHBOARD</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a th:href="@{/admin/posts}" class="nav-link">
+                <i class="bi bi-file-earmark-text"></i> <span>BÀI VIẾT</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a th:href="@{/admin/categories}" th:classappend="${currentUri == '/admin/categories' ? 'active' : ''}" class="nav-link">
+                <i class="bi bi-list-task"></i> <span>DANH MỤC</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a th:href="@{/admin/tags}" class="nav-link">
+                <i class="bi bi-tags"></i> <span>HASHTAG</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a th:href="@{/admin/accounts}" class="nav-link">
+                <i class="bi bi-person"></i> <span>TÀI KHOẢN</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a th:href="@{/admin/reports}" class="nav-link">
+                <i class="bi bi-bar-chart"></i> <span>BÁO CÁO</span>
+            </a>
+        </li>
+    </ul>
+</div>

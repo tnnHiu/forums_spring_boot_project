@@ -1,5 +1,6 @@
 package org.spring.mockprojectwebapp.controllers.admin;
 
+import jakarta.servlet.http.HttpServletRequest;
 import org.spring.mockprojectwebapp.entities.Category;
 import org.spring.mockprojectwebapp.services.CategoryServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,8 +31,9 @@ public class AdminCategoryController {
     public String showCategoriesPage(
             @RequestParam(value = "keyword", required = false) String keyword,
             @RequestParam(value = "page", defaultValue = "0") int page,
-            @RequestParam(value = "size", defaultValue = "5") int size,
-            Model model) {
+            @RequestParam(value = "size", defaultValue = "8") int size,
+            Model model,
+            HttpServletRequest request) {
 
         Pageable pageable = PageRequest.of(page, size);
         Page<Category> categoryPage = categoryServiceImpl.getCategories(keyword, pageable);
@@ -41,6 +43,7 @@ public class AdminCategoryController {
         model.addAttribute("totalPages", categoryPage.getTotalPages());
         model.addAttribute("keyword", keyword);
         model.addAttribute("title", "Quản lý danh mục");
+        model.addAttribute("currentUri", request.getRequestURI());
 
         return "admin/category/index";
     }

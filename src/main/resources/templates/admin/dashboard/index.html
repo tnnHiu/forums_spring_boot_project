@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <!-- Fragment head -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title th:text="${pageTitle}">Dashboard</title>
+  <link rel="icon" type="image/x-icon" th:href="@{/assets/imag/favicon.png}">
+  <link rel="stylesheet" th:href="@{/bootstrap-5.3.3-dist/css/bootstrap.min.css}">
+  <script th:src="@{/bootstrap-5.3.3-dist/js/bootstrap.bundle.min.js}"></script>
+  <link rel="stylesheet" th:href="@{/bootstrap-icons-1.11.3/font/bootstrap-icons.min.css}">
+  <link rel="stylesheet" th:href="@{/css/admin-category.css}">
+</head>
+<body>
+<div class="d-flex">
+  <!-- Sidebar -->
+  <div th:replace="fragments/sidebar :: sidebar"></div>
+
+  <div class="main-content flex-grow-1 p-4">
+    <!-- Header -->
+    <div class="d-flex justify-content-between align-items-center mb-4 border-bottom pb-2">
+      <button id="toggleSidebar" class="btn btn-outline-primary">
+        <i class="bi bi-list"></i>
+      </button>
+      <h4 class="text-primary" th:text="${pageTitle}">Tiêu đề trang</h4>
+      <div>
+        <i class="bi bi-person-circle me-2"></i> Admin
+      </div>
+    </div>
+
+<!--    <div th:fragment="content">-->
+    </div>
+  </div>
+</div>
+
+<!-- Toast -->
+<div th:replace="fragments/toast :: toast"></div>
+
+<!-- JS -->
+<script th:src="@{/js/admin-category.js}"></script>
+</body>
+</html>
