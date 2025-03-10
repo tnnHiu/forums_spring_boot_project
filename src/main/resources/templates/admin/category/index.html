@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Quản Lý Danh Mục</title>
-    <link rel="icon" type="image/x-icon" th:href="@{/assets/imag/favicon.png}">
+    <link rel="icon" type="image/x-icon" th:href="@{/assets/images/favicon.png}">
     <link rel="stylesheet" th:href="@{/bootstrap-5.3.3-dist/css/bootstrap.min.css}">
     <script th:src="@{/bootstrap-5.3.3-dist/js/bootstrap.bundle.min.js}"></script>
     <link rel="stylesheet" th:href="@{/bootstrap-icons-1.11.3/font/bootstrap-icons.min.css}">
@@ -12,7 +12,6 @@
 </head>
 <body>
 <div class="d-flex">
-
     <!-- Sidebar -->
     <div th:replace="fragments/sidebar :: sidebar"></div>
 
@@ -32,90 +31,74 @@
         <!-- Nút thêm danh mục -->
         <button class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#addCategoryModal">+ Thêm</button>
 
-        <!-- Thanh tìm kiếm và lọc -->
-        <div class="d-flex gap-2 mb-3">
-            <input type="text" id="searchInput" class="form-control w-25" placeholder="Tìm kiếm..."
-            onkeypress="if(event.key === 'Enter') performSearch()">
-            <button class="btn btn-primary" id="searchButton" th:onclick="performSearch()">Tìm</button>
-            <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#filterModal"><i
-                    class="bi bi-funnel"></i> Lọc
-            </button>
-        </div>
+        <!-- Thanh tìm kiếm -->
+        <form th:action="@{/admin/categories}" method="get" class="d-flex gap-2 mb-3">
+            <input type="text" name="keyword" class="form-control w-25" placeholder="Tìm kiếm..." th:value="${keyword}">
+            <button type="submit" class="btn btn-primary">Tìm</button>
+        </form>
 
-        <!-- Bảng dữ liệu -->
-        <table class="table table-striped table-hover text-center" id="categoryTable">
+        <!-- Bảng danh mục -->
+        <table class="table table-striped table-hover text-center">
             <thead class="table-primary">
             <tr>
-                <th>
-                    Tên Danh Mục
-                    <i class="bi bi-arrow-up sort-icon" data-column="0" data-order="asc"></i>
-                    <i class="bi bi-arrow-down sort-icon" data-column="0" data-order="desc"></i>
-                </th>
-                <th>
-                    Mô Tả
-                    <i class="bi bi-arrow-up sort-icon" data-column="1" data-order="asc"></i>
-                    <i class="bi bi-arrow-down sort-icon" data-column="1" data-order="desc"></i>
-                </th>
-                <th>
-                    Ngày Tạo
-                    <i class="bi bi-arrow-up sort-icon" data-column="2" data-order="asc"></i>
-                    <i class="bi bi-arrow-down sort-icon" data-column="2" data-order="desc"></i>
-                </th>
+                <th>Tên Danh Mục</th>
+                <th>Mô Tả</th>
+                <th>Ngày Tạo</th>
                 <th>Hành Động</th>
             </tr>
             </thead>
             <tbody>
-            <!-- Vòng lặp hiển thị danh sách -->
             <tr th:each="category : ${categories}">
                 <td th:text="${category.categoryName}"></td>
                 <td th:text="${category.description}"></td>
-                <td th:text="${category.createdAt}"></td>
+                <td th:text="${#temporals.format(category.createdAt, 'dd/MM/yyyy')}"></td>
                 <td>
-
                     <button class="btn btn-outline-primary btn-sm btn-action btn-view"
-                            data-category-id="${category.categoryId}">
+                            th:attr="data-category-id=${category.categoryId}">
                         <i class="bi bi-eye"></i>
                     </button>
-                    <button class="btn btn-outline-primary btn-sm btn-action btn-edit"
-                            data-category-id="${category.categoryId}"
+                    <button class="btn btn-outline-primary btn-sm btn-action"
                             data-bs-toggle="modal"
-                            data-bs-target="#editCategoryModal"
-                            th:onclick="|openEditModal(${category.categoryId})|">
+                            th:attr="data-bs-target='#editCategoryModal' + ${category.categoryId}">
                         <i class="bi bi-pencil"></i>
                     </button>
-                    <button class="btn btn-outline-danger btn-sm btn-action btn-delete"
-                            th:data-category-id="${category.categoryId}"
-                            th:onclick="'deleteCategory(' + ${category.categoryId} + ')'">
-                        <i class="bi bi-trash"></i>
-                    </button>
+
+                    <form th:action="@{/admin/categories/delete/{id}(id=${category.categoryId})}" method="post"
+                          style="display:inline;"
+                          onsubmit="return confirm('Bạn có chắc chắn muốn xóa danh mục này không?');">
+                        <input type="hidden" name="_method" value="delete">
+                        <button type="submit" class="btn btn-outline-danger btn-sm btn-action">
+                            <i class="bi bi-trash"></i>
+                        </button>
+                    </form>
                 </td>
             </tr>
             </tbody>
         </table>
 
         <!-- Phân trang -->
-        <nav>
+        <nav th:if="${totalPages > 1}">
             <ul class="pagination justify-content-center">
                 <li class="page-item" th:classappend="${currentPage == 0} ? 'disabled'">
-                    <a class="page-link" th:href="@{/admin/categories(page=${currentPage - 1}, keyword=${keyword})}">Previous</a>
+                    <a class="page-link" th:href="@{/admin/categories(page=${currentPage - 1}, keyword=${keyword != null ? keyword : ''})}">Previous</a>
                 </li>
                 <li class="page-item" th:each="i : ${#numbers.sequence(0, totalPages - 1)}"
                     th:classappend="${currentPage == i} ? 'active'">
-                    <a class="page-link" th:href="@{/admin/categories(page=${i}, keyword=${keyword})}" th:text="${i + 1}"></a>
+                    <a class="page-link" th:href="@{/admin/categories(page=${i}, keyword=${keyword != null ? keyword : ''})}" th:text="${i + 1}"></a>
                 </li>
                 <li class="page-item" th:classappend="${currentPage == totalPages - 1} ? 'disabled'">
-                    <a class="page-link" th:href="@{/admin/categories(page=${currentPage + 1}, keyword=${keyword})}">Next</a>
+                    <a class="page-link" th:href="@{/admin/categories(page=${currentPage + 1}, keyword=${keyword != null ? keyword : ''})}">Next</a>
                 </li>
             </ul>
         </nav>
     </div>
 </div>
 
-<!-- Các modal thêm, sửa, xóa danh mục -->
+<!-- Modal -->
 <div th:replace="fragments/category-modal :: category-modal"></div>
-
-<!-- Toast thông báo -->
 <div th:replace="fragments/toast :: toast"></div>
+
+<!-- Scripts -->
 <script th:src="@{/js/admin-category.js}"></script>
 </body>
 </html>
