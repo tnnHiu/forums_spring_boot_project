@@ -6,3 +6,19 @@
 # Datasource local storage ignored files
 /dataSources/
 /dataSources.local.xml
+
+# Thư mục của IntelliJ IDEA
+../.idea/
+
+# Thư mục build của Maven
+../target/
+# Tệp cấu hình môi trường cục bộ
+*.iml
+*.log
+
+# Tệp chạy Maven Wrapper
+../mvnw
+../mvnw.cmd
+
+# Thư mục của Maven Wrapper
+../.mvn/
