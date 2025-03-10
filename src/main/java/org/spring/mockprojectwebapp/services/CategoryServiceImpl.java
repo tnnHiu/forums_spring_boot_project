@@ -2,7 +2,6 @@ package org.spring.mockprojectwebapp.services;
 
 import org.spring.mockprojectwebapp.entities.Category;
 import org.spring.mockprojectwebapp.repositories.CategoryRepository;
-import org.spring.mockprojectwebapp.services.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -55,13 +54,11 @@ public class CategoryServiceImpl implements CategoryService {
         categoryRepository.deleteById(id);
     }
 
-
     public Page<Category> getCategories(String keyword, Pageable pageable) {
         if (keyword == null || keyword.isBlank()) {
             return categoryRepository.findAll(pageable);
         }
         return categoryRepository.findByCategoryNameContainingIgnoreCase(keyword, pageable);
     }
-
 
 }
