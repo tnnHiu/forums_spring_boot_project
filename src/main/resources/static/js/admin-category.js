@@ -153,20 +153,16 @@ function performSearch() {
     })
         .then(response => {
             if (response.ok) {
-                return response.text(); // Trả về HTML dưới dạng text
+                return response.text();
             } else {
                 throw new Error("Có lỗi xảy ra khi tìm kiếm.");
             }
         })
         .then(data => {
-            // Tạo một div tạm thời để chứa HTML trả về
             const tempDiv = document.createElement('div');
             tempDiv.innerHTML = data;
-            // Lấy phần nội dung cần cập nhật
             const newContent = tempDiv.querySelector('.main-content').innerHTML;
-            // Cập nhật nội dung của .main-content
             document.querySelector('.main-content').innerHTML = newContent;
-
 
         })
         .catch(error => {

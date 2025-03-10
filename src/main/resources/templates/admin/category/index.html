@@ -12,50 +12,9 @@
 </head>
 <body>
 <div class="d-flex">
+
     <!-- Sidebar -->
-    <div class="sidebar border-end vh-100">
-        <div class="p-3 text-center">
-            <h4>Logo Icons</h4>
-        </div>
-        <ul class="nav flex-column">
-            <li class="nav-item">
-                <a href="#dashboard" class="nav-link">
-                    <i class="bi bi-house-door"></i>
-                    <span>DASHBOARD</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="#post" class="nav-link">
-                    <i class="bi bi-file-earmark-text"></i>
-                    <span>BÀI VIẾT</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="#categories" class="nav-link active">
-                    <i class="bi bi-list-task"></i>
-                    <span>DANH MỤC</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="#hashtags" class="nav-link">
-                    <i class="bi bi-tags"></i>
-                    <span>HASHTAG</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="#accounts" class="nav-link">
-                    <i class="bi bi-person"></i>
-                    <span>TÀI KHOẢN</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="#reports" class="nav-link">
-                    <i class="bi bi-bar-chart"></i>
-                    <span>BÁO CÁO</span>
-                </a>
-            </li>
-        </ul>
-    </div>
+    <div th:replace="fragments/sidebar :: sidebar"></div>
 
     <!-- Main Content -->
     <div class="main-content flex-grow-1 p-4">
@@ -152,120 +111,11 @@
     </div>
 </div>
 
-
-<!-- Modal Lọc Danh Mục -->
-<div class="modal fade" id="filterModal" tabindex="-1" aria-labelledby="filterModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header bg-primary text-white">
-                <h5 class="modal-title" id="filterModalLabel"><i class="bi bi-funnel"></i> Lọc Danh Mục</h5>
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
-                        aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form id="filterForm" class="row g-3">
-                    <div class="col-md-6">
-                        <label for="filterCreatedAtStart" class="form-label fw-bold">Ngày Tạo Từ</label>
-                        <input type="date" class="form-control" id="filterCreatedAtStart">
-                    </div>
-                    <div class="col-md-6">
-                        <label for="filterCreatedAtEnd" class="form-label fw-bold">Ngày Tạo Đến</label>
-                        <input type="date" class="form-control" id="filterCreatedAtEnd">
-                    </div>
-                    <div class="col-12">
-                        <label for="filterStatus" class="form-label fw-bold">Số Lượng Bài Viết</label>
-                        <select class="form-select" id="filterStatus" aria-label="Chọn khoảng số lượng bài viết">
-                            <option value="" selected>-- Chọn khoảng số lượng --</option>
-                            <option value="under20">Dưới 20</option>
-                            <option value="20to49">Từ 20 đến 49</option>
-                            <option value="50to100">Từ 50 đến 100</option>
-                            <option value="over100">Trên 100</option>
-                            <option value="over1000">Trên 1000</option>
-                        </select>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Đóng</button>
-                <button type="button" class="btn btn-primary" onclick="applyFilters()"><i
-                        class="bi bi-check-circle"></i> Áp dụng
-                </button>
-                <button type="button" class="btn btn-outline-secondary" onclick="resetFilters()"><i
-                        class="bi bi-arrow-counterclockwise"></i> Đặt Lại
-                </button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Modal Thêm Danh Mục -->
-<div class="modal fade" id="addCategoryModal" tabindex="-1" aria-labelledby="addCategoryModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <form id="addCategoryForm">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="addCategoryModalLabel">Thêm Danh Mục</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="mb-3">
-                        <label class="form-label">Tên Danh Mục</label>
-                        <input type="text" class="form-control" id="categoryName" placeholder="Nhập tên danh mục" required>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Mô Tả</label>
-                        <input type="text" class="form-control" id="categoryDescription" placeholder="Nhập mô tả" required>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
-                    <button type="submit" class="btn btn-primary">Lưu</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-
-<!-- Modal Sửa Danh Mục -->
-
-<div class="modal fade" id="editCategoryModal" tabindex="-1" aria-labelledby="editCategoryModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="editCategoryModalLabel">Sửa Danh Mục</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form id="editCategoryForm">
-                    <input type="hidden" id="editCategoryId">
-                    <div class="mb-3">
-                        <label for="editCategoryName" class="form-label">Tên danh mục</label>
-                        <input type="text" class="form-control" id="editCategoryName" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="editCategoryDescription" class="form-label">Mô tả</label>
-                        <textarea class="form-control" id="editCategoryDescription"></textarea>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
-                <button type="button" class="btn btn-primary" onclick="saveCategory()">Lưu thay đổi</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-
+<!-- Các modal thêm, sửa, xóa danh mục -->
+<div th:replace="fragments/category-modal :: category-modal"></div>
 
 <!-- Toast thông báo -->
-<div class="toast" id="toast" role="alert" aria-live="assertive" aria-atomic="true">
-    <div class="toast-header">
-        <strong class="me-auto">Thông báo</strong>
-        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-    </div>
-    <div class="toast-body" id="toastBody"></div>
-</div>
+<div th:replace="fragments/toast :: toast"></div>
 <script th:src="@{/js/admin-category.js}"></script>
 </body>
 </html>
