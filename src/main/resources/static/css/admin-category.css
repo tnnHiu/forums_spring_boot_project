@@ -202,3 +202,15 @@
     height: 1rem;
     margin-right: 0.5rem;
 }
+
+
+.sort-icon {
+    cursor: pointer;
+    margin-left: 5px;
+    font-size: 0.8em;
+    color: #007bff;
+}
+
+.sort-icon:hover {
+    color: #0056b3;
+}
