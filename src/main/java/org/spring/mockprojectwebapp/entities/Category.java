@@ -34,5 +34,4 @@ public class Category {
     @Column(name = "updated_at", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private LocalDateTime updatedAt;
-
 }

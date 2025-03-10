@@ -16,10 +16,9 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "users")
 public class User {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int user_id;
+    private int userId;
 
     @Column(nullable = false, length = 50)
     private String username;
