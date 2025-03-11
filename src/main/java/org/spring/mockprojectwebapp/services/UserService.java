@@ -1,10 +1,7 @@
 package org.spring.mockprojectwebapp.services;
 
-import org.spring.mockprojectwebapp.dtos.UserDto;
-import org.spring.mockprojectwebapp.entities.User;
+import org.spring.mockprojectwebapp.dtos.UserDTO;
 
 public interface UserService {
-    User register(UserDto userDto);
-
-//    User login(String username, String password);
+    void registerUser(UserDTO userDTO);
 }
