@@ -1,6 +1,7 @@
 package org.spring.mockprojectwebapp.services;
 
 import org.spring.mockprojectwebapp.dtos.UserDTO;
+import org.spring.mockprojectwebapp.entities.Role;
 import org.spring.mockprojectwebapp.entities.User;
 import org.spring.mockprojectwebapp.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +31,7 @@ public class UserServiceImpl implements UserService {
         user.setUsername(userDTO.getUsername());
         user.setEmail(userDTO.getEmail());
         user.setPassword(userDTO.getPassword()); // Nên mã hóa mật khẩu
-        user.setRoleId(1); // Mặc định là role user
+        user.setRole(new Role(1, Role.RoleName.USER));
         user.setStatus(User.Status.ACTIVE);
         user.setCreatedAt(LocalDateTime.now());
         user.setUpdatedAt(LocalDateTime.now());
