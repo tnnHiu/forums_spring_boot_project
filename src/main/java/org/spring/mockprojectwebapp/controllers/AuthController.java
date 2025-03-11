@@ -27,7 +27,7 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public String loginUser(@ModelAttribute("loginDto") LoginDTO loginDto, Model model) {
+    public String login(@ModelAttribute("loginDto") LoginDTO loginDto, Model model) {
         Optional<User> user = userService.login(loginDto);
         if (user.isPresent()) {
             return "redirect:/admin";

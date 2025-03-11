@@ -1,28 +1,31 @@
 package org.spring.mockprojectwebapp.security;
 
 
-//import org.springframework.context.annotation.Bean;
-//import org.springframework.context.annotation.Configuration;
-//import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-//import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-//import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.web.SecurityFilterChain;
 
-//@Configuration
-//@EnableWebSecurity
+
+@Configuration
+@EnableWebSecurity
 public class SecurityConfig {
-//    @Bean
-//    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-//        return http.authorizeHttpRequests(authorizeRequests -> authorizeRequests
-//                        .requestMatchers("/").permitAll()
-//                        .requestMatchers("/admin/**").hasRole("ADMIN")
-//                        .requestMatchers("/auth/login").permitAll()
-//                        .anyRequest().authenticated())
-//                .formLogin(formLogin -> formLogin
-//                        .loginPage("/auth/login")
-//                        .defaultSuccessUrl("/", true)
-//                        .permitAll()
-//                )
-//                .logout(config -> config
-//                        .logoutSuccessUrl("/").permitAll()).build();
-//    }
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        return http.authorizeHttpRequests(authorizeRequests -> authorizeRequests
+                        .requestMatchers("/").permitAll()
+                        .requestMatchers("/admin/**").hasRole("ADMIN")
+                        .requestMatchers("/auth/**").permitAll()
+                        .requestMatchers("/css/**", "/js/**", "/images/**", "/bootstrap-5.3.3-dist/**").permitAll()
+                        .anyRequest().authenticated())
+                .formLogin(formLogin -> formLogin
+                        .loginPage("/auth/login")
+                        .defaultSuccessUrl("/", true)
+                        .permitAll()
+                )
+                .logout(config -> config
+                        .logoutSuccessUrl("/").permitAll()).build();
+    }
 }
+
