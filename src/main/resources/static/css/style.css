@@ -1,0 +1,59 @@
+/* Define the primary theme color */
+:root {
+    --primary-color: #F07900;
+    --primary-hover: #c86200;
+    --primary-light: #f4a261;
+    --text-color: #ffffff;
+}
+
+/* Apply the primary color to key elements */
+body {
+    font-family: Arial, sans-serif;
+}
+
+/* Buttons */
+.btn-primary {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+    color: var(--text-color);
+}
+
+.btn-primary:hover {
+    background-color: var(--primary-hover);
+    border-color: var(--primary-hover);
+}
+
+/* Links */
+.link-secondary {
+    color: var(--primary-color);
+}
+
+.link-secondary:hover {
+    color: var(--primary-hover);
+}
+
+/* Backgrounds */
+.text-bg-primary {
+    background-color: var(--primary-color) !important;
+    color: var(--text-color);
+}
+
+.border-primary-subtle {
+    border-color: var(--primary-light) !important;
+}
+
+.bg-primary {
+    background-color: var(--primary-color) !important;
+    color: var(--text-color);
+}
+
+.nav-pills {
+    --bs-nav-pills-border-radius: var(--bs-border-radius);
+    --bs-nav-pills-link-active-color: #fff;
+    --bs-nav-pills-link-active-bg: var(--primary-color);
+}
+
+.nav {
+    --bs-nav-link-color: var(--primary-color);
+    --bs-nav-link-hover-color: var(--primary-hover);
+}

@@ -1,7 +1,8 @@
-package org.spring.mockprojectwebapp.services;
+package org.spring.mockprojectwebapp.services.implement;
 
 import org.spring.mockprojectwebapp.entities.Category;
 import org.spring.mockprojectwebapp.repositories.CategoryRepository;
+import org.spring.mockprojectwebapp.services.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

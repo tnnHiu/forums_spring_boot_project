@@ -2,7 +2,7 @@ package org.spring.mockprojectwebapp.controllers.admin;
 
 import jakarta.servlet.http.HttpServletRequest;
 import org.spring.mockprojectwebapp.entities.Category;
-import org.spring.mockprojectwebapp.services.CategoryServiceImpl;
+import org.spring.mockprojectwebapp.services.implement.CategoryServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-
 
 
 @Controller
@@ -25,7 +24,6 @@ public class AdminCategoryController {
     public AdminCategoryController(CategoryServiceImpl categoryServiceImpl) {
         this.categoryServiceImpl = categoryServiceImpl;
     }
-
 
     @GetMapping("/categories")
     public String showCategoriesPage(
@@ -74,7 +72,6 @@ public class AdminCategoryController {
     }
 
 
-
     @PostMapping("/categories/update/{id}")
     public String updateCategory(@PathVariable("id") int id, @ModelAttribute Category category) {
         Category existingCategory = categoryServiceImpl.findById(id);
@@ -85,7 +82,6 @@ public class AdminCategoryController {
         }
         return "redirect:/admin/categories";
     }
-
 
 
     // Xóa danh mục

@@ -1,6 +1,7 @@
 <div th:fragment="category-modal">
     <!-- Modal Thêm Danh Mục -->
-    <div class="modal fade" id="addCategoryModal" tabindex="-1" aria-labelledby="addCategoryModalLabel" aria-hidden="true">
+    <div class="modal fade" id="addCategoryModal" tabindex="-1" aria-labelledby="addCategoryModalLabel"
+         aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <form th:action="@{/admin/categories/add}" method="post">
@@ -11,11 +12,13 @@
                     <div class="modal-body">
                         <div class="mb-3">
                             <label class="form-label">Tên Danh Mục</label>
-                            <input type="text" class="form-control" name="categoryName" placeholder="Nhập tên danh mục" required>
+                            <input type="text" class="form-control" name="categoryName" placeholder="Nhập tên danh mục"
+                                   required>
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Mô Tả</label>
-                            <input type="text" class="form-control" name="description" placeholder="Nhập mô tả" required>
+                            <input type="text" class="form-control" name="description" placeholder="Nhập mô tả"
+                                   required>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -26,10 +29,10 @@
             </div>
         </div>
     </div>
-
     <!-- Lặp qua danh sách danh mục để tạo modal tương ứng -->
     <th:block th:each="category : ${categories}">
-        <div class="modal fade" th:id="'editCategoryModal' + ${category.categoryId}" tabindex="-1" aria-labelledby="editCategoryModalLabel" aria-hidden="true">
+        <div class="modal fade" th:id="'editCategoryModal' + ${category.categoryId}" tabindex="-1"
+             aria-labelledby="editCategoryModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <form th:action="@{/admin/categories/update/{id}(id=${category.categoryId})}" method="post">
@@ -42,11 +45,13 @@
 
                             <div class="mb-3">
                                 <label class="form-label">Tên Danh Mục</label>
-                                <input type="text" class="form-control" name="categoryName" th:value="${category.categoryName}" required>
+                                <input type="text" class="form-control" name="categoryName"
+                                       th:value="${category.categoryName}" required>
                             </div>
                             <div class="mb-3">
                                 <label class="form-label">Mô Tả</label>
-                                <input type="text" class="form-control" name="description" th:value="${category.description}" required>
+                                <input type="text" class="form-control" name="description"
+                                       th:value="${category.description}" required>
                             </div>
                         </div>
                         <div class="modal-footer">
@@ -58,7 +63,4 @@
             </div>
         </div>
     </th:block>
-
-
-
 </div>
