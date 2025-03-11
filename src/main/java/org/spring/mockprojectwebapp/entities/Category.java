@@ -15,10 +15,9 @@ import java.time.LocalDateTime;
 @Setter
 @Table(name = "categories")
 public class Category {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "category_id")
+    @Column(name = "category_id", nullable = false)
     private int categoryId;
 
     @Column(name = "category_name", nullable = false, length = 100)
@@ -27,12 +26,10 @@ public class Category {
     @Column(name = "description")
     private String description;
 
-    @Column(name = "created_at", nullable = false, updatable = false)
-    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;
 
-    @Column(name = "updated_at", nullable = false)
-    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
 }
