@@ -17,7 +17,6 @@ import org.springframework.data.domain.Pageable;
 @Controller
 @RequestMapping("/admin")
 public class AdminCategoryController {
-
     private final CategoryServiceImpl categoryServiceImpl;
 
     @Autowired
@@ -49,7 +48,6 @@ public class AdminCategoryController {
         return "admin/category/index";
     }
 
-
     @PostMapping("/categories/add")
     public String addCategory(@ModelAttribute("category") Category category, Model model) {
         try {
@@ -60,7 +58,6 @@ public class AdminCategoryController {
         }
         return "redirect:/admin/categories";
     }
-
 
     @GetMapping("/categories/edit/{id}")
     public ResponseEntity<?> getCategoryById(@PathVariable("id") int id) {

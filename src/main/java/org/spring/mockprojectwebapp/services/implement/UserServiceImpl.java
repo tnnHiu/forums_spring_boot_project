@@ -16,7 +16,15 @@ public class UserServiceImpl implements UserService {
     private UserRepository userRepository;
 
     @Override
-    public Optional<User> login(LoginDTO loginDto) {
-        return userRepository.findByEmail(loginDto.getEmail()).filter(user -> user.getPassword().equals(loginDto.getPassword()));
+    public User login(String email, String password) {
+        return userRepository.findByEmail(email);
     }
+//
+//    @Override
+//    public User login() {
+//        return userRepository.findByEmail(loginDto.getEmail()).filter(user -> user
+//                .getPassword().equals(loginDto.getPassword()));
+//    }'
+
 }
+
