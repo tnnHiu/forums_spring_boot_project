@@ -13,8 +13,13 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        return http.authorizeHttpRequests(authorizeRequests -> authorizeRequests.requestMatchers("/").permitAll().requestMatchers("/user").permitAll().anyRequest().authenticated()).formLogin(formLogin -> formLogin.defaultSuccessUrl("/", true)).logout(config -> config.logoutSuccessUrl("/").permitAll()).build();
+        return http.authorizeHttpRequests(authorizeRequests -> authorizeRequests
+                        .requestMatchers("/").permitAll()
+                        .requestMatchers("/admin/**").permitAll()
+                        .anyRequest().authenticated())
+                .formLogin(formLogin -> formLogin
+                        .defaultSuccessUrl("/", true))
+                .logout(config -> config
+                        .logoutSuccessUrl("/").permitAll()).build();
     }
-
-
 }
