@@ -31,7 +31,7 @@
                         <div class="mb-5">
                             <h2>Đăng ký tài khoản</h2>
                         </div>
-                        <form th:action="@{/auth/register}" th:object="${registerDTO}" method="post">
+                        <form th:action="@{/register}" th:object="${registerDTO}" method="post">
                             <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
 
                             <div class="row gy-3 gy-md-4 overflow-hidden">
@@ -70,7 +70,7 @@
                         <div class="text-center mt-4">
                             <hr class="mb-3 border-secondary-subtle">
                             <p class="text-muted">Đã có tài khoản? <a class="link-secondary text-decoration-none"
-                                                                      th:href="@{auth/login}">Đăng
+                                                                      th:href="@{/login}">Đăng
                                 nhập ngay</a></p>
                         </div>
                     </div>

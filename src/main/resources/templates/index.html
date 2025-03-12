@@ -7,6 +7,13 @@
 </head>
 <body>
 <h1>Welcome</h1>
+
 <h1 sec:authorize="isAuthenticated()">Hello User</h1>
+
+<div sec:authorize="isAuthenticated()">
+    <form th:action="@{/logout}" method="post">
+        <button type="submit">Logout</button>
+    </form>
+</div>
 </body>
 </html>

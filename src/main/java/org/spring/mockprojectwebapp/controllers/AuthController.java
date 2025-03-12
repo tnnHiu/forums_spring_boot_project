@@ -51,7 +51,7 @@ public class AuthController {
         try {
             authService.save(registerDTO);
             model.addAttribute("registerDTO", new RegisterDTO());
-            model.addAttribute("success", true);
+//            model.addAttribute("success", true);
         } catch (Exception e) {
             result.addError(new FieldError("registerDTO", "username", e.getMessage()));
         }
