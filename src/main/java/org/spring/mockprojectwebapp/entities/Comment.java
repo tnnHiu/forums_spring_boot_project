@@ -10,7 +10,6 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import java.time.LocalDateTime;
-
 @Entity
 @Getter
 @Setter
@@ -18,7 +17,6 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Table(name = "comments")
 public class Comment {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "comment_id")
@@ -50,5 +48,4 @@ public class Comment {
     public enum Status {
         ACTIVE, INACTIVE
     }
-
 }
