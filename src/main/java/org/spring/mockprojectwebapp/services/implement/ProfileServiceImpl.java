@@ -2,6 +2,7 @@ package org.spring.mockprojectwebapp.services.implement;
 
 import org.spring.mockprojectwebapp.entities.User;
 import org.spring.mockprojectwebapp.repositories.ProfileRepository;
+import org.spring.mockprojectwebapp.services.ProfileService;
 
 public class ProfileServiceImpl implements ProfileService {
 
