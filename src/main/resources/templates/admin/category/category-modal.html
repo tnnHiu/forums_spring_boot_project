@@ -1,4 +1,4 @@
-<div th:fragment="category-modal">
+<div th:fragment="category-modal-fragment">
     <!-- Modal Thêm Danh Mục -->
     <div class="modal fade" id="addCategoryModal" tabindex="-1" aria-labelledby="addCategoryModalLabel"
          aria-hidden="true">
@@ -30,28 +30,28 @@
         </div>
     </div>
     <!-- Lặp qua danh sách danh mục để tạo modal tương ứng -->
-    <th:block th:each="category : ${categories}">
-        <div class="modal fade" th:id="'editCategoryModal' + ${category.categoryId}" tabindex="-1"
+    <th:block th:each="categoryDTO : ${categoryDTOs}">
+        <div class="modal fade" th:id="'editCategoryModal' + ${categoryDTO.categoryId}" tabindex="-1"
              aria-labelledby="editCategoryModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
-                    <form th:action="@{/admin/categories/update/{id}(id=${category.categoryId})}" method="post">
+                    <form th:action="@{/admin/categories/update/{id}(id=${categoryDTO.categoryId})}" method="post">
                         <div class="modal-header">
                             <h5 class="modal-title">Sửa Danh Mục</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                            <input type="hidden" name="categoryId" th:value="${category.categoryId}">
+                            <input type="hidden" name="categoryId" th:value="${categoryDTO.categoryId}">
 
                             <div class="mb-3">
                                 <label class="form-label">Tên Danh Mục</label>
                                 <input type="text" class="form-control" name="categoryName"
-                                       th:value="${category.categoryName}" required>
+                                       th:value="${categoryDTO.categoryName}" required>
                             </div>
                             <div class="mb-3">
                                 <label class="form-label">Mô Tả</label>
                                 <input type="text" class="form-control" name="description"
-                                       th:value="${category.description}" required>
+                                       th:value="${categoryDTO.description}" required>
                             </div>
                         </div>
                         <div class="modal-footer">

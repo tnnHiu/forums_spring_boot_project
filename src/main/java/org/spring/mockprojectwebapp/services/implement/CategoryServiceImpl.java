@@ -10,20 +10,12 @@ import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
+
 @Service
 public class CategoryServiceImpl implements CategoryService {
 
-    private final CategoryRepository categoryRepository;
-
     @Autowired
-    public CategoryServiceImpl(CategoryRepository categoryRepository) {
-        this.categoryRepository = categoryRepository;
-    }
-
-    @Override
-    public Iterable<Category> findAll() {
-        return categoryRepository.findAll();
-    }
+    private CategoryRepository categoryRepository;
 
     @Override
     public Category findById(Integer id) {
