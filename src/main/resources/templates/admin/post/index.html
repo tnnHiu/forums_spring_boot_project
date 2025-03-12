@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<html lang="vi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -22,13 +22,13 @@
             <button id="toggleSidebar" class="btn btn-outline-primary">
                 <i class="bi bi-list"></i>
             </button>
-            <h4 class="text-primary">Quản Lý Danh Mục</h4>
+            <h4 class="text-primary">Quản Lý Bài Viết</h4>
             <div>
                 <i class="bi bi-person-circle me-2"></i> Admin
             </div>
         </div>
 
-        <!-- Nút thêm danh mục -->
+        <!-- Nút thêm -->
         <button class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#addCategoryModal">+ Thêm</button>
 
         <!-- Thanh tìm kiếm -->
@@ -38,43 +38,43 @@
         </form>
 
         <!-- Bảng danh mục -->
-        <table class="table table-striped table-hover text-center">
-            <thead class="table-primary">
-            <tr>
-                <th>Tên Danh Mục</th>
-                <th>Mô Tả</th>
-                <th>Ngày Tạo</th>
-                <th>Hành Động</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="categoryDTO : ${categoryDTOs}">
-                <td th:text="${categoryDTO.categoryName}"></td>
-                <td th:text="${categoryDTO.description}"></td>
-                <td th:text="${#temporals.format(categoryDTO.createdAt, 'dd/MM/yyyy')}"></td>
-                <td>
-                    <button class="btn btn-outline-primary btn-sm btn-action btn-view"
-                            th:attr="data-category-id=${categoryDTO.categoryId}">
-                        <i class="bi bi-eye"></i>
-                    </button>
-                    <button class="btn btn-outline-primary btn-sm btn-action"
-                            data-bs-toggle="modal"
-                            th:attr="data-bs-target='#editCategoryModal' + ${categoryDTO.categoryId}">
-                        <i class="bi bi-pencil"></i>
-                    </button>
+<!--        <table class="table table-striped table-hover text-center">-->
+<!--            <thead class="table-primary">-->
+<!--            <tr>-->
+<!--                <th>Tên Danh Mục</th>-->
+<!--                <th>Mô Tả</th>-->
+<!--                <th>Ngày Tạo</th>-->
+<!--                <th>Hành Động</th>-->
+<!--            </tr>-->
+<!--            </thead>-->
+<!--            <tbody>-->
+<!--            <tr th:each="categoryDTO : ${categoryDTOs}">-->
+<!--                <td th:text="${categoryDTO.categoryName}"></td>-->
+<!--                <td th:text="${categoryDTO.description}"></td>-->
+<!--                <td th:text="${#temporals.format(categoryDTO.createdAt, 'dd/MM/yyyy')}"></td>-->
+<!--                <td>-->
+<!--                    <button class="btn btn-outline-primary btn-sm btn-action btn-view"-->
+<!--                            th:attr="data-category-id=${categoryDTO.categoryId}">-->
+<!--                        <i class="bi bi-eye"></i>-->
+<!--                    </button>-->
+<!--                    <button class="btn btn-outline-primary btn-sm btn-action"-->
+<!--                            data-bs-toggle="modal"-->
+<!--                            th:attr="data-bs-target='#editCategoryModal' + ${categoryDTO.categoryId}">-->
+<!--                        <i class="bi bi-pencil"></i>-->
+<!--                    </button>-->
 
-                    <form th:action="@{/admin/categories/delete/{id}(id=${categoryDTO.categoryId})}" method="post"
-                          style="display:inline;"
-                          onsubmit="return confirm('Bạn có chắc chắn muốn xóa danh mục này không?');">
-                        <input type="hidden" name="_method" value="delete">
-                        <button type="submit" class="btn btn-outline-danger btn-sm btn-action">
-                            <i class="bi bi-trash"></i>
-                        </button>
-                    </form>
-                </td>
-            </tr>
-            </tbody>
-        </table>
+<!--                    <form th:action="@{/admin/categories/delete/{id}(id=${categoryDTO.categoryId})}" method="post"-->
+<!--                          style="display:inline;"-->
+<!--                          onsubmit="return confirm('Bạn có chắc chắn muốn xóa danh mục này không?');">-->
+<!--                        <input type="hidden" name="_method" value="delete">-->
+<!--                        <button type="submit" class="btn btn-outline-danger btn-sm btn-action">-->
+<!--                            <i class="bi bi-trash"></i>-->
+<!--                        </button>-->
+<!--                    </form>-->
+<!--                </td>-->
+<!--            </tr>-->
+<!--            </tbody>-->
+<!--        </table>-->
 
         <!-- Phân trang -->
         <nav th:if="${totalPages > 1}">
@@ -99,7 +99,7 @@
 </div>
 
 <!-- Modal -->
-<div th:replace="category-modal :: category-modal"></div>
+<div th:replace="fragments/category-modal :: category-modal"></div>
 <div th:replace="fragments/toast :: toast"></div>
 
 <!-- Scripts -->
