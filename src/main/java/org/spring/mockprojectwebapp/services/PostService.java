@@ -1,15 +1,15 @@
 package org.spring.mockprojectwebapp.services;
 
-import org.spring.mockprojectwebapp.entities.Post;
+import org.spring.mockprojectwebapp.dtos.PostDTO;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
+import java.util.List;
+import java.util.Optional;
 
 public interface PostService {
-    Iterable<Post> findAll();
-
-    Post findById(Integer id);
-
-    Post save(Post post);
-
-    Post update(Integer id, Post post);
-
-    void deleteById(Integer id);
+    Optional<PostDTO> findPostById(int id);
+    PostDTO savePost(PostDTO postDTO);
+    Page<PostDTO> getPosts(String keyword, Pageable pageable);
+    List<PostDTO> getRecentPosts();
 }

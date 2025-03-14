@@ -73,6 +73,9 @@
                     </form>
                 </td>
             </tr>
+            <tr th:if="${categoryDTOs.empty}">
+                <td colspan="4" class="text-muted">Không có dữ liệu danh mục.</td>
+            </tr>
             </tbody>
         </table>
 
@@ -99,7 +102,7 @@
 </div>
 
 <!-- Modal -->
-<div th:replace="category-modal :: category-modal"></div>
+<div th:replace="fragments/category-modal :: category-modal"></div>
 <div th:replace="fragments/toast :: toast"></div>
 
 <!-- Scripts -->

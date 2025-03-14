@@ -1,20 +1,16 @@
 package org.spring.mockprojectwebapp.services;
 
-import org.spring.mockprojectwebapp.entities.Category;
+import org.spring.mockprojectwebapp.dtos.CategoryDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Service;
 
+import java.util.List;
 
 public interface CategoryService {
-
-    Category findById(Integer id);
-
-    Category save(Category category);
-
-    Category update(Integer id, Category category);
-
+    CategoryDTO findById(Integer id);
+    CategoryDTO save(CategoryDTO categoryDTO);
+    CategoryDTO update(Integer id, CategoryDTO categoryDTO);
     void deleteById(Integer id);
-
-    Page<Category> getCategories(String keyword, Pageable pageable);
+    Page<CategoryDTO> getCategories(String keyword, Pageable pageable);
+    List<CategoryDTO> getAllCategories();
 }

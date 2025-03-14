@@ -1,10 +1,6 @@
 package org.spring.mockprojectwebapp.dtos;
 
-import lombok.Builder;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
@@ -13,10 +9,14 @@ import java.time.LocalDateTime;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class CategoryDTO {
-    private int categoryId;
-    private String categoryName;
+public class PostDTO {
+    private int postId;
+    private String title;
+    private String content;
+    private String imageUrl;
     private String description;
+    private String author;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
+    private CategoryDTO category;
 }
