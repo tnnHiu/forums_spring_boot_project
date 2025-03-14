@@ -65,16 +65,6 @@ public class UserServiceImpl implements UserService {
         return userOptional.map(this::mapToUserDTO).orElse(null);
     }
 
-//    @Override
-//    public void editUser(UserDTO updatedUserDTO, Integer userId) {
-//        User existingUser = userRepository.findById(userId)
-//                .orElseThrow(() -> new EntityNotFoundException("User not found"));
-//        existingUser.setUsername(updatedUserDTO.getUsername());
-//        existingUser.setEmail(updatedUserDTO.getEmail());
-//        existingUser.setStatus(updatedUserDTO.getStatus());
-//
-//        userRepository.save(existingUser);
-//    }
 
     public void updateUserStatus(Integer userId, User.Status newStatus) {
         User user = userRepository.findById(userId)
@@ -84,7 +74,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDTO mapToUserDTO(User user){
+    public UserDTO mapToUserDTO(User user) {
         UserDTO userDTO = new UserDTO();
         userDTO.setUserId(user.getUserId());
         userDTO.setUsername(user.getUsername());
