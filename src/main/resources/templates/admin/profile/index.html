@@ -30,7 +30,7 @@
         </div>
 
         <!-- Thanh tìm kiếm -->
-        <form th:action="@{/admin/profile}" method="get" class="d-flex gap-2 mb-3">
+        <form th:action="@{/admin/account}" method="get" class="d-flex gap-2 mb-3">
             <input type="text" name="keyword" class="form-control w-25" placeholder="Tìm kiếm..." th:value="${keyword}">
             <button type="submit" class="btn btn-primary">Tìm</button>
         </form>
@@ -50,7 +50,7 @@
                 <td th:text="${user.username}"></td>
                 <td th:text="${user.email}"></td>
                 <td>
-                    <form th:action="@{/admin/profile/status/{userId}(userId=${user.userId})}" method="post">
+                    <form th:action="@{/admin/account/status/{userId}(userId=${user.userId})}" method="post">
                         <select class="form-select" name="status">
                             <option value="ACTIVE" th:selected="${user.status == 'ACTIVE'}">Active</option>
                             <option value="INACTIVE" th:selected="${user.status == 'INACTIVE'}">Inactive</option>
@@ -60,7 +60,8 @@
                     </form>
                 </td>
                 <td>
-                    <form th:action="@{/admin/profile/delete/{userId}(userId=${user.userId})}" method="post" onsubmit="return confirm('Bạn có chắc chắn muốn xóa tài khoản này không?');">
+                    <form th:action="@{/admin/account/delete/{userId}(userId=${user.userId})}" method="post"
+                          onsubmit="return confirm('Bạn có chắc chắn muốn xóa tài khoản này không?');">
                         <input type="hidden" name="_method" value="delete">
                         <button type="submit" class="btn btn-outline-danger btn-sm">
                             <i class="bi bi-trash"></i> Xóa

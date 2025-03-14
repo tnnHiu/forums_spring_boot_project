@@ -15,21 +15,15 @@ import java.util.stream.Collectors;
 @Service
 public class UserServiceImpl implements UserService {
 
-
-    private final UserRepository userRepository;
-
     @Autowired
-    public UserServiceImpl(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
+    private UserRepository userRepository;
 
     @Override
     public List<UserDTO> findAllUsers() {
         List<User> users = userRepository.findAll();
-        return users.stream()
-                .map(this::mapToUserDTO)
-                .collect(Collectors.toList());
+        return users.stream().map(this::mapToUserDTO).collect(Collectors.toList());
     }
+
 
     @Override
     public List<UserDTO> searchUsers(String keyword) {
@@ -49,26 +43,14 @@ public class UserServiceImpl implements UserService {
         return userOptional.isPresent();
     }
 
-    @Override
-    public Optional<User> findUserByEmail(String email) {
-        return userRepository.findByEmail(email);
-    }
-
-    @Override
-    public UserDTO findUserById(Integer userId) {
-        Optional<User> userOptional = userRepository.findById(userId);
-        return userOptional.map(this::mapToUserDTO).orElse(null);
-    }
-
     public void updateUserStatus(Integer userId, User.Status newStatus) {
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new EntityNotFoundException("User not found"));
+        User user = userRepository.findById(userId).orElseThrow(() -> new EntityNotFoundException("User not found"));
         user.setStatus(newStatus);
         userRepository.save(user);
     }
 
     @Override
-    public UserDTO mapToUserDTO(User user){
+    public UserDTO mapToUserDTO(User user) {
         UserDTO userDTO = new UserDTO();
         userDTO.setUserId(user.getUserId());
         userDTO.setUsername(user.getUsername());

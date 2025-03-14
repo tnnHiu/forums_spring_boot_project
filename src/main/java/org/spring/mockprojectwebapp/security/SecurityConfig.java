@@ -84,7 +84,7 @@ public class SecurityConfig {
                                     return;
                                 }
                             }
-                            response.sendRedirect("/"); // fallback
+                            response.sendRedirect("/");
                         })
                 )
                 .logout(logout -> logout
