@@ -15,23 +15,25 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
+<<<<<<< HEAD
 import java.time.LocalDateTime;
 
 @Controller
 @RequestMapping("/admin")
 public class AdminCategoryController {
+=======
+@Controller
+@RequestMapping("/admin")
+public class AdminCategoryController {
+    private final CategoryServiceImpl categoryServiceImpl;
+>>>>>>> b277057cfc12a2a5de028b20dee6801c90528aee
 
     @Autowired
     public CategoryService categoryService;
 
     // Hiển thị trang danh sách danh mục
     @GetMapping("/categories")
-    public String showCategoriesPage(
-            @RequestParam(value = "keyword", required = false) String keyword,
-            @RequestParam(value = "page", defaultValue = "0") int page,
-            @RequestParam(value = "size", defaultValue = "8") int size,
-            Model model,
-            HttpServletRequest request) {
+    public String showCategoriesPage(@RequestParam(value = "keyword", required = false) String keyword, @RequestParam(value = "page", defaultValue = "0") int page, @RequestParam(value = "size", defaultValue = "8") int size, Model model, HttpServletRequest request) {
 
         Pageable pageable = PageRequest.of(page, size);
         Page<Category> categoryPage = categoryService.getCategories(keyword, pageable);
@@ -54,7 +56,10 @@ public class AdminCategoryController {
         return "admin/category/index";
     }
 
+<<<<<<< HEAD
     // Thêm danh mục
+=======
+>>>>>>> b277057cfc12a2a5de028b20dee6801c90528aee
     @PostMapping("/categories/add")
     public String addCategory(
             @ModelAttribute("categoryDTO") CategoryDTO categoryDTO,
@@ -84,7 +89,10 @@ public class AdminCategoryController {
         return "redirect:/admin/categories";
     }
 
+<<<<<<< HEAD
     // Lấy thông tin danh mục để chỉnh sửa (API)
+=======
+>>>>>>> b277057cfc12a2a5de028b20dee6801c90528aee
     @GetMapping("/categories/edit/{id}")
     public ResponseEntity<?> getCategoryById(@PathVariable("id") int id) {
         Category category = categoryService.findById(id);
@@ -104,7 +112,10 @@ public class AdminCategoryController {
         return ResponseEntity.ok(categoryDTO);
     }
 
+<<<<<<< HEAD
     // Cập nhật danh mục
+=======
+>>>>>>> b277057cfc12a2a5de028b20dee6801c90528aee
     @PostMapping("/categories/update/{id}")
     public String updateCategory(
             @PathVariable("id") int id,
