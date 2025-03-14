@@ -12,37 +12,35 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.util.List;
 
 @Controller
-@RequestMapping("/admin/profile")
+@RequestMapping("/admin")
 public class AdminProfileController {
 
-    private final UserService userService;
-
-    public AdminProfileController(UserService userService) {
-        this.userService = userService;
-    }
-
-    @GetMapping
-    public String users(@RequestParam(value = "keyword", required = false) String keyword, Model model) {
-        List<UserDTO> users;
-        if (keyword != null && !keyword.trim().isEmpty()) {
-            users = userService.searchUsers(keyword);
-        } else {
-            users = userService.findAllUsers();
-        }
-        model.addAttribute("users", users);
-        model.addAttribute("keyword", keyword);
-        return "admin/profile/index";
-    }
+    @Autowired
+    private UserService userService;
 
 
-    @GetMapping
+//    @GetMapping()
+//    public String users(@RequestParam(value = "keyword", required = false) String keyword, Model model) {
+//        List<UserDTO> users;
+//        if (keyword != null && !keyword.trim().isEmpty()) {
+//            users = userService.searchUsers(keyword);
+//        } else {
+//            users = userService.findAllUsers();
+//        }
+//        model.addAttribute("users", users);
+//        model.addAttribute("keyword", keyword);
+//        return "admin/profile/index";
+//    }
+
+
+    @GetMapping("/account")
     public String users(Model model) {
         List<UserDTO> users = userService.findAllUsers();
         model.addAttribute("users", users);
         return "admin/profile/index";
     }
 
-    @GetMapping("/delete/{userId}")
+    @PostMapping("/account/delete/{userId}")
     public String deleteUser(@PathVariable Integer userId, RedirectAttributes redirectAttributes) {
         if (userService.doesUserExist(userId)) {
             userService.deleteUserById(userId);
@@ -50,13 +48,13 @@ public class AdminProfileController {
         } else {
             redirectAttributes.addFlashAttribute("error", "User does not exist.");
         }
-        return "redirect:/admin/profile";
+        return "admin/profile/index";
     }
 
-    @PostMapping("/status/{userId}")
+    @PostMapping("/account/status/{userId}")
     public String updateUserStatus(@PathVariable Integer userId, @RequestParam("status") User.Status status, RedirectAttributes redirectAttributes) {
         userService.updateUserStatus(userId, status);
         redirectAttributes.addFlashAttribute("success", "User status updated successfully!");
-        return "redirect:/admin/profile";
+        return "/admin/profile/index";
     }
 }

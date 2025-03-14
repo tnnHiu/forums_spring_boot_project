@@ -16,6 +16,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 import java.time.LocalDateTime;
 
 @Controller
@@ -25,8 +26,13 @@ public class AdminCategoryController {
 @Controller
 @RequestMapping("/admin")
 public class AdminCategoryController {
+=======
+@Controller
+@RequestMapping("/admin")
+public class AdminCategoryController {
+>>>>>>> b8af64f984abfef6c0d0791aa1d9d922c04981e8
     private final CategoryServiceImpl categoryServiceImpl;
->>>>>>> b277057cfc12a2a5de028b20dee6801c90528aee
+>>>>>>> b8af64f984abfef6c0d0791aa1d9d922c04981e8
 
     @Autowired
     public CategoryService categoryService;
@@ -57,9 +63,12 @@ public class AdminCategoryController {
     }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
     // Thêm danh mục
 =======
->>>>>>> b277057cfc12a2a5de028b20dee6801c90528aee
+>>>>>>> b8af64f984abfef6c0d0791aa1d9d922c04981e8
+=======
+>>>>>>> b8af64f984abfef6c0d0791aa1d9d922c04981e8
     @PostMapping("/categories/add")
     public String addCategory(
             @ModelAttribute("categoryDTO") CategoryDTO categoryDTO,
@@ -90,9 +99,12 @@ public class AdminCategoryController {
     }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
     // Lấy thông tin danh mục để chỉnh sửa (API)
 =======
->>>>>>> b277057cfc12a2a5de028b20dee6801c90528aee
+>>>>>>> b8af64f984abfef6c0d0791aa1d9d922c04981e8
+=======
+>>>>>>> b8af64f984abfef6c0d0791aa1d9d922c04981e8
     @GetMapping("/categories/edit/{id}")
     public ResponseEntity<?> getCategoryById(@PathVariable("id") int id) {
         Category category = categoryService.findById(id);
@@ -113,9 +125,12 @@ public class AdminCategoryController {
     }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
     // Cập nhật danh mục
 =======
->>>>>>> b277057cfc12a2a5de028b20dee6801c90528aee
+>>>>>>> b8af64f984abfef6c0d0791aa1d9d922c04981e8
+=======
+>>>>>>> b8af64f984abfef6c0d0791aa1d9d922c04981e8
     @PostMapping("/categories/update/{id}")
     public String updateCategory(
             @PathVariable("id") int id,
