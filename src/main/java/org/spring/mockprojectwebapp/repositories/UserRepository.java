@@ -9,10 +9,9 @@ import java.util.List;
 import java.util.Optional;
 
 public interface UserRepository extends JpaRepository<User, Integer> {
-    Optional<User> findByEmail(String email);
+    User findByEmail(String email);
 
     @Query("SELECT u FROM User u WHERE u.username LIKE CONCAT('%', :keyword, '%') OR u.email LIKE CONCAT('%', :keyword, '%')")
     List<User> findByUsernameContainingOrEmailContaining(@Param("keyword") String keyword);
-
 
 }
