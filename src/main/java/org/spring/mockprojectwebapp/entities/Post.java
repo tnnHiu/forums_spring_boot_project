@@ -37,6 +37,12 @@ public class Post {
     @Column(name = "title", nullable = false)
     private String title;
 
+    @Column(name = "image_url")
+    private String imageUrl;
+
+    @Column(name = "description", nullable = false)
+    private String description;
+
     @Lob // Dùng khi đây là trường có dữ liệu lớn
     @Column(name = "content", nullable = false)
     private String content;

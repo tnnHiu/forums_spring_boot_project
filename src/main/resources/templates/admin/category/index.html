@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="vi">
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -48,22 +48,22 @@
             </tr>
             </thead>
             <tbody>
-            <tr th:each="category : ${categories}">
-                <td th:text="${category.categoryName}"></td>
-                <td th:text="${category.description}"></td>
-                <td th:text="${#temporals.format(category.createdAt, 'dd/MM/yyyy')}"></td>
+            <tr th:each="categoryDTO : ${categoryDTOs}">
+                <td th:text="${categoryDTO.categoryName}"></td>
+                <td th:text="${categoryDTO.description}"></td>
+                <td th:text="${#temporals.format(categoryDTO.createdAt, 'dd/MM/yyyy')}"></td>
                 <td>
                     <button class="btn btn-outline-primary btn-sm btn-action btn-view"
-                            th:attr="data-category-id=${category.categoryId}">
+                            th:attr="data-category-id=${categoryDTO.categoryId}">
                         <i class="bi bi-eye"></i>
                     </button>
                     <button class="btn btn-outline-primary btn-sm btn-action"
                             data-bs-toggle="modal"
-                            th:attr="data-bs-target='#editCategoryModal' + ${category.categoryId}">
+                            th:attr="data-bs-target='#editCategoryModal' + ${categoryDTO.categoryId}">
                         <i class="bi bi-pencil"></i>
                     </button>
 
-                    <form th:action="@{/admin/categories/delete/{id}(id=${category.categoryId})}" method="post"
+                    <form th:action="@{/admin/categories/delete/{id}(id=${categoryDTO.categoryId})}" method="post"
                           style="display:inline;"
                           onsubmit="return confirm('Bạn có chắc chắn muốn xóa danh mục này không?');">
                         <input type="hidden" name="_method" value="delete">
@@ -72,6 +72,9 @@
                         </button>
                     </form>
                 </td>
+            </tr>
+            <tr th:if="${categoryDTOs.empty}">
+                <td colspan="4" class="text-muted">Không có dữ liệu danh mục.</td>
             </tr>
             </tbody>
         </table>
