@@ -1,5 +1,6 @@
 package org.spring.mockprojectwebapp.controllers.home;
 
+import jakarta.servlet.http.HttpSession;
 import org.spring.mockprojectwebapp.dtos.PostDTO;
 import org.spring.mockprojectwebapp.dtos.UserDTO;
 import org.spring.mockprojectwebapp.services.PostService;
@@ -24,11 +25,12 @@ public class HomeController {
     private UserService userService;
 
     @GetMapping
-    public String showHomePage(Model model) {
+    public String showHomePage(Model model, HttpSession session) {
         List<PostDTO> recentPostDTOs = postService.getRecentPosts();
         List<UserDTO> receUserDTOS = userService.findAllUsers();
         model.addAttribute("recentPostDTOs", recentPostDTOs);
         model.addAttribute("receUserDTOS", receUserDTOS);
+        model.addAttribute("userName", session.getAttribute("userName"));
         return "index";
     }
 

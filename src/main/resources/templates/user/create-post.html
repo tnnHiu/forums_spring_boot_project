@@ -12,20 +12,24 @@
             background-color: #f5f6f8;
             font-family: 'Segoe UI', Tahoma, sans-serif;
         }
+
         .navbar {
             background: linear-gradient(135deg, #F07900 0%, #ff914d 100%);
             border-radius: 0 0 15px 15px;
             box-shadow: 0 4px 15px rgba(240, 121, 0, 0.2);
             padding: 1rem;
         }
+
         .navbar-brand, .nav-link {
             color: white !important;
             font-weight: 600;
             transition: all 0.3s ease;
         }
+
         .nav-link:hover {
             color: #ffe5cc !important;
         }
+
         .container-card {
             background: white;
             border-radius: 20px;
@@ -34,9 +38,11 @@
             margin-top: 3rem;
             transition: transform 0.3s ease;
         }
+
         .container-card:hover {
             transform: translateY(-5px);
         }
+
         .btn-custom {
             background: linear-gradient(45deg, #F07900, #ff914d);
             border: none;
@@ -46,24 +52,29 @@
             color: white;
             transition: all 0.3s ease;
         }
+
         .btn-custom:hover {
             background: linear-gradient(45deg, #d96a00, #ff7733);
             transform: translateY(-2px);
             color: white;
         }
+
         .form-control, .form-select {
             border-radius: 10px;
             border: 2px solid #e9ecef;
             transition: all 0.3s ease;
         }
+
         .form-control:focus, .form-select:focus {
             border-color: #F07900;
             box-shadow: 0 0 8px rgba(240, 121, 0, 0.2);
         }
+
         .form-label {
             font-weight: 600;
             color: #333;
         }
+
         .upload-btn {
             border: 2px dashed #F07900;
             background: #fff8f0;
@@ -71,14 +82,17 @@
             padding: 2rem;
             transition: all 0.3s ease;
         }
+
         .upload-btn:hover {
             background: #fff0e6;
             border-color: #ff914d;
         }
+
         legend {
             color: #F07900;
             font-weight: 700;
         }
+
         hr {
             border-color: #F07900;
             opacity: 0.3;
@@ -135,18 +149,21 @@
                 <select class="form-select" name="categoryId" required>
                     <option value="" selected>-- Chọn Danh Mục --</option>
                     <th:block th:if="${categories != null}">
-                        <option th:each="category : ${categories}" th:value="${category.categoryId}" th:text="${category.categoryName}"></option>
+                        <option th:each="category : ${categories}" th:value="${category.categoryId}"
+                                th:text="${category.categoryName}"></option>
                     </th:block>
                 </select>
             </div>
             <div class="mb-4">
                 <label class="form-label fs-5">Mô tả</label>
-                <textarea class="form-control" rows="6" name="description" placeholder="Mô tả sơ lược" required></textarea>
+                <textarea class="form-control" rows="6" name="description" placeholder="Mô tả sơ lược"
+                          required></textarea>
             </div>
 
             <div class="mb-4">
                 <label class="form-label fs-5">Nội dung</label>
-                <textarea class="form-control" rows="6" name="content" placeholder="Nhập nội dung bài viết của bạn" required></textarea>
+                <textarea class="form-control" rows="6" name="content" placeholder="Nhập nội dung bài viết của bạn"
+                          required></textarea>
             </div>
             <div class="d-flex justify-content-center mt-5">
                 <button type="submit" class="btn btn-custom">Đăng bài ngay</button>
@@ -156,15 +173,15 @@
 </div>
 
 <script>
-    document.getElementById('uploadButton').addEventListener('click', function() {
+    document.getElementById('uploadButton').addEventListener('click', function () {
         document.getElementById('coverImage').click();
     });
 
-    document.getElementById('coverImage').addEventListener('change', function(e) {
+    document.getElementById('coverImage').addEventListener('change', function (e) {
         const file = e.target.files[0];
         if (file) {
             const reader = new FileReader();
-            reader.onload = function(e) {
+            reader.onload = function (e) {
                 const uploadBtn = document.getElementById('uploadButton');
                 uploadBtn.innerHTML = `
                 <input type="file" id="coverImage" name="imageFile" accept="image/*" style="display: none;">
