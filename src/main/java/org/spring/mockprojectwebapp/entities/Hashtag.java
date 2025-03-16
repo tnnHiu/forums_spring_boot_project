@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "hashtag")
+@Table(name = "hashtags")
 public class Hashtag {
 
     @Id

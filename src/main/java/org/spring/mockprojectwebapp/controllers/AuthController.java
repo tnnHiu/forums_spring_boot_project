@@ -1,41 +1,60 @@
 package org.spring.mockprojectwebapp.controllers;
 
 
+import jakarta.validation.Valid;
 import org.spring.mockprojectwebapp.dtos.LoginDTO;
 
 
-import org.spring.mockprojectwebapp.entities.User;
-import org.spring.mockprojectwebapp.services.UserService;
+import org.spring.mockprojectwebapp.dtos.RegisterDTO;
+import org.spring.mockprojectwebapp.services.implement.AuthServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Optional;
-
 @Controller
-@RequestMapping("/auth")
 public class AuthController {
 
     @Autowired
-    private UserService userService;
+    private AuthServiceImpl authService;
 
     @GetMapping("/login")
-    public String showLoginPage(Model model) {
-        model.addAttribute("loginDto", new LoginDTO());
-        return "sign-in";
+    public String showLoginPage() {
+        return "login";
     }
 
-    @PostMapping("/login")
-    public String login(@ModelAttribute("loginDto") LoginDTO loginDto, Model model) {
-        Optional<User> user = userService.login(loginDto);
-        if (user.isPresent()) {
-            return "redirect:/admin";
-        } else {
-            model.addAttribute("error", "Email hoặc mật khẩu không đúng!");
-            return "redirect:/auth/login";
+
+    @GetMapping("/register")
+    public String showRegisterPage(Model model) {
+
+        RegisterDTO registerDTO = new RegisterDTO();
+
+        model.addAttribute("registerDTO", registerDTO);
+        model.addAttribute("success", false);
+        return "register";
+    }
+
+    @PostMapping("/register")
+    public String register(Model model, @Valid @ModelAttribute RegisterDTO registerDTO, BindingResult result) {
+
+        if (!registerDTO.getPassword().equals(registerDTO.getConfirmPassword())) {
+            result.addError(new FieldError("registerDTO", "confirmPassword", "Passwords do not match"));
         }
+        if (authService.findByEmail(registerDTO.getEmail()) != null) {
+            result.addError(new FieldError("registerDTO", "email", "Email address already in use"));
+        }
+        if (result.hasErrors()) {
+            return "register";
+        }
+        try {
+            authService.save(registerDTO);
+            model.addAttribute("registerDTO", new RegisterDTO());
+//            model.addAttribute("success", true);
+        } catch (Exception e) {
+            result.addError(new FieldError("registerDTO", "username", e.getMessage()));
+        }
+        return "register";
     }
-
-
 }

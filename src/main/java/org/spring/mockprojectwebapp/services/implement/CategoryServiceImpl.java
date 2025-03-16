@@ -1,5 +1,6 @@
 package org.spring.mockprojectwebapp.services.implement;
 
+import org.spring.mockprojectwebapp.dtos.CategoryDTO;
 import org.spring.mockprojectwebapp.entities.Category;
 import org.spring.mockprojectwebapp.repositories.CategoryRepository;
 import org.spring.mockprojectwebapp.services.CategoryService;
@@ -8,7 +9,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
+
 
 @Service
 public class CategoryServiceImpl implements CategoryService {
@@ -21,30 +24,32 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public Iterable<Category> findAll() {
-        return categoryRepository.findAll();
-    }
-
-    @Override
-    public Category findById(Integer id) {
+    public CategoryDTO findById(Integer id) {
         Optional<Category> category = categoryRepository.findById(id);
-        return category.orElseThrow(() -> new RuntimeException("Category not found with id: " + id));
+        return category.map(this::mapToDTO)
+                .orElseThrow(() -> new RuntimeException("Category not found with id: " + id));
     }
 
     @Override
-    public Category save(Category category) {
-        category.setCreatedAt(category.getCreatedAt() == null ? java.time.LocalDateTime.now() : category.getCreatedAt());
-        category.setUpdatedAt(java.time.LocalDateTime.now());
-        return categoryRepository.save(category);
+    public CategoryDTO save(CategoryDTO categoryDTO) {
+        Category category = mapToEntity(categoryDTO);
+        category.setCreatedAt(category.getCreatedAt() == null ? LocalDateTime.now() : category.getCreatedAt());
+        category.setUpdatedAt(LocalDateTime.now());
+        Category savedCategory = categoryRepository.save(category);
+        return mapToDTO(savedCategory);
     }
 
     @Override
-    public Category update(Integer id, Category updatedCategory) {
-        Category existingCategory = findById(id);
-        existingCategory.setCategoryName(updatedCategory.getCategoryName());
-        existingCategory.setDescription(updatedCategory.getDescription());
-        existingCategory.setUpdatedAt(java.time.LocalDateTime.now());
-        return categoryRepository.save(existingCategory);
+    public CategoryDTO update(Integer id, CategoryDTO categoryDTO) {
+        Category existingCategory = categoryRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Category not found with id: " + id));
+
+        existingCategory.setCategoryName(categoryDTO.getCategoryName());
+        existingCategory.setDescription(categoryDTO.getDescription());
+        existingCategory.setUpdatedAt(LocalDateTime.now());
+
+        Category updatedCategory = categoryRepository.save(existingCategory);
+        return mapToDTO(updatedCategory);
     }
 
     @Override
@@ -55,11 +60,36 @@ public class CategoryServiceImpl implements CategoryService {
         categoryRepository.deleteById(id);
     }
 
-    public Page<Category> getCategories(String keyword, Pageable pageable) {
+    @Override
+    public Page<CategoryDTO> getCategories(String keyword, Pageable pageable) {
+        Page<Category> categoryPage;
         if (keyword == null || keyword.isBlank()) {
-            return categoryRepository.findAll(pageable);
+            categoryPage = categoryRepository.findAll(pageable);
+        } else {
+            categoryPage = categoryRepository.findByCategoryNameContainingIgnoreCase(keyword, pageable);
         }
-        return categoryRepository.findByCategoryNameContainingIgnoreCase(keyword, pageable);
+        return categoryPage.map(this::mapToDTO);
     }
 
+    // Chuyển đổi từ Entity sang DTO
+    private CategoryDTO mapToDTO(Category category) {
+        return CategoryDTO.builder()
+                .categoryId(category.getCategoryId())
+                .categoryName(category.getCategoryName())
+                .description(category.getDescription())
+                .createdAt(category.getCreatedAt())
+                .updatedAt(category.getUpdatedAt())
+                .build();
+    }
+
+    // Chuyển đổi từ DTO sang Entity
+    private Category mapToEntity(CategoryDTO categoryDTO) {
+        Category category = new Category();
+        category.setCategoryId(categoryDTO.getCategoryId());
+        category.setCategoryName(categoryDTO.getCategoryName());
+        category.setDescription(categoryDTO.getDescription());
+        category.setCreatedAt(categoryDTO.getCreatedAt());
+        category.setUpdatedAt(categoryDTO.getUpdatedAt());
+        return category;
+    }
 }

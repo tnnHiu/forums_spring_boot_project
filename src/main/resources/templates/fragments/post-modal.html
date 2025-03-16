@@ -1,0 +1,186 @@
+<div th:fragment="post-modal">
+  <!-- Modal Thêm Bài Đăng -->
+  <div class="modal fade" id="addPostModal" tabindex="-1" aria-labelledby="addPostModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <form th:action="@{/admin/posts/add}" method="post">
+          <div class="modal-header">
+            <h5 class="modal-title" id="addPostModalLabel">Thêm Bài Đăng</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <div class="mb-3">
+              <label class="form-label">Tiêu Đề</label>
+              <input type="text" class="form-control" name="title" placeholder="Nhập tiêu đề" required>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Nội Dung</label>
+              <textarea class="form-control" name="content" placeholder="Nhập nội dung" required></textarea>
+            </div>
+            <!-- Có thể thêm các trường khác như trạng thái, danh mục, v.v. nếu cần -->
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+            <button type="submit" class="btn btn-primary">Lưu</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Xem Bài Đăng-->
+  <th:block th:each="post : ${posts}">
+    <div class="modal fade" th:id="'viewPostModal' + ${post.id}" tabindex="-1" aria-labelledby="viewPostModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header bg-primary text-white">
+            <h5 class="modal-title" id="viewPostModalLabel" th:text="${post.title}">Post Title</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <!-- Content section -->
+            <div class="mb-4">
+              <h6 class="fw-bold text-primary">Nội dung</h6>
+              <div class="border rounded p-3" style="min-height: 200px;" th:text="${post.content}">
+                Post content
+              </div>
+            </div>
+
+            <hr class="my-4">
+
+            <!-- Post metadata -->
+            <div class="row">
+              <!-- Left column -->
+              <div class="col-md-6">
+                <div class="mb-3">
+                  <h6 class="fw-bold text-primary">Danh mục</h6>
+                  <p class="border rounded p-2" th:text="${post.categoryName}">Category</p>
+                </div>
+
+                <div class="mb-3">
+                  <h6 class="fw-bold text-primary">Người đăng</h6>
+                  <p class="border rounded p-2" th:text="${post.userName}">Username</p>
+                </div>
+
+                <div class="mb-3">
+                  <h6 class="fw-bold text-primary">Loại nội dung</h6>
+                  <p class="border rounded p-2">
+                    <span th:if="${post.isPremium == 1}" class="badge bg-warning">Premium</span>
+                    <span th:unless="${post.isPremium == 1}" class="badge bg-secondary">Free</span>
+                  </p>
+                </div>
+              </div>
+
+              <!-- Right column -->
+              <div class="col-md-6">
+                <div class="mb-3">
+                  <h6 class="fw-bold text-primary">Trạng thái</h6>
+                  <p class="border rounded p-2">
+                    <span th:if="${post.status == 0}" class="badge bg-success">ACTIVE</span>
+                    <span th:if="${post.status == 1}" class="badge bg-warning">INACTIVE</span>
+                    <span th:if="${post.status == 2}" class="badge bg-danger">BANNED</span>
+                    <span class="ms-2" th:text="${post.statusName}"></span>
+                  </p>
+                </div>
+
+                <div class="mb-3">
+                  <h6 class="fw-bold text-primary">Ngày tạo</h6>
+                  <p class="border rounded p-2" th:text="${#temporals.format(post.createdAt, 'dd/MM/yyyy HH:mm')}">
+                    Creation date
+                  </p>
+                </div>
+
+                <div class="mb-3">
+                  <h6 class="fw-bold text-primary">Ngày cập nhật</h6>
+                  <p class="border rounded p-2" th:text="${post.updatedAt != null ? #temporals.format(post.updatedAt, 'dd/MM/yyyy HH:mm') : '-'}">
+                    Update date
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" th:data-bs-target="'#editPostModal' + ${post.id}"
+                    data-bs-dismiss="modal">Chỉnh sửa</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </th:block>
+  <!-- Modal Sửa Bài Đăng -->
+  <th:block th:each="post : ${posts}">
+    <div class="modal fade" th:id="'editPostModal' + ${post.id}" tabindex="-1" aria-labelledby="editPostModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <form th:action="@{/admin/posts/{id}(id=${post.id})}" method="post">
+            <div class="modal-header">
+              <h5 class="modal-title">Sửa Bài Đăng</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <input type="hidden" name="id" th:value="${post.id}">
+
+              <!-- Editable fields -->
+              <div class="mb-3">
+                <label class="form-label">Tiêu Đề</label>
+                <input type="text" class="form-control" name="title" th:value="${post.title}" required>
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Nội Dung</label>
+                <textarea class="form-control" name="content" rows="5" required th:text="${post.content}"></textarea>
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Danh Mục</label>
+                <select class="form-select" name="categoryId" required>
+                  <!-- You'll need to populate this with actual categories from the controller -->
+                  <option th:value="${post.categoryId}" th:text="${post.categoryName}" selected></option>
+                </select>
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Trạng Thái</label>
+                <select class="form-select" name="status" required>
+                  <option value="0" th:selected="${post.status == 0}">ACTIVE</option>
+                  <option value="1" th:selected="${post.status == 1}">INACTIVE</option>
+                  <option value="2" th:selected="${post.status == 2}">BANNED</option>
+                </select>
+              </div>
+
+              <!-- Read-only information -->
+              <div class="row mt-4">
+                <h6 class="mb-3">Thông tin khác (không chỉnh sửa được)</h6>
+
+                <div class="col-md-6 mb-3">
+                  <label class="form-label fw-bold">Người Đăng:</label>
+                  <p class="border rounded p-2" th:text="${post.userName}"></p>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                  <label class="form-label fw-bold">Premium:</label>
+                  <p class="border rounded p-2">
+                    <span th:if="${post.isPremium == 1}" class="badge bg-warning">Premium</span>
+                    <span th:unless="${post.isPremium == 1}" class="badge bg-secondary">Free</span>
+                  </p>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                  <label class="form-label fw-bold">Ngày Tạo:</label>
+                  <p class="border rounded p-2" th:text="${#temporals.format(post.createdAt, 'dd/MM/yyyy')}"></p>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                  <label class="form-label fw-bold">Ngày Cập Nhật:</label>
+                  <p class="border rounded p-2" th:text="${post.updatedAt != null ? #temporals.format(post.updatedAt, 'dd/MM/yyyy') : '-'}"></p>
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+              <button type="submit" class="btn btn-primary">Lưu thay đổi</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </th:block>
+</div>

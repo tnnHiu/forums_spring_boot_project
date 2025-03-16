@@ -1,16 +1,14 @@
 package org.spring.mockprojectwebapp.entities;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import java.time.LocalDateTime;
 
 @Entity
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
@@ -38,7 +36,7 @@ public class Report {
     @JoinColumn(name = "reported_comment_id")
     private Comment reportedComment;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "reported_user_id")
     private User reportedUser;
@@ -49,7 +47,6 @@ public class Report {
     @Enumerated(EnumType.STRING)
     @Column(name = "status", nullable = false)
     private Status status;
-
 
     @Enumerated(EnumType.STRING)
     @Column(name = "report_type")
