@@ -67,7 +67,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers("/", "/css/**", "/js/**", "/images/**", "/bootstrap-5.3.3-dist/**").permitAll()
                         .requestMatchers("/register", "/login").permitAll()
-                        .requestMatchers("/admin/**").hasRole("ADMIN")
+                        .requestMatchers("/admin/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .formLogin(form -> form
