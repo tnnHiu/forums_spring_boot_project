@@ -6,6 +6,7 @@ import org.spring.mockprojectwebapp.entities.User.Status;
 import java.time.LocalDateTime;
 
 
+@Builder
 @Getter
 @Setter
 @Builder

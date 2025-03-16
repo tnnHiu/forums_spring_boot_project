@@ -53,7 +53,8 @@ public class Post {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
-    @Column(name = "status")
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status", nullable = false)
     private Status status;
 
     @Column(name = "is_premium")
