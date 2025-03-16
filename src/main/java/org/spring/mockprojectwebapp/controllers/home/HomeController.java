@@ -1,7 +1,9 @@
 package org.spring.mockprojectwebapp.controllers.home;
 
 import org.spring.mockprojectwebapp.dtos.PostDTO;
+import org.spring.mockprojectwebapp.dtos.UserDTO;
 import org.spring.mockprojectwebapp.services.PostService;
+import org.spring.mockprojectwebapp.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,10 +20,15 @@ public class HomeController {
     @Autowired
     private PostService postService;
 
+    @Autowired
+    private UserService userService;
+
     @GetMapping
     public String showHomePage(Model model) {
         List<PostDTO> recentPostDTOs = postService.getRecentPosts();
+        List<UserDTO> receUserDTOS = userService.findAllUsers();
         model.addAttribute("recentPostDTOs", recentPostDTOs);
+        model.addAttribute("receUserDTOS", receUserDTOS);
         return "index";
     }
 

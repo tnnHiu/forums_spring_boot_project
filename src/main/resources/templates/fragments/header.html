@@ -1,0 +1,42 @@
+<div th:fragment="header">
+    <nav class="navbar navbar-expand-lg p-3" style="background-color: #F07900;">
+        <div class="container-fluid">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo03"
+                    aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <a class="navbar-brand fw-bold" th:href="@{/}">LOGO ICON</a>
+            <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active fw-bold" aria-current="page" th:href="@{/}">Trang chủ</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/recipes}">Công thức</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/community}">Cộng đồng</a>
+                    </li>
+                </ul>
+                <form class="d-flex me-2" th:action="@{/search}" method="get">
+                    <button class="btn btn-outline-light me-2" type="submit"><i class="bi bi-search"></i></button>
+                    <input class="form-control rounded-pill me-auto" type="search" name="q" placeholder="Tìm kiếm">
+                </form>
+                <!-- Avatar Dropdown -->
+                <div class="dropdown" onclick="event.stopPropagation()">
+                    <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="userDropdown" role="button"
+                       data-bs-toggle="dropdown" aria-expanded="false">
+                        <img th:src="@{../static/img/img_avatar.jpg}" alt="Avatar" width="40" height="40" class="rounded-circle me-2">
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                        <li><p class="dropdown-item" th:text="${#authentication.getName()}">User</p></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" th:href="@{/}">Profile</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" th:href="@{/}">Logout</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
+</div>
