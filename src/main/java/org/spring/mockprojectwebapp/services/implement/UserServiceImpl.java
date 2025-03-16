@@ -6,6 +6,8 @@ import org.spring.mockprojectwebapp.entities.User;
 import org.spring.mockprojectwebapp.repositories.UserRepository;
 import org.spring.mockprojectwebapp.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,6 +19,13 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserRepository userRepository;
+
+    public Page<User> getAccounts(String keyword, Pageable pageable) {
+        if (keyword != null && !keyword.isEmpty()) {
+            return userRepository.findByUsernameContainingIgnoreCase(keyword, pageable);
+        }
+        return userRepository.findAll(pageable);
+    }
 
     @Override
     public List<UserDTO> findAllUsers() {
