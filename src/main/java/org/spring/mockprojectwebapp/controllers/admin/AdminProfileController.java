@@ -26,7 +26,7 @@ public class AdminProfileController {
     public String showAccountsPage(
             @RequestParam(value = "keyword", required = false) String keyword,
             @RequestParam(value = "page", defaultValue = "0") int page,
-            @RequestParam(value = "size", defaultValue = "8") int size,
+            @RequestParam(value = "size", defaultValue = "5") int size,
             Model model, HttpServletRequest request) {
 
         Pageable pageable = PageRequest.of(page, size);
@@ -42,14 +42,29 @@ public class AdminProfileController {
         return "admin/account/index";
     }
 
-    @GetMapping("/account")
-    public String users(Model model) {
-        List<UserDTO> users = userService.findAllUsers();
-        model.addAttribute("users", users);
-        return "admin/accounts";
-    }
 
-    @PostMapping("/account/delete/{userId}")
+//    @GetMapping()
+//    public String users(@RequestParam(value = "keyword", required = false) String keyword, Model model) {
+//        List<UserDTO> users;
+//        if (keyword != null && !keyword.trim().isEmpty()) {
+//            users = userService.searchUsers(keyword);
+//        } else {
+//            users = userService.findAllUsers();
+//        }
+//        model.addAttribute("users", users);
+//        model.addAttribute("keyword", keyword);
+//        return "admin/profile/index";
+//    }
+
+
+//    @GetMapping("/account")
+//    public String users(Model model) {
+//        List<UserDTO> users = userService.findAllUsers();
+//        model.addAttribute("users", users);
+//        return "admin/profile/index";
+//    }
+
+    @PostMapping("/accounts/delete/{userId}")
     public String deleteUser(@PathVariable Integer userId, RedirectAttributes redirectAttributes) {
         if (userService.doesUserExist(userId)) {
             userService.deleteUserById(userId);
@@ -60,7 +75,7 @@ public class AdminProfileController {
         return "admin/accounts";
     }
 
-    @PostMapping("/account/status/{userId}")
+    @PostMapping("/accounts/status/{userId}")
     public String updateUserStatus(@PathVariable Integer userId, @RequestParam("status") User.Status status, RedirectAttributes redirectAttributes) {
         userService.updateUserStatus(userId, status);
         redirectAttributes.addFlashAttribute("success", "User status updated successfully!");
