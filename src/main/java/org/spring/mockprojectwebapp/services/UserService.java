@@ -6,6 +6,7 @@ import org.spring.mockprojectwebapp.entities.User;
 import java.util.List;
 
 public interface UserService {
+//    void updateUserStatus(int userId, User.Status status);
 
     List<UserDTO> findAllUsers();
 

@@ -63,7 +63,7 @@ public class Post {
     @JoinTable(name = "post_hashtag", joinColumns = @JoinColumn(name = "post_id"), inverseJoinColumns = @JoinColumn(name = "hashtag_id"))
     Set<Hashtag> hashtags;
 
-    private enum Status {
+    public enum Status {
         ACTIVE, INACTIVE, BANNED
     }
 }

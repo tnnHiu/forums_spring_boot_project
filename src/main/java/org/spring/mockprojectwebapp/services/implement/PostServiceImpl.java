@@ -12,6 +12,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -45,6 +46,19 @@ public class PostServiceImpl implements PostService {
         return postRepository.findTop10ByOrderByCreatedAtDesc().stream()
                 .map(this::mapToDTO)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public void updatePostStatus(int postId, Post.Status status) {
+        Post existingPost = postRepository.findById(postId)
+                .orElseThrow(() -> new RuntimeException("Post not found with id: " + postId));
+
+        // Cập nhật trạng thái và thời gian cập nhật
+        existingPost.setStatus(status);
+        existingPost.setUpdatedAt(LocalDateTime.now());
+
+        // Lưu vào cơ sở dữ liệu
+        postRepository.save(existingPost);
     }
 
     private PostDTO mapToDTO(Post post) {

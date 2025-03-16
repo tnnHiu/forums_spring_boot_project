@@ -1,22 +1,21 @@
 package org.spring.mockprojectwebapp.dtos;
 
 import lombok.*;
-import org.spring.mockprojectwebapp.entities.User.Status;
+import org.spring.mockprojectwebapp.entities.Comment.Status;
 
 import java.time.LocalDateTime;
-import org.spring.mockprojectwebapp.entities.User;
 
 @Getter
 @Setter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserDTO {
+public class CommentDTO {
+    private int id;
+    private int postId;
     private int userId;
-    private String username;
-    private String email;
+    private String content;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     private Status status;
-    private int roleId;
 }

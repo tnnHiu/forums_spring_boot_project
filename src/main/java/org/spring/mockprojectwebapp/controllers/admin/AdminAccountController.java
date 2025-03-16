@@ -1,17 +1,15 @@
 package org.spring.mockprojectwebapp.controllers.admin;
 
-import jakarta.servlet.http.HttpServletRequest;
 import org.spring.mockprojectwebapp.dtos.UserDTO;
+import org.spring.mockprojectwebapp.entities.User;
 import org.spring.mockprojectwebapp.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("/admin")
@@ -20,24 +18,43 @@ public class AdminAccountController {
     @Autowired
     private UserService userService;
 
-//    @GetMapping("/accounts")
-//    public String showAccountsPage(
-//            @RequestParam(value = "keyword", required = false) String keyword,
-//            @RequestParam(value = "page", defaultValue = "0") int page,
-//            @RequestParam(value = "size", defaultValue = "8") int size,
-//            Model model,
-//            HttpServletRequest request) {
-//
-//        Pageable pageable = PageRequest.of(page, size);
-//        Page<UserDTO> userDTOPage = userService.getUsers(keyword, pageable);
-//
-//        model.addAttribute("userDTOs", userDTOPage.getContent());
-//        model.addAttribute("currentPage", page);
-//        model.addAttribute("totalPages", userDTOPage.getTotalPages());
+
+//    @GetMapping()
+//    public String users(@RequestParam(value = "keyword", required = false) String keyword, Model model) {
+//        List<UserDTO> users;
+//        if (keyword != null && !keyword.trim().isEmpty()) {
+//            users = userService.searchUsers(keyword);
+//        } else {
+//            users = userService.findAllUsers();
+//        }
+//        model.addAttribute("users", users);
 //        model.addAttribute("keyword", keyword);
-//        model.addAttribute("title", "Account Management");
-//        model.addAttribute("currentUri", request.getRequestURI());
-//
 //        return "admin/account/index";
 //    }
+
+
+    @GetMapping("/accounts")
+    public String users(Model model) {
+        List<UserDTO> users = userService.findAllUsers();
+        model.addAttribute("users", users);
+        return "admin/account/index";
+    }
+
+    @PostMapping("/accounts/delete/{userId}")
+    public String deleteUser(@PathVariable Integer userId, RedirectAttributes redirectAttributes) {
+        if (userService.doesUserExist(userId)) {
+            userService.deleteUserById(userId);
+            redirectAttributes.addFlashAttribute("success", "User has been deleted successfully.");
+        } else {
+            redirectAttributes.addFlashAttribute("error", "User does not exist.");
+        }
+        return "admin/account/index";
+    }
+
+    @PostMapping("/accounts/status/{userId}")
+    public String updateUserStatus(@PathVariable Integer userId, @RequestParam("status") User.Status status, RedirectAttributes redirectAttributes) {
+        userService.updateUserStatus(userId, status);
+        redirectAttributes.addFlashAttribute("success", "User status updated successfully!");
+        return "redirect:/admin/accounts";
+    }
 }

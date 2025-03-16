@@ -15,6 +15,7 @@
 <div class="d-flex">
     <!-- Sidebar -->
     <div th:replace="fragments/sidebar :: sidebar"></div>
+
     <!-- Nội dung chính -->
     <div class="main-content flex-grow-1 p-4">
         <!-- Header -->
@@ -27,7 +28,10 @@
                 <i class="bi bi-person-circle me-2"></i> Admin
             </div>
         </div>
-        <div th:fragment="content"></div>
+        <!-- Nội dung động (child content placeholder) -->
+        <div th:fragment="content">
+            <!-- Nội dung mặc định (trống, sẽ được ghi đè ở các file con) -->
+        </div>
     </div>
 </div>
 
@@ -35,6 +39,6 @@
 <div th:replace="fragments/toast :: toast"></div>
 
 <!-- JS -->
-<script th:src="@{/js/admin-category.js}"></script>
+<script th:src="@{/js/admin.js}"></script>
 </body>
 </html>
