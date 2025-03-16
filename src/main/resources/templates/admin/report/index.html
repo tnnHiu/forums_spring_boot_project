@@ -30,38 +30,54 @@
 
         <div class="d-flex justify-content-between mb-3">
             <!-- Thanh tìm kiếm -->
-            <form class="d-flex gap-2">
+            <form class="d-flex gap-2" th:action="@{/admin/reports}" method="get">
+                <!-- Thanh tìm kiếm -->
                 <input type="text" name="keyword" class="form-control w-100" placeholder="Tìm kiếm..." th:value="${keyword}">
                 <button type="submit" class="btn btn-primary">Tìm</button>
-            </form>
 
-            <div class="d-flex gap-2">
-                <!--  Nút lọc dropdown -->
+                <!-- Nút lọc dropdown -->
                 <div class="dropdown">
                     <button class="btn btn-outline-primary dropdown-toggle" type="button" data-bs-toggle="dropdown">
                         <i class="bi bi-funnel"></i> Bộ lọc
                     </button>
-                    <div class="dropdown-menu p-3" style="width: 300px;">
-                        <h6 class="dropdown-header">Ngày</h6>
-                        <button class="btn btn-outline-secondary">Cũ nhất <i class="bi bi-arrow-up"></i></button>
-                        <hr>
+                    <div class="dropdown-menu p-3" style="width: 300px;" onclick="event.stopPropagation()">
+<!--                        <h6 class="dropdown-header">Ngày</h6>-->
+<!--                        <div class="form-check">-->
+<!--                            <input class="form-check-input" type="checkbox" id="oldestCheckbox" onchange="toggleOldestFilter()">-->
+<!--                            <label class="form-check-label" for="oldestCheckbox">Cũ nhất</label>-->
+<!--                            <input type="hidden" id="oldest" name="oldest" value="">-->
+<!--                        </div>-->
+<!--                        <hr>-->
+                         Các trường lọc khác
                         <h6 class="dropdown-header">Loại báo cáo</h6>
                         <div class="d-flex flex-wrap gap-2">
-                            <button class="btn btn-outline-secondary">USER</button>
-                            <button class="btn btn-outline-secondary">POST</button>
-                            <button class="btn btn-outline-secondary">COMMENT</button>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="reportType" id="user" value="USER" th:checked="${reportType == 'USER'}">
+                                <label class="form-check-label" for="user">USER</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="reportType" id="post" value="POST" th:checked="${reportType == 'POST'}">
+                                <label class="form-check-label" for="post">POST</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="reportType" id="comment" value="COMMENT" th:checked="${reportType == 'COMMENT'}">
+                                <label class="form-check-label" for="comment">COMMENT</label>
+                            </div>
                         </div>
                         <hr>
                         <h6 class="dropdown-header">Trạng thái</h6>
-                        <button class="btn btn-outline-secondary">RESOLVED</button>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="pending" name="status" value="PENDING" th:checked="${status == 'PENDING'}">
+                            <label class="form-check-label" for="pending">PENDING</label>
+                        </div>
                         <hr>
                         <div class="d-flex justify-content-center gap-2 mt-2">
-                            <button class="btn btn-outline-danger">Bỏ chọn</button>
-                            <button class="btn btn-primary">Xem kết quả</button>
+                            <button class="btn btn-outline-danger" type="button" onclick="clearFilters()">Bỏ chọn</button>
+                            <button type="submit" class="btn btn-primary">Xem kết quả</button>
                         </div>
                     </div>
                 </div>
-            </div>
+            </form>
         </div>
 
         <!-- Bảng báo cáo -->

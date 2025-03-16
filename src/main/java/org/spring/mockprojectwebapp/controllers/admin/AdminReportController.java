@@ -2,16 +2,21 @@ package org.spring.mockprojectwebapp.controllers.admin;
 
 import jakarta.servlet.http.HttpServletRequest;
 import org.spring.mockprojectwebapp.dtos.ReportDTO;
+import org.spring.mockprojectwebapp.entities.Report;
 import org.spring.mockprojectwebapp.services.ReportService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Controller
 @RequestMapping("/admin")
@@ -27,22 +32,34 @@ public class AdminReportController {
     @GetMapping("/reports")
     public String showReportsPage(
             @RequestParam(value = "keyword", required = false) String keyword,
+            @RequestParam(value = "reportType", required = false) Report.ReportType reportType,
+            @RequestParam(value = "status", required = false) Report.Status status,
+            @RequestParam(value = "oldest", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate oldest, // Sử dụng LocalDate thay vì LocalDateTime
             @RequestParam(value = "page", defaultValue = "0") int page,
-            @RequestParam(value = "size", defaultValue = "5") int size,
+            @RequestParam(value = "size", defaultValue = "10") int size,
             Model model,
             HttpServletRequest request) {
 
         Pageable pageable = PageRequest.of(page, size);
-        Page<ReportDTO> reportDTOPage = reportService.getReports(keyword, pageable);
+        Page<ReportDTO> reportDTOPage;
+
+        if (keyword != null && !keyword.isEmpty()) {
+            reportDTOPage = reportService.getReports(keyword, pageable);
+        } else {
+            LocalDateTime oldestDateTime = oldest != null ? oldest.atStartOfDay() : null; // Chuyển đổi LocalDate sang LocalDateTime
+            reportDTOPage = reportService.getFilteredReports(reportType, status, oldestDateTime, pageable);
+        }
 
         model.addAttribute("reportDTOs", reportDTOPage.getContent());
         model.addAttribute("currentPage", page);
         model.addAttribute("totalPages", reportDTOPage.getTotalPages());
         model.addAttribute("keyword", keyword);
+        model.addAttribute("reportType", reportType);
+        model.addAttribute("status", status);
+        model.addAttribute("oldest", oldest);
         model.addAttribute("title", "Quản lý báo cáo");
         model.addAttribute("currentUri", request.getRequestURI());
 
-        // Thêm một đối tượng report rỗng để tránh Thymeleaf bị lỗi
         model.addAttribute("reportDTO", new ReportDTO());
 
         return "admin/report/index";

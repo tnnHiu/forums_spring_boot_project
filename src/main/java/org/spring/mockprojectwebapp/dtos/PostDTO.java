@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.spring.mockprojectwebapp.entities.Post.Status;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
@@ -18,6 +19,8 @@ public class PostDTO {
     private int postId;
     private String title;
     private String content;
+    private String imageUrl;
+    private String description;
     private String author;
     private Status status;
     private LocalDateTime createdAt;

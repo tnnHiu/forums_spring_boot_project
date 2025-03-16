@@ -6,6 +6,8 @@ import org.spring.mockprojectwebapp.entities.Report;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.time.LocalDateTime;
+
 
 public interface ReportService {
     ReportDTO findById(Integer id);
@@ -16,5 +18,5 @@ public interface ReportService {
 
     ReportDTO update(Integer id, ReportDTO reportDTO, String postStatus, String commentStatus, String userStatus);
 
-
+    Page<ReportDTO> getFilteredReports(Report.ReportType reportType, Report.Status status, LocalDateTime oldest, Pageable pageable);
 }

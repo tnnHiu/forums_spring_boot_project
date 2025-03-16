@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng Bài Viết</title>
+    <link rel="stylesheet" th:href="@{/bootstrap-5.3.3-dist/css/bootstrap.min.css}">
+    <script th:src="@{/bootstrap-5.3.3-dist/js/bootstrap.bundle.min.js}"></script>
+    <link rel="stylesheet" th:href="@{/bootstrap-icons-1.11.3/font/bootstrap-icons.min.css}">
+    <style>
+        body {
+            background-color: #f5f6f8;
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+        }
+        .navbar {
+            background: linear-gradient(135deg, #F07900 0%, #ff914d 100%);
+            border-radius: 0 0 15px 15px;
+            box-shadow: 0 4px 15px rgba(240, 121, 0, 0.2);
+            padding: 1rem;
+        }
+        .navbar-brand, .nav-link {
+            color: white !important;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        .nav-link:hover {
+            color: #ffe5cc !important;
+        }
+        .container-card {
+            background: white;
+            border-radius: 20px;
+            padding: 2.5rem;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.05);
+            margin-top: 3rem;
+            transition: transform 0.3s ease;
+        }
+        .container-card:hover {
+            transform: translateY(-5px);
+        }
+        .btn-custom {
+            background: linear-gradient(45deg, #F07900, #ff914d);
+            border: none;
+            padding: 0.75rem 2rem;
+            border-radius: 10px;
+            font-weight: 600;
+            color: white;
+            transition: all 0.3s ease;
+        }
+        .btn-custom:hover {
+            background: linear-gradient(45deg, #d96a00, #ff7733);
+            transform: translateY(-2px);
+            color: white;
+        }
+        .form-control, .form-select {
+            border-radius: 10px;
+            border: 2px solid #e9ecef;
+            transition: all 0.3s ease;
+        }
+        .form-control:focus, .form-select:focus {
+            border-color: #F07900;
+            box-shadow: 0 0 8px rgba(240, 121, 0, 0.2);
+        }
+        .form-label {
+            font-weight: 600;
+            color: #333;
+        }
+        .upload-btn {
+            border: 2px dashed #F07900;
+            background: #fff8f0;
+            border-radius: 10px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+        }
+        .upload-btn:hover {
+            background: #fff0e6;
+            border-color: #ff914d;
+        }
+        legend {
+            color: #F07900;
+            font-weight: 700;
+        }
+        hr {
+            border-color: #F07900;
+            opacity: 0.3;
+        }
+    </style>
+</head>
+<body>
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#"><i class="bi bi-pen-fill me-2"></i>Viết Bài</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item"><a class="nav-link active" href="#">Trang chủ</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">Danh mục</a></li>
+            </ul>
+            <form class="d-flex">
+                <input class="form-control me-2" type="search" placeholder="Tìm kiếm bài viết">
+                <button class="btn btn-light" type="submit"><i class="bi bi-search"></i></button>
+            </form>
+        </div>
+    </div>
+</nav>
+
+<!-- Form -->
+<div class="container">
+    <div class="container-card">
+        <form th:action="@{/post/create}" method="post" enctype="multipart/form-data">
+            <legend class="text-center fs-2 mb-4">Đăng Bài Viết Mới</legend>
+            <div th:if="${error}" class="alert alert-danger alert-dismissible fade show mb-4">
+                <strong><i class="bi bi-exclamation-triangle-fill me-2"></i>Lỗi!</strong>
+                <span th:text="${error}"></span>
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+            <hr class="mb-4">
+            <hr class="mb-4">
+            <div class="mb-4">
+                <label class="form-label fs-5">Trang bìa</label>
+                <div class="upload-btn w-100 text-center" id="uploadButton">
+                    <input type="file" id="coverImage" name="imageFile" accept="image/*" style="display: none;">
+                    <i class="bi bi-cloud-upload fs-2 d-block"></i>
+                    <span>Nhấn để thêm ảnh bìa (Tối đa 5MB)</span>
+                </div>
+            </div>
+            <div class="mb-4">
+                <label class="form-label fs-5">Tiêu đề</label>
+                <input class="form-control" type="text" name="title" placeholder="Nhập tiêu đề bài viết" required>
+            </div>
+            <div class="mb-4">
+                <label class="form-label fs-5">Danh mục</label>
+                <select class="form-select" name="categoryId" required>
+                    <option value="" selected>-- Chọn Danh Mục --</option>
+                    <th:block th:if="${categories != null}">
+                        <option th:each="category : ${categories}" th:value="${category.categoryId}" th:text="${category.categoryName}"></option>
+                    </th:block>
+                </select>
+            </div>
+            <div class="mb-4">
+                <label class="form-label fs-5">Mô tả</label>
+                <textarea class="form-control" rows="6" name="description" placeholder="Mô tả sơ lược" required></textarea>
+            </div>
+
+            <div class="mb-4">
+                <label class="form-label fs-5">Nội dung</label>
+                <textarea class="form-control" rows="6" name="content" placeholder="Nhập nội dung bài viết của bạn" required></textarea>
+            </div>
+            <div class="d-flex justify-content-center mt-5">
+                <button type="submit" class="btn btn-custom">Đăng bài ngay</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    document.getElementById('uploadButton').addEventListener('click', function() {
+        document.getElementById('coverImage').click();
+    });
+
+    document.getElementById('coverImage').addEventListener('change', function(e) {
+        const file = e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const uploadBtn = document.getElementById('uploadButton');
+                uploadBtn.innerHTML = `
+                <input type="file" id="coverImage" name="imageFile" accept="image/*" style="display: none;">
+                <img src="${e.target.result}" style="max-width: 100%; border-radius: 10px;">
+            `;
+            }
+            reader.readAsDataURL(file);
+        }
+    });
+</script>
+</body>
+</html>

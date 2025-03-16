@@ -7,14 +7,27 @@ document.addEventListener("DOMContentLoaded", function () {
             element.classList.add("text-warning", "fw-bold");
         }
     });
-
-
-    document.querySelectorAll(".btn-sort").forEach(function (button) {
-        button.addEventListener("click", function () {
-            this.classList.toggle("bg-primary");
-            this.classList.toggle("text-white");
-            this.classList.toggle("btn-outline-primary");
-        });
-    });
-
 });
+
+// function toggleOldestFilter() {
+//     const oldestCheckbox = document.getElementById('oldestCheckbox');
+//     const oldestInput = document.getElementById('oldest');
+//
+//     if (oldestCheckbox.checked) {
+//         // Nếu checkbox được chọn, thiết lập giá trị ngày tháng cụ thể
+//         const now = new Date();
+//         const formattedDate = now.toISOString().split('T')[0]; // Định dạng YYYY-MM-DD
+//         oldestInput.value = formattedDate;
+//     } else {
+//         // Nếu checkbox không được chọn, xóa giá trị
+//         oldestInput.value = '';
+//     }
+// }
+
+function clearFilters() {
+    document.querySelectorAll('input[type="checkbox"], input[type="radio"]').forEach(input => {
+        input.checked = false;
+    });
+    // document.getElementById('oldest').value = ''; // Xóa giá trị trường ẩn
+    document.querySelector('form').submit(); // Gửi form sau khi xóa bộ lọc
+}

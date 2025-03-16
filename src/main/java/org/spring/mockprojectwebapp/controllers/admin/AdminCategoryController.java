@@ -41,7 +41,6 @@ public class AdminCategoryController {
         model.addAttribute("title", "Quản lý danh mục");
         model.addAttribute("currentUri", request.getRequestURI());
 
-        // Thêm một đối tượng CategoryDTO rỗng để tránh Thymeleaf bị lỗi
         model.addAttribute("categoryDTO", new CategoryDTO());
 
         return "admin/category/index";

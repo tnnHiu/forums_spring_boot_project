@@ -4,6 +4,7 @@ import lombok.*;
 import org.spring.mockprojectwebapp.entities.User.Status;
 
 import java.time.LocalDateTime;
+import org.spring.mockprojectwebapp.entities.User;
 
 @Getter
 @Setter

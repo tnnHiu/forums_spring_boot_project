@@ -93,6 +93,12 @@ public class ReportServiceImpl implements ReportService {
         return reportPage.map(this::mapToDTO);
     }
 
+    @Override
+    public Page<ReportDTO> getFilteredReports(Report.ReportType reportType, Report.Status status, LocalDateTime oldest, Pageable pageable) {
+        Page<Report> reportPage = reportRepository.findFilteredReports(reportType, status, oldest, pageable);
+        return reportPage.map(this::mapToDTO);
+    }
+
     // Chuyển đổi từ Entity sang DTO
     private ReportDTO mapToDTO(Report report) {
         return ReportDTO.builder()
