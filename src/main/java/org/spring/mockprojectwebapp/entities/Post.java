@@ -53,7 +53,8 @@ public class Post {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
-    @Column(name = "status")
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status", nullable = false)
     private Status status;
 
     @Column(name = "is_premium")
@@ -63,7 +64,7 @@ public class Post {
     @JoinTable(name = "post_hashtag", joinColumns = @JoinColumn(name = "post_id"), inverseJoinColumns = @JoinColumn(name = "hashtag_id"))
     Set<Hashtag> hashtags;
 
-    private enum Status {
+    public enum Status {
         ACTIVE, INACTIVE, BANNED
     }
 }

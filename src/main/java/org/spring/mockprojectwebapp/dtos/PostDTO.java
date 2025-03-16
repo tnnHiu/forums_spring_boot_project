@@ -2,6 +2,8 @@ package org.spring.mockprojectwebapp.dtos;
 
 import lombok.*;
 
+
+
 import java.time.LocalDateTime;
 
 @Builder
@@ -15,8 +17,13 @@ public class PostDTO {
     private String content;
     private String imageUrl;
     private String description;
-    private String author;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
-    private CategoryDTO category;
+    private int status;
+    private boolean isPremium;
+    private String imagePath;
+    private String categoryName;
+    private String username;
+    private int userId;
+    private int categoryId;
 }

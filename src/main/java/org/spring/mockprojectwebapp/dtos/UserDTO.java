@@ -3,6 +3,7 @@ package org.spring.mockprojectwebapp.dtos;
 import lombok.*;
 import org.spring.mockprojectwebapp.entities.User;
 
+@Builder
 @Getter
 @Setter
 @NoArgsConstructor
