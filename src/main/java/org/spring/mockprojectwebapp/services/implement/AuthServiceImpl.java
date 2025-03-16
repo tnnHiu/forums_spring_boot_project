@@ -25,6 +25,7 @@ public class AuthServiceImpl implements AuthService, UserDetailsService {
     @Autowired
     RoleRepository roleRepository;
 
+
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         User user = userRepository.findByEmail(email);
