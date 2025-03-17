@@ -2,11 +2,12 @@ package org.spring.mockprojectwebapp.services;
 
 import org.spring.mockprojectwebapp.dtos.UserDTO;
 import org.spring.mockprojectwebapp.entities.User;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
 public interface UserService {
-//    void updateUserStatus(int userId, User.Status status);
 
     List<UserDTO> findAllUsers();
 
@@ -20,4 +21,5 @@ public interface UserService {
 
     UserDTO mapToUserDTO(User user);
 
+    Page<User> getAccounts(String keyword, Pageable pageable);
 }
