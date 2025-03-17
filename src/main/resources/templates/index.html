@@ -1,12 +1,232 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Hello World</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <link rel="stylesheet" th:href="@{/bootstrap-5.3.3-dist/css/bootstrap.min.css}">
+    <script th:src="@{/bootstrap-5.3.3-dist/js/bootstrap.bundle.min.js}"></script>
+    <link rel="stylesheet" th:href="@{/bootstrap-icons-1.11.3/font/bootstrap-icons.min.css}">
+    <link rel="stylesheet" th:href="@{/css/home.css}" media="screen" type="text/css"/>
 </head>
 <body>
-<h1>Welcome</h1>
-<h1 sec:authorize="isAuthenticated()">Hello User</h1>
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg p-3" style="background-color: #F07900;">
+    <div class="container-fluid">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo03"
+                aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <a class="navbar-brand fw-bold" th:href="@{/}">LOGO ICON</a>
+        <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link active fw-bold" aria-current="page" th:href="@{/}">Trang chủ</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/recipes}">Công thức</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/community}">Cộng đồng</a>
+                </li>
+            </ul>
+            <form class="d-flex" th:action="@{/search}" method="get">
+                <button class="btn btn-outline-light me-2" type="submit"><i class="bi bi-search"></i></button>
+                <input class="form-control rounded-pill me-auto" type="search" name="q" placeholder="Tìm kiếm">
+            </form>
+        </div>
+    </div>
+</nav>
+
+
+<div class="container mt-5 rounded-4 p-0">
+    <!--    Phần banner-->
+    <div class="row d-flex align-items-center rounded-4 banner mx-auto">
+        <div class="col-md-8 z-1 m-5">
+            <div class="placeholder-text w-75" style="color: #F8A145">
+                Khám phá thế giới ẩm thực phong phú với hàng ngàn công thức nấu ăn được tuyển chọn, từ những món ăn
+                truyền thống gia đình đến các món ăn quốc tế độc đáo, giúp bạn dễ dàng thực hiện những bữa ăn ngon miệng
+                và đầy sáng tạo.
+            </div>
+            <div class="placeholder-text w-75 mt-4" style="color: #F8A145">
+                Khám phá kho tàng công thức nấu ăn phong phú, từ món ăn gia đình ấm cúng đến ẩm thực quốc tế đặc sắc.
+            </div>
+            <button class="btn btn-light mt-4 w-25 text-black" style="background-color: #F8A145; border: #F07900">Tìm
+                hiểu thêm
+            </button>
+        </div>
+    </div>
+
+    <div class="row m-0 d-flex align-items-start justify-content-center">
+        <!--    Phần nội dung-->
+        <div class="col-md-9">
+            <!--            Dành cho bạn-->
+            <div class="d-flex flex-wrap justify-content-between align-items-center mt-4">
+                <h5 class="fw-bold">DÀNH CHO BẠN</h5>
+                <a href="#" class="text-decoration-none text-black">Xem thêm <i class="bi bi-arrow-right"></i></a>
+            </div>
+
+            <div class="row mt-4">
+                <div th:each="postDTO : ${recentPostDTOs}" class="col-lg-6 col-12 mb-4">
+                    <div class="card">
+                        <div class="image-container">
+                            <img th:src="@{${postDTO.imageUrl}}" alt="Món ăn" class="card-img-top">
+                            <a th:href="@{/post/{id}(id=${postDTO.postId})}" class="btn btn-light hover-btn">Xem chi
+                                tiết</a>
+                        </div>
+                        <div class="card-body">
+                            <p class="fw-bold title" th:text="${postDTO.title}">Phở Bò - Món ăn truyền thống của Việt
+                                Nam với hương vị tinh tế và lịch sử lâu đời</p>
+                            <p class="text-muted description" th:text="${postDTO.description}">
+                                Món ăn truyền thống của Việt Nam với nước dùng đậm đà, hương vị đặc trưng từ xương bò
+                                hầm nhiều giờ,
+                                kết hợp với bánh phở mềm, thịt bò thái mỏng và các loại rau thơm tươi ngon.
+                                Mỗi bát phở là sự hòa quyện hoàn hảo giữa nước dùng thanh ngọt, sợi phở dẻo dai và gia
+                                vị đậm đà,
+                                mang đến một trải nghiệm ẩm thực không thể quên cho mọi thực khách.
+                            </p>
+                            <div class="d-flex justify-content-around align-items-center mt-3">
+                                <div class="d-flex align-items-center gap-2">
+                                    <i class="bi bi-chat-left-text fs-5 icon-btn"></i>
+                                    <span class="small">500</span>
+                                </div>
+                                <div class="d-flex align-items-center gap-2">
+                                    <i class="bi bi-heart fs-5 text-danger icon-btn like-btn"></i>
+                                    <span class="small">1.2k</span>
+                                </div>
+                                <div class="d-flex align-items-center gap-2">
+                                    <i class="bi bi-bookmark fs-5 text-primary icon-btn save-btn"></i>
+                                    <span class="small">Lưu</span>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <!--Các bài viết khác-->
+                <!--Các bài viết khác-->
+                <!--Các bài viết khác-->
+            </div>
+
+            <!--            Nổi bật-->
+            <div class="d-flex flex-wrap justify-content-between align-items-center mt-4">
+                <h5 class="fw-bold">NỔI BẬT</h5>
+                <a href="#" class="text-decoration-none text-black">Xem thêm <i class="bi bi-arrow-right"></i></a>
+            </div>
+
+            <div class="row mt-4" th:if="${recentPosts != null}">
+                <div class="col-lg-6 col-12 mb-4" th:each="post : ${recentPosts}">
+                    <div class="card">
+                        <div class="image-container">
+                            <img th:src="@{/img/image-food-test.jpg}" alt="Món ăn" class="card-img-top">
+                            <button class="btn btn-light hover-btn">Xem chi tiết</button>
+                        </div>
+                        <div class="card-body">
+                            <p class="fw-bold title" th:text="${post.title}">Phở Bò - Món ăn truyền thống của Việt Nam
+                                với hương vị tinh tế và lịch sử lâu đời</p>
+                            <p class="text-muted description" th:text="${post.content}">
+                                Món ăn truyền thống của Việt Nam với nước dùng đậm đà, hương vị đặc trưng từ xương bò
+                                hầm nhiều giờ,
+                                kết hợp với bánh phở mềm, thịt bò thái mỏng và các loại rau thơm tươi ngon.
+                                Mỗi bát phở là sự hòa quyện hoàn hảo giữa nước dùng thanh ngọt, sợi phở dẻo dai và gia
+                                vị đậm đà,
+                                mang đến một trải nghiệm ẩm thực không thể quên cho mọi thực khách.
+                            </p>
+                            <div class="d-flex justify-content-around align-items-center mt-3">
+                                <div class="d-flex align-items-center gap-2">
+                                    <i class="bi bi-chat-left-text fs-5"></i>
+                                    <span class="small">Bình luận</span>
+                                </div>
+                                <div class="d-flex align-items-center gap-2">
+                                    <i class="bi bi-heart fs-5 text-danger"></i>
+                                    <span class="small">Yêu thích</span>
+                                </div>
+                                <div class="d-flex align-items-center gap-2">
+                                    <i class="bi bi-bookmark fs-5 text-primary"></i>
+                                    <span class="small">Lưu</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--        Phần chọn activities-->
+        <div class="col-lg-3 mt-4 sticky-icons">
+            <div class="d-flex flex-column align-items-center gap-3">
+                <div class="d-flex justify-content-around border w-100 p-3 rounded-4 gap-4">
+                    <a th:href="@{/post/create}" class="text-dark text-decoration-none">
+                        <i class="bi bi-pencil-square fs-1"></i>
+                    </a>
+                    <a href="#" class="text-dark text-decoration-none">
+                        <i class="bi bi-image fs-1"></i>
+                    </a>
+                    <a href="#" class="text-dark text-decoration-none">
+                        <i class="bi bi-people fs-1"></i>
+                    </a>
+                </div>
+                <div class="border p-5 rounded-3 bg-light d-flex justify-content-center align-items-center w-100">
+                    <i class="bi bi-bar-chart-line fs-1"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Nút Scroll to Top -->
+<button id="scrollToTopBtn" class="btn rounded-circle shadow-lg">
+    <i class="bi bi-arrow-up fs-3"></i>
+</button>
+
+<script>
+    // Lấy phần tử button
+    const scrollToTopBtn = document.getElementById("scrollToTopBtn");
+
+    // Khi cuộn xuống 300px thì hiển thị nút
+    window.onscroll = function () {
+        if (document.documentElement.scrollTop > 1000) {
+            scrollToTopBtn.style.display = "block";
+        } else {
+            scrollToTopBtn.style.display = "none";
+        }
+    };
+
+    // Khi click vào nút, cuộn lên đầu trang
+    scrollToTopBtn.addEventListener("click", function () {
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
+    });
+
+    document.addEventListener("DOMContentLoaded", function () {
+        const likeButtons = document.querySelectorAll(".like-btn");
+        const saveButtons = document.querySelectorAll(".save-btn");
+
+        likeButtons.forEach(button => {
+            button.addEventListener("click", function () {
+                this.classList.toggle("liked");
+            });
+        });
+
+        saveButtons.forEach(button => {
+            button.addEventListener("click", function () {
+                this.classList.toggle("saved");
+            });
+        });
+    });
+
+</script>
 </body>
 </html>
+
+<!--<h1>Welcome</h1>-->
+
+<!--<h1 sec:authorize="isAuthenticated()">Hello User</h1>-->
+
+<!--<div sec:authorize="isAuthenticated()">-->
+<!--    <form th:action="@{/logout}" method="post">-->
+<!--        <button type="submit">Logout</button>-->
+<!--    </form>-->
+<!--</div>-->

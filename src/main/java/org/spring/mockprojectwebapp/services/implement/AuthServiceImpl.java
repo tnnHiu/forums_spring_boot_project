@@ -39,8 +39,9 @@ public class AuthServiceImpl implements AuthService, UserDetailsService {
 
     @Override
     public User save(RegisterDTO registerDTO) {
+
         BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
-        Role role = roleRepository.getRoleByRoleId(1);
+        Role role = roleRepository.getRoleByRoleId(2);
         User user = new User();
         user.setUsername(registerDTO.getUsername());
         user.setEmail(registerDTO.getEmail());

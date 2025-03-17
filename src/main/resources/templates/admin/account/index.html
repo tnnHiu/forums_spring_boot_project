@@ -30,11 +30,11 @@
         </div>
 
         <!-- Thanh tìm kiếm -->
-        <form th:action="@{/admin/profile}" method="get" class="d-flex gap-2 mb-3">
-            <input type="text" name="keyword" class="form-control w-25" placeholder="Tìm kiếm..." th:value="${keyword}">
+        <form th:action="@{/admin/accounts}" method="get" class="d-flex gap-2 mb-3">
+            <input type="text" name="keyword" class="form-control w-25" placeholder="Tìm kiếm username hoặc email..."
+                   th:value="${keyword}">
             <button type="submit" class="btn btn-primary">Tìm</button>
         </form>
-
 
         <table class="table table-striped table-hover text-center">
             <thead class="table-primary">
@@ -46,21 +46,40 @@
             </tr>
             </thead>
             <tbody>
-            <tr th:each="user : ${users}">
+            <tr th:each="user : ${accounts}">
                 <td th:text="${user.username}"></td>
                 <td th:text="${user.email}"></td>
                 <td>
-                    <form th:action="@{/admin/profile/status/{userId}(userId=${user.userId})}" method="post">
-                        <select class="form-select" name="status">
-                            <option value="ACTIVE" th:selected="${user.status == 'ACTIVE'}">Active</option>
-                            <option value="INACTIVE" th:selected="${user.status == 'INACTIVE'}">Inactive</option>
-                            <option value="BANNED" th:selected="${user.status == 'BANNED'}">Banned</option>
-                        </select>
-                        <button type="submit" class="btn btn-primary mt-2">Cập Nhật</button>
-                    </form>
+                    <div class="dropdown">
+                        <button class="btn btn-outline-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                            <span th:text="${user.status}"></span> <!-- Hiển thị trạng thái hiện tại -->
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <li>
+                                <form th:action="@{/admin/account/status/{userId}(userId=${user.userId})}" method="post">
+                                    <input type="hidden" name="status" value="ACTIVE">
+                                    <button type="submit" class="dropdown-item">Active</button>
+                                </form>
+                            </li>
+                            <li>
+                                <form th:action="@{/admin/account/status/{userId}(userId=${user.userId})}" method="post">
+                                    <input type="hidden" name="status" value="INACTIVE">
+                                    <button type="submit" class="dropdown-item">Inactive</button>
+                                </form>
+                            </li>
+                            <li>
+                                <form th:action="@{/admin/account/status/{userId}(userId=${user.userId})}" method="post">
+                                    <input type="hidden" name="status" value="BANNED">
+                                    <button type="submit" class="dropdown-item">Banned</button>
+                                </form>
+                            </li>
+                        </ul>
+                    </div>
                 </td>
+
                 <td>
-                    <form th:action="@{/admin/profile/delete/{userId}(userId=${user.userId})}" method="post" onsubmit="return confirm('Bạn có chắc chắn muốn xóa tài khoản này không?');">
+                    <form th:action="@{/admin/account/delete/{userId}(userId=${user.userId})}" method="post"
+                          onsubmit="return confirm('Bạn có chắc chắn muốn xóa tài khoản này không?');">
                         <input type="hidden" name="_method" value="delete">
                         <button type="submit" class="btn btn-outline-danger btn-sm">
                             <i class="bi bi-trash"></i> Xóa
@@ -74,22 +93,33 @@
         <!-- Phân trang -->
         <nav th:if="${totalPages > 1}">
             <ul class="pagination justify-content-center">
+                <!-- Nút Previous -->
                 <li class="page-item" th:classappend="${currentPage == 0} ? 'disabled'">
                     <a class="page-link"
-                       th:href="@{/admin/categories(page=${currentPage - 1}, keyword=${keyword != null ? keyword : ''})}">Previous</a>
+                       th:href="@{/admin/accounts(page=${currentPage - 1}, keyword=${keyword != null ? keyword : ''})}">
+                        Trước
+                    </a>
                 </li>
+
+                <!-- Số trang -->
                 <li class="page-item" th:each="i : ${#numbers.sequence(0, totalPages - 1)}"
                     th:classappend="${currentPage == i} ? 'active'">
                     <a class="page-link"
-                       th:href="@{/admin/categories(page=${i}, keyword=${keyword != null ? keyword : ''})}"
-                       th:text="${i + 1}"></a>
+                       th:href="@{/admin/accounts(page=${i}, keyword=${keyword != null ? keyword : ''})}"
+                       th:text="${i + 1}">
+                    </a>
                 </li>
+
+                <!-- Nút Next -->
                 <li class="page-item" th:classappend="${currentPage == totalPages - 1} ? 'disabled'">
                     <a class="page-link"
-                       th:href="@{/admin/categories(page=${currentPage + 1}, keyword=${keyword != null ? keyword : ''})}">Next</a>
+                       th:href="@{/admin/accounts(page=${currentPage + 1}, keyword=${keyword != null ? keyword : ''})}">
+                        Tiếp
+                    </a>
                 </li>
             </ul>
         </nav>
+
     </div>
 </div>
 

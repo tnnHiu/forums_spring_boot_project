@@ -13,7 +13,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
-
 @Controller
 @RequestMapping("/admin")
 public class AdminCategoryController {
@@ -25,12 +24,7 @@ public class AdminCategoryController {
     }
 
     @GetMapping("/categories")
-    public String showCategoriesPage(
-            @RequestParam(value = "keyword", required = false) String keyword,
-            @RequestParam(value = "page", defaultValue = "0") int page,
-            @RequestParam(value = "size", defaultValue = "8") int size,
-            Model model,
-            HttpServletRequest request) {
+    public String showCategoriesPage(@RequestParam(value = "keyword", required = false) String keyword, @RequestParam(value = "page", defaultValue = "0") int page, @RequestParam(value = "size", defaultValue = "8") int size, Model model, HttpServletRequest request) {
 
         Pageable pageable = PageRequest.of(page, size);
         Page<Category> categoryPage = categoryServiceImpl.getCategories(keyword, pageable);
@@ -68,7 +62,6 @@ public class AdminCategoryController {
         return ResponseEntity.ok(category);
     }
 
-
     @PostMapping("/categories/update/{id}")
     public String updateCategory(@PathVariable("id") int id, @ModelAttribute Category category) {
         Category existingCategory = categoryServiceImpl.findById(id);
@@ -80,13 +73,10 @@ public class AdminCategoryController {
         return "redirect:/admin/categories";
     }
 
-
     // Xóa danh mục
     @PostMapping("/categories/delete/{id}")
     public String deleteCategory(@PathVariable("id") int id) {
         categoryServiceImpl.deleteById(id);
         return "redirect:/admin/categories";
     }
-
-
 }
