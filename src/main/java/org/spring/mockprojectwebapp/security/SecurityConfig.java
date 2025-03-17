@@ -20,26 +20,49 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        return http.authorizeHttpRequests(authorize -> authorize.requestMatchers("/", "/css/**", "/js/**", "/img/**", "/bootstrap-5.3.3-dist/**", "/bootstrap-icons-1.11.3/**").permitAll().requestMatchers("/register", "/login").permitAll().requestMatchers("/admin/**").hasRole("ADMIN").anyRequest().authenticated()).formLogin(form -> form.loginPage("/login").permitAll().successHandler((request, response, authentication) -> {
+        return http
+                .authorizeHttpRequests(authorize -> authorize
+                        .requestMatchers("/", "/css/**", "/js/**", "/img/**", "/bootstrap-5.3.3-dist/**", "/bootstrap-icons-1.11.3/**").permitAll()
+                        .requestMatchers("/register", "/login").permitAll()
+                        .requestMatchers("/admin/**").hasRole("ADMIN")
+                        .anyRequest().authenticated()
+                )
+                .formLogin(form -> form
+                        .loginPage("/login")
+                        .permitAll()
+                        .successHandler(
+                                (request, response, authentication) -> {
 
             String email = authentication.getName();
             User user = authService.findByEmail(email);
+
             request.getSession().setAttribute("userId", user.getUserId());
             request.getSession().setAttribute("userEmail", user.getEmail());
             request.getSession().setAttribute("userName", user.getUsername());
 
-            var authorities = authentication.getAuthorities();
-            for (var authority : authorities) {
-                if (authority.getAuthority().equals("ROLE_ADMIN")) {
-                    response.sendRedirect("/admin");
-                    return;
-                } else if (authority.getAuthority().equals("ROLE_USER")) {
-                    response.sendRedirect("/");
-                    return;
-                }
-            }
-            response.sendRedirect("/");
-        })).logout(logout -> logout.logoutUrl("/logout").logoutSuccessUrl("/login").invalidateHttpSession(true).deleteCookies("JSESSIONID").permitAll()).sessionManagement(session -> session.maximumSessions(1).maxSessionsPreventsLogin(false)).build();
+                                    var authorities = authentication.getAuthorities();
+                                    for (var authority : authorities) {
+                                        if (authority.getAuthority().equals("ROLE_ADMIN")) {
+                                            response.sendRedirect("/admin");
+                                            return;
+                                        } else if (authority.getAuthority().equals("ROLE_USER")) {
+                                            response.sendRedirect("/");
+                                            return;
+                                        }
+                                    }
+                                    response.sendRedirect("/");
+                                })
+                )
+                .logout(logout -> logout
+                        .logoutUrl("/logout")
+                        .logoutSuccessUrl("/login")
+                        .invalidateHttpSession(true)
+                        .deleteCookies("JSESSIONID")
+                        .permitAll())
+                .sessionManagement(session -> session
+                        .maximumSessions(1)
+                        .maxSessionsPreventsLogin(false))
+                .build();
     }
 
     @Bean
@@ -47,3 +70,4 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
 }
+
