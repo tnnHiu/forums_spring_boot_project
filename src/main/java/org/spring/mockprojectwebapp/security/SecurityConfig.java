@@ -26,6 +26,7 @@ public class SecurityConfig {
             User user = authService.findByEmail(email);
             request.getSession().setAttribute("userId", user.getUserId());
             request.getSession().setAttribute("userEmail", user.getEmail());
+            request.getSession().setAttribute("userName", user.getUsername());
 
             var authorities = authentication.getAuthorities();
             for (var authority : authorities) {
