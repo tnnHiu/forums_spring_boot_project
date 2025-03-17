@@ -19,6 +19,7 @@ import java.util.stream.Collectors;
 
 @Service
 public class PostServiceImpl implements PostService {
+
     @Autowired
     private PostRepository postRepository;
 
@@ -41,6 +42,7 @@ public class PostServiceImpl implements PostService {
         }
         return postRepository.findByTitleContainingOrContentContainingIgnoreCase(keyword, pageable).map(this::mapToDTO);
     }
+
     @Override
     public List<PostDTO> getRecentPosts() {
         return postRepository.findTop10ByOrderByCreatedAtDesc().stream()
