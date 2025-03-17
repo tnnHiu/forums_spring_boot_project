@@ -8,7 +8,7 @@
     <link rel="stylesheet" th:href="@{/bootstrap-5.3.3-dist/css/bootstrap.min.css}">
     <script th:src="@{/bootstrap-5.3.3-dist/js/bootstrap.bundle.min.js}"></script>
     <link rel="stylesheet" th:href="@{/bootstrap-icons-1.11.3/font/bootstrap-icons.min.css}">
-    <link rel="stylesheet" th:href="@{/css/admin-category.css}" media="screen" type="text/css"/>
+    <link rel="stylesheet" th:href="@{/css/admin.css}" media="screen" type="text/css"/>
 </head>
 <body></body>
 <div class="d-flex">
@@ -51,24 +51,28 @@
                 <td th:text="${user.email}"></td>
                 <td>
                     <div class="dropdown">
-                        <button class="btn btn-outline-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                        <button class="btn btn-outline-primary dropdown-toggle" type="button" id="dropdownMenuButton"
+                                data-bs-toggle="dropdown" aria-expanded="false">
                             <span th:text="${user.status}"></span> <!-- Hiển thị trạng thái hiện tại -->
                         </button>
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                             <li>
-                                <form th:action="@{/admin/account/status/{userId}(userId=${user.userId})}" method="post">
+                                <form th:action="@{/admin/account/status/{userId}(userId=${user.userId})}"
+                                      method="post">
                                     <input type="hidden" name="status" value="ACTIVE">
                                     <button type="submit" class="dropdown-item">Active</button>
                                 </form>
                             </li>
                             <li>
-                                <form th:action="@{/admin/account/status/{userId}(userId=${user.userId})}" method="post">
+                                <form th:action="@{/admin/account/status/{userId}(userId=${user.userId})}"
+                                      method="post">
                                     <input type="hidden" name="status" value="INACTIVE">
                                     <button type="submit" class="dropdown-item">Inactive</button>
                                 </form>
                             </li>
                             <li>
-                                <form th:action="@{/admin/account/status/{userId}(userId=${user.userId})}" method="post">
+                                <form th:action="@{/admin/account/status/{userId}(userId=${user.userId})}"
+                                      method="post">
                                     <input type="hidden" name="status" value="BANNED">
                                     <button type="submit" class="dropdown-item">Banned</button>
                                 </form>
