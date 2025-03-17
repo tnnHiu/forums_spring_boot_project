@@ -8,8 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 
@@ -71,7 +71,15 @@ public class CategoryServiceImpl implements CategoryService {
         return categoryPage.map(this::mapToDTO);
     }
 
-    // Chuyển đổi từ Entity sang DTO
+    @Override
+    public List<CategoryDTO> getAllCategories() {
+        List<Category> categories = categoryRepository.findAll();
+        return categories.stream()
+                .map(this::mapToDTO)
+                .toList();
+    }
+
+
     private CategoryDTO mapToDTO(Category category) {
         return CategoryDTO.builder()
                 .categoryId(category.getCategoryId())
@@ -82,7 +90,6 @@ public class CategoryServiceImpl implements CategoryService {
                 .build();
     }
 
-    // Chuyển đổi từ DTO sang Entity
     private Category mapToEntity(CategoryDTO categoryDTO) {
         Category category = new Category();
         category.setCategoryId(categoryDTO.getCategoryId());
@@ -92,4 +99,6 @@ public class CategoryServiceImpl implements CategoryService {
         category.setUpdatedAt(categoryDTO.getUpdatedAt());
         return category;
     }
+
+
 }

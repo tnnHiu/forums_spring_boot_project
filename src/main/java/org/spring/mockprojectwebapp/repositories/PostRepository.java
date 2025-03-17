@@ -8,11 +8,13 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
 
+@Repository
 public interface PostRepository extends JpaRepository<Post, Integer> {
     // Find all posts by user
     @Query("SELECT p FROM Post p WHERE p.user = :user")
@@ -29,6 +31,10 @@ public interface PostRepository extends JpaRepository<Post, Integer> {
     // Get all posts
     @Query("SELECT p FROM Post p")
     List<Post> findAll();
+    @Query("SELECT p FROM Post p WHERE p.title LIKE %:keyword% OR p.content LIKE %:keyword%")
+    Page<Post> findByTitleContainingOrContentContainingIgnoreCase(String keyword, Pageable pageable);
+    @Query("SELECT p FROM Post p ORDER BY p.createdAt DESC LIMIT 10")
+    List<Post> findTop10ByOrderByCreatedAtDesc();
 
     // Check if post exists by id
     @Query("SELECT CASE WHEN COUNT(p) > 0 THEN true ELSE false END FROM Post p WHERE p.id = :id")

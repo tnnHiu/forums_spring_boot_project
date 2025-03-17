@@ -1,0 +1,114 @@
+.row.banner {
+    background-image: url('../img/dashboard-banner.jpg');
+    background-size: cover;
+    background-position: center;
+    color: white;
+    position: relative;
+    width: 100%;
+    height: 100vb;
+    overflow: hidden;
+}
+
+.row.banner::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.image-container {
+    position: relative;
+    overflow: hidden;
+}
+
+.hover-btn {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.image-container:hover .card-img-top {
+    filter: brightness(0.5);
+}
+
+.image-container:hover .hover-btn {
+    opacity: 1;
+}
+
+.card-img-top {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    transition: filter 0.3s ease-in-out;
+}
+
+.title {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.description {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.sticky-icons {
+    position: sticky;
+    top: 50px;
+    background: white;
+    z-index: 1000;
+}
+
+#scrollToTopBtn {
+    position: fixed;
+    bottom: 50px;
+    right: 50px;
+    display: none;
+    width: 50px;
+    height: 50px;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    transition: opacity 0.3s ease-in-out;
+    background-color: #F07900;
+}
+
+
+.icon-btn {
+    cursor: pointer;
+    transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.icon-btn:hover {
+    transform: scale(1.2);
+    color: #F07900; /* Màu cam khi hover */
+}
+
+/* Hiệu ứng khi click */
+.liked {
+    color: red !important;
+    animation: pop 0.3s ease;
+}
+
+.saved {
+    color: blue !important;
+    animation: pop 0.3s ease;
+}
+
+/* Hiệu ứng pop khi click */
+@keyframes pop {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.3); }
+    100% { transform: scale(1); }
+}

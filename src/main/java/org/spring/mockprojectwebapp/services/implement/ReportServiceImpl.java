@@ -49,29 +49,29 @@ public class ReportServiceImpl implements ReportService {
                 .orElseThrow(() -> new RuntimeException("report not found with id: " + id));
     }
 
-//    @Override
-//    public ReportDTO update(Integer id, ReportDTO reportDTO, String postStatus, String commentStatus, String userStatus) {
-//        Report existingReport = reportRepository.findById(id)
-//                .orElseThrow(() -> new RuntimeException("Report not found with id: " + id));
-//
-//        // Cập nhật trạng thái của đối tượng bị báo cáo (nếu có)
-//        if (existingReport.getReportedPost() != null && postStatus != null) {
-//            postService.updatePostStatus(existingReport.getReportedPost().getId(), Post.Status.valueOf(postStatus));
-//        }
-//        if (existingReport.getReportedComment() != null && commentStatus != null) {
-//            commentService.updateCommentStatus(existingReport.getReportedComment().getId(), Comment.Status.valueOf(commentStatus));
-//        }
-//        if (existingReport.getReportedUser() != null && userStatus != null) {
-//            userService.updateUserStatus(existingReport.getReportedUser().getUserId(), User.Status.valueOf(userStatus));
-//        }
-//
-//        // Set status của báo cáo thành RESOLVED
-//        existingReport.setStatus(Report.Status.RESOLVED);
-//        existingReport.setUpdatedAt(LocalDateTime.now());
-//
-//        Report updatedReport = reportRepository.save(existingReport);
-//        return mapToDTO(updatedReport);
-//    }
+    @Override
+    public ReportDTO update(Integer id, ReportDTO reportDTO, String postStatus, String commentStatus, String userStatus) {
+        Report existingReport = reportRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Report not found with id: " + id));
+
+        // Cập nhật trạng thái của đối tượng bị báo cáo (nếu có)
+        if (existingReport.getReportedPost() != null && postStatus != null) {
+            postService.updatePostStatus(existingReport.getReportedPost().getId(), Post.Status.valueOf(postStatus));
+        }
+        if (existingReport.getReportedComment() != null && commentStatus != null) {
+            commentService.updateCommentStatus(existingReport.getReportedComment().getId(), Comment.Status.valueOf(commentStatus));
+        }
+        if (existingReport.getReportedUser() != null && userStatus != null) {
+            userService.updateUserStatus(existingReport.getReportedUser().getUserId(), User.Status.valueOf(userStatus));
+        }
+
+        // Set status của báo cáo thành RESOLVED
+        existingReport.setStatus(Report.Status.RESOLVED);
+        existingReport.setUpdatedAt(LocalDateTime.now());
+
+        Report updatedReport = reportRepository.save(existingReport);
+        return mapToDTO(updatedReport);
+    }
 
     @Override
     public void deleteById(Integer id) {
@@ -90,6 +90,12 @@ public class ReportServiceImpl implements ReportService {
         } else {
             reportPage = reportRepository.findByReportReasonContainingIgnoreCase(keyword, pageable);
         }
+        return reportPage.map(this::mapToDTO);
+    }
+
+    @Override
+    public Page<ReportDTO> getFilteredReports(Report.ReportType reportType, Report.Status status, LocalDateTime oldest, Pageable pageable) {
+        Page<Report> reportPage = reportRepository.findFilteredReports(reportType, status, oldest, pageable);
         return reportPage.map(this::mapToDTO);
     }
 

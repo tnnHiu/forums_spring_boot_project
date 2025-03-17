@@ -14,6 +14,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 @Service
 public class AuthServiceImpl implements AuthService, UserDetailsService {
@@ -23,6 +24,7 @@ public class AuthServiceImpl implements AuthService, UserDetailsService {
 
     @Autowired
     RoleRepository roleRepository;
+
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
@@ -41,7 +43,7 @@ public class AuthServiceImpl implements AuthService, UserDetailsService {
     public User save(RegisterDTO registerDTO) {
 
         BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
-        Role role = roleRepository.getRoleByRoleId(1);
+        Role role = roleRepository.getRoleByRoleId(2);
         User user = new User();
         user.setUsername(registerDTO.getUsername());
         user.setEmail(registerDTO.getEmail());
