@@ -11,8 +11,8 @@ import java.time.LocalDateTime;
 @Builder
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 public class CategoryDTO {
     private int categoryId;
     private String categoryName;

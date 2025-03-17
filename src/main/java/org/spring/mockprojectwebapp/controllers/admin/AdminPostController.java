@@ -1,71 +1,43 @@
 package org.spring.mockprojectwebapp.controllers.admin;
 
+import jakarta.servlet.http.HttpServletRequest;
 import org.spring.mockprojectwebapp.dtos.PostDTO;
-import org.spring.mockprojectwebapp.services.implement.PostServiceImpl;
+import org.spring.mockprojectwebapp.services.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequestMapping("/admin")
 public class AdminPostController {
 
-    private final PostServiceImpl postServiceImpl;
-
     @Autowired
-    public AdminPostController(PostServiceImpl postServiceImpl) {
-        this.postServiceImpl = postServiceImpl;
-    }
+    private PostService postService;
 
     @GetMapping("/posts")
-    public String listPosts(
+    public String showPostsPage(
             @RequestParam(value = "keyword", required = false) String keyword,
             @RequestParam(value = "page", defaultValue = "0") int page,
-            @RequestParam(value = "size", defaultValue = "8") int size,
+            @RequestParam(value = "size", defaultValue = "10") int size,
+            HttpServletRequest request,
             Model model) {
 
-        Page<PostDTO> postPage;
-        if (keyword != null && !keyword.trim().isEmpty()) {
-            postPage = postServiceImpl.searchPosts(keyword, page, size);
-        } else {
-            postPage = postServiceImpl.getAllPosts(page, size);
-        }
+        Pageable pageable = PageRequest.of(page, size);
+        Page<PostDTO> postDTOPage = postService.getPosts(keyword, pageable);
 
-        model.addAttribute("posts", postPage.getContent());
+        model.addAttribute("postDTOs", postDTOPage.getContent());
         model.addAttribute("currentPage", page);
-        model.addAttribute("totalPages", postPage.getTotalPages());
+        model.addAttribute("totalPages", postDTOPage.getTotalPages());
         model.addAttribute("keyword", keyword);
+        model.addAttribute("title", "Post Management");
+        model.addAttribute("currentUri", request.getRequestURI());
+
         return "admin/post/index";
-    }
-
-    @GetMapping("/posts/{id}")
-    public String viewPost(@PathVariable Integer id, Model model) {
-        PostDTO post = postServiceImpl.getPostById(id);
-        model.addAttribute("post", post);
-        return "admin/post/view";
-    }
-
-    @GetMapping("/posts/{id}/edit")
-    public String editPostForm(@PathVariable Integer id, Model model) {
-        PostDTO post = postServiceImpl.getPostById(id);
-        model.addAttribute("post", post);
-        return "admin/post/edit";
-    }
-
-    @PostMapping("/posts/{id}")
-    public String updatePost(@PathVariable Integer id, @ModelAttribute PostDTO postDTO) {
-        postDTO.setId(id);
-        postServiceImpl.updatePost(postDTO);
-        return "redirect:/admin/posts";
-    }
-
-    @PostMapping("/posts/{id}/delete")
-    public String deletePost(@PathVariable Integer id) {
-        postServiceImpl.deletePost(id);
-        return "redirect:/admin/posts";
     }
 }

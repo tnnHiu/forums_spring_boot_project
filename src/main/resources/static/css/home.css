@@ -112,3 +112,18 @@
     50% { transform: scale(1.3); }
     100% { transform: scale(1); }
 }
+
+
+/*Hover button "Đăng nhập"*/
+.login_btn:hover {
+    background-color: #F07900 !important;
+    color: white !important;
+}
+
+.sticky-header {
+    position: sticky;
+    top: 0;
+    z-index: 1000; /* Đảm bảo hiển thị trên các phần tử khác */
+    background-color: white; /* Nền trắng để tránh che nội dung */
+    padding: 10px;
+}

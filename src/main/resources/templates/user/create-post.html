@@ -5,16 +5,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Đăng Bài Viết</title>
     <link rel="stylesheet" th:href="@{/bootstrap-5.3.3-dist/css/bootstrap.min.css}">
-    <script th:src="@{/bootstrap-5.3.3-dist/js/bootstrap.bundle.min.js}"></script>
     <link rel="stylesheet" th:href="@{/bootstrap-icons-1.11.3/font/bootstrap-icons.min.css}">
+    <script th:src="@{/bootstrap-5.3.3-dist/js/bootstrap.bundle.min.js}" defer></script>
     <style>
+        :root {
+            --primary-color: #F07900;
+            --secondary-color: #ff914d;
+            --light-bg: #f5f6f8;
+        }
+
         body {
-            background-color: #f5f6f8;
+            background-color: var(--light-bg);
             font-family: 'Segoe UI', Tahoma, sans-serif;
+            margin: 0;
+            padding: 0;
         }
 
         .navbar {
-            background: linear-gradient(135deg, #F07900 0%, #ff914d 100%);
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
             border-radius: 0 0 15px 15px;
             box-shadow: 0 4px 15px rgba(240, 121, 0, 0.2);
             padding: 1rem;
@@ -23,7 +31,7 @@
         .navbar-brand, .nav-link {
             color: white !important;
             font-weight: 600;
-            transition: all 0.3s ease;
+            transition: color 0.3s ease;
         }
 
         .nav-link:hover {
@@ -35,7 +43,8 @@
             border-radius: 20px;
             padding: 2.5rem;
             box-shadow: 0 8px 25px rgba(0, 0, 0, 0.05);
-            margin-top: 3rem;
+            margin: 3rem auto;
+            max-width: 800px;
             transition: transform 0.3s ease;
         }
 
@@ -44,7 +53,7 @@
         }
 
         .btn-custom {
-            background: linear-gradient(45deg, #F07900, #ff914d);
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
             border: none;
             padding: 0.75rem 2rem;
             border-radius: 10px;
@@ -66,7 +75,7 @@
         }
 
         .form-control:focus, .form-select:focus {
-            border-color: #F07900;
+            border-color: var(--primary-color);
             box-shadow: 0 0 8px rgba(240, 121, 0, 0.2);
         }
 
@@ -75,26 +84,41 @@
             color: #333;
         }
 
-        .upload-btn {
-            border: 2px dashed #F07900;
+        .upload-area {
+            border: 2px dashed var(--primary-color);
             background: #fff8f0;
             border-radius: 10px;
             padding: 2rem;
+            text-align: center;
+            cursor: pointer;
             transition: all 0.3s ease;
+            position: relative;
         }
 
-        .upload-btn:hover {
+        .upload-area:hover {
             background: #fff0e6;
-            border-color: #ff914d;
+            border-color: var(--secondary-color);
+        }
+
+        .upload-area.dragover {
+            background: #ffe5cc;
+            border-style: solid;
+        }
+
+        .preview-image {
+            max-width: 100%;
+            border-radius: 10px;
+            margin-top: 1rem;
+            display: none;
         }
 
         legend {
-            color: #F07900;
+            color: var(--primary-color);
             font-weight: 700;
         }
 
         hr {
-            border-color: #F07900;
+            border-color: var(--primary-color);
             opacity: 0.3;
         }
     </style>
@@ -113,7 +137,7 @@
                 <li class="nav-item"><a class="nav-link" href="#">Danh mục</a></li>
             </ul>
             <form class="d-flex">
-                <input class="form-control me-2" type="search" placeholder="Tìm kiếm bài viết">
+                <input class="form-control me-2" type="search" placeholder="Tìm kiếm bài viết" aria-label="Search">
                 <button class="btn btn-light" type="submit"><i class="bi bi-search"></i></button>
             </form>
         </div>
@@ -123,48 +147,52 @@
 <!-- Form -->
 <div class="container">
     <div class="container-card">
-        <form th:action="@{/post/create}" method="post" enctype="multipart/form-data">
+        <form th:action="@{/post/create}" method="post" enctype="multipart/form-data" id="postForm">
             <legend class="text-center fs-2 mb-4">Đăng Bài Viết Mới</legend>
+
             <div th:if="${error}" class="alert alert-danger alert-dismissible fade show mb-4">
                 <strong><i class="bi bi-exclamation-triangle-fill me-2"></i>Lỗi!</strong>
                 <span th:text="${error}"></span>
                 <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
             </div>
+
             <hr class="mb-4">
-            <hr class="mb-4">
+
             <div class="mb-4">
                 <label class="form-label fs-5">Trang bìa</label>
-                <div class="upload-btn w-100 text-center" id="uploadButton">
-                    <input type="file" id="coverImage" name="imageFile" accept="image/*" style="display: none;">
+                <div class="upload-area" id="uploadArea">
+                    <input type="file" id="coverImage" name="imageFile" accept="image/*" hidden>
                     <i class="bi bi-cloud-upload fs-2 d-block"></i>
-                    <span>Nhấn để thêm ảnh bìa (Tối đa 5MB)</span>
+                    <span id="uploadText">Nhấn hoặc kéo thả để thêm ảnh bìa (Tối đa 5MB)</span>
+                    <img id="previewImage" class="preview-image" alt="Preview">
                 </div>
             </div>
+
             <div class="mb-4">
                 <label class="form-label fs-5">Tiêu đề</label>
                 <input class="form-control" type="text" name="title" placeholder="Nhập tiêu đề bài viết" required>
             </div>
+
             <div class="mb-4">
                 <label class="form-label fs-5">Danh mục</label>
                 <select class="form-select" name="categoryId" required>
-                    <option value="" selected>-- Chọn Danh Mục --</option>
-                    <th:block th:if="${categories != null}">
-                        <option th:each="category : ${categories}" th:value="${category.categoryId}"
-                                th:text="${category.categoryName}"></option>
+                    <option value="" selected disabled>-- Chọn Danh Mục --</option>
+                    <th:block th:each="categoryDTO : ${categoryDTOs}">
+                        <option th:value="${categoryDTO.categoryId}" th:text="${categoryDTO.categoryName}"></option>
                     </th:block>
                 </select>
             </div>
+
             <div class="mb-4">
                 <label class="form-label fs-5">Mô tả</label>
-                <textarea class="form-control" rows="6" name="description" placeholder="Mô tả sơ lược"
-                          required></textarea>
+                <textarea class="form-control" rows="6" name="description" placeholder="Mô tả sơ lược" required></textarea>
             </div>
 
             <div class="mb-4">
                 <label class="form-label fs-5">Nội dung</label>
-                <textarea class="form-control" rows="6" name="content" placeholder="Nhập nội dung bài viết của bạn"
-                          required></textarea>
+                <textarea class="form-control" rows="6" name="content" placeholder="Nhập nội dung bài viết của bạn" required></textarea>
             </div>
+
             <div class="d-flex justify-content-center mt-5">
                 <button type="submit" class="btn btn-custom">Đăng bài ngay</button>
             </div>
@@ -173,23 +201,71 @@
 </div>
 
 <script>
-    document.getElementById('uploadButton').addEventListener('click', function () {
-        document.getElementById('coverImage').click();
-    });
+    document.addEventListener('DOMContentLoaded', () => {
+        const uploadArea = document.getElementById('uploadArea');
+        const fileInput = document.getElementById('coverImage');
+        const previewImage = document.getElementById('previewImage');
+        const uploadText = document.getElementById('uploadText');
 
-    document.getElementById('coverImage').addEventListener('change', function (e) {
-        const file = e.target.files[0];
-        if (file) {
-            const reader = new FileReader();
-            reader.onload = function (e) {
-                const uploadBtn = document.getElementById('uploadButton');
-                uploadBtn.innerHTML = `
-                <input type="file" id="coverImage" name="imageFile" accept="image/*" style="display: none;">
-                <img src="${e.target.result}" style="max-width: 100%; border-radius: 10px;">
-            `;
+        // Xử lý click để chọn file
+        uploadArea.addEventListener('click', () => fileInput.click());
+
+        // Xử lý kéo thả
+        ['dragenter', 'dragover'].forEach(event => {
+            uploadArea.addEventListener(event, (e) => {
+                e.preventDefault();
+                uploadArea.classList.add('dragover');
+            });
+        });
+
+        ['dragleave', 'drop'].forEach(event => {
+            uploadArea.addEventListener(event, (e) => {
+                e.preventDefault();
+                uploadArea.classList.remove('dragover');
+            });
+        });
+
+        uploadArea.addEventListener('drop', (e) => {
+            const file = e.dataTransfer.files[0];
+            if (file && file.type.startsWith('image/')) {
+                handleFile(file);
             }
+        });
+
+        fileInput.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (file) {
+                handleFile(file);
+            }
+        });
+
+        function handleFile(file) {
+            // Kiểm tra kích thước file (5MB = 5 * 1024 * 1024 bytes)
+            if (file.size > 5 * 1024 * 1024) {
+                alert('File ảnh vượt quá 5MB!');
+                fileInput.value = '';
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                previewImage.src = e.target.result;
+                previewImage.style.display = 'block';
+                uploadText.textContent = 'Thay đổi ảnh bìa';
+            };
+            reader.onerror = () => {
+                alert('Không thể đọc file ảnh!');
+            };
             reader.readAsDataURL(file);
         }
+
+        // Xử lý submit form
+        document.getElementById('postForm').addEventListener('submit', (e) => {
+            if (!fileInput.files.length) {
+                e.preventDefault();
+                alert('Vui lòng chọn ảnh bìa!');
+            }
+        });
     });
 </script>
 </body>
