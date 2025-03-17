@@ -1,11 +1,11 @@
 package org.spring.mockprojectwebapp.services.implement;
 
-import org.spring.mockprojectwebapp.dtos.CategoryDTO;
 import org.spring.mockprojectwebapp.dtos.PostDTO;
 import org.spring.mockprojectwebapp.entities.Category;
 import org.spring.mockprojectwebapp.entities.Post;
 import org.spring.mockprojectwebapp.entities.User;
 import org.spring.mockprojectwebapp.repositories.PostRepository;
+import org.spring.mockprojectwebapp.repositories.UserRepository;
 import org.spring.mockprojectwebapp.services.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -14,7 +14,6 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -26,13 +25,14 @@ public class PostServiceImpl implements PostService {
     @Override
     public PostDTO savePost(PostDTO postDTO) {
         Post post = mapToEntity(postDTO);
-        Post savedPost = postRepository.save(post);
-        return mapToDTO(savedPost);
+        post = postRepository.save(post);
+        return mapToDTO(post);
     }
 
     @Override
-    public Optional<PostDTO> findPostById(int postId) {
-        return postRepository.findById(postId).map(this::mapToDTO);
+    public PostDTO findPostById(int postId) {
+    Post post = postRepository.findPostById(postId);
+    return mapToDTO(post);
     }
 
     @Override
@@ -70,43 +70,36 @@ public class PostServiceImpl implements PostService {
                 .content(post.getContent())
                 .imageUrl(post.getImageUrl())
                 .description(post.getDescription())
-                .author(post.getUser() != null ? post.getUser().getUsername() : null)
                 .createdAt(post.getCreatedAt())
                 .updatedAt(post.getUpdatedAt())
-                .category(post.getCategory() != null ?
-                        CategoryDTO.builder()
-                                .categoryId(post.getCategory().getCategoryId())
-                                .categoryName(post.getCategory().getCategoryName())
-                                .description(post.getCategory().getDescription())
-                                .createdAt(post.getCategory().getCreatedAt())
-                                .updatedAt(post.getCategory().getUpdatedAt())
-                                .build() : null)
+                .status(post.getStatus().ordinal())
+                .isPremium(post.isPremium())
+                .categoryName(post.getCategory().getCategoryName())
+                .username(post.getUser().getUsername())
                 .build();
     }
 
     private Post mapToEntity(PostDTO postDTO) {
         Post post = new Post();
-        post.setId(postDTO.getPostId());
         post.setTitle(postDTO.getTitle());
         post.setContent(postDTO.getContent());
         post.setImageUrl(postDTO.getImageUrl());
         post.setDescription(postDTO.getDescription());
-        if (postDTO.getAuthor() != null) {
-            User user = new User();
-            user.setUsername(postDTO.getAuthor());
-            post.setUser(user);
-        }
-        post.setCreatedAt(postDTO.getCreatedAt());
-        post.setUpdatedAt(postDTO.getUpdatedAt());
-        if (postDTO.getCategory() != null) {
-            Category category = new Category();
-            category.setCategoryId(postDTO.getCategory().getCategoryId());
-            category.setCategoryName(postDTO.getCategory().getCategoryName());
-            category.setDescription(postDTO.getCategory().getDescription());
-            category.setCreatedAt(postDTO.getCategory().getCreatedAt());
-            category.setUpdatedAt(postDTO.getCategory().getUpdatedAt());
-            post.setCategory(category);
-        }
+        post.setCreatedAt(postDTO.getCreatedAt() != null ? postDTO.getCreatedAt() : LocalDateTime.now());
+        post.setUpdatedAt(LocalDateTime.now());
+        post.setPremium(postDTO.isPremium());
+        post.setStatus(postDTO.getStatus() == 1 ? Post.Status.ACTIVE : Post.Status.INACTIVE);
+
+
+        // Set User and Category (only need ID)
+        User user = new User();
+        user.setUserId(postDTO.getUserId());
+        post.setUser(user);
+
+        Category category = new Category();
+        category.setCategoryId(postDTO.getCategoryId());
+        post.setCategory(category);
+
         return post;
     }
 }

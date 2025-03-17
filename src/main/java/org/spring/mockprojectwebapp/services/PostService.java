@@ -6,11 +6,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface PostService {
     void updatePostStatus(int postId, Post.Status status);
-    Optional<PostDTO> findPostById(int id);
+    PostDTO findPostById(int id);
     PostDTO savePost(PostDTO postDTO);
     Page<PostDTO> getPosts(String keyword, Pageable pageable);
     List<PostDTO> getRecentPosts();

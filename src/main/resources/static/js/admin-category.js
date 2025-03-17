@@ -13,3 +13,10 @@ toggleSidebarButton.addEventListener('click', () => {
 });
 
 
+
+function clearFilters() {
+    document.querySelector('input[name="keyword"]').value = '';
+    document.querySelector('input[name="startDate"]').value = '';
+    document.querySelector('input[name="endDate"]').value = '';
+    document.querySelector('form').submit();
+}

@@ -19,4 +19,5 @@ public interface UserService {
     void updateUserStatus(Integer userId, User.Status status);
 
     UserDTO mapToUserDTO(User user);
+
 }
