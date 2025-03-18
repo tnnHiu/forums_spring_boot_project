@@ -1,7 +1,7 @@
 package org.spring.mockprojectwebapp.services.implement;
 
 import jakarta.persistence.EntityNotFoundException;
-import org.spring.mockprojectwebapp.dtos.UserDTO;
+import org.spring.mockprojectwebapp.dtos.admin.UserDTO;
 import org.spring.mockprojectwebapp.entities.User;
 import org.spring.mockprojectwebapp.repositories.UserRepository;
 import org.spring.mockprojectwebapp.services.UserService;
@@ -10,7 +10,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -59,19 +58,6 @@ public class UserServiceImpl implements UserService {
         user.setStatus(newStatus);
         userRepository.save(user);
     }
-
-//    @Override
-//    public void updateUserStatus(int userId, User.Status status) {
-//        User existingUser = userRepository.findById(userId)
-//                .orElseThrow(() -> new RuntimeException("User not found with id: " + userId));
-//
-//        // Cập nhật trạng thái và thời gian cập nhật
-//        existingUser.setStatus(status);
-//        existingUser.setUpdatedAt(LocalDateTime.now());
-//
-//        // Lưu vào cơ sở dữ liệu
-//        userRepository.save(existingUser);
-//    }
 
     // Chuyển đổi từ Entity sang DTO
     @Override

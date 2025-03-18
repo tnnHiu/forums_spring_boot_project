@@ -1,4 +1,4 @@
-package org.spring.mockprojectwebapp.dtos;
+package org.spring.mockprojectwebapp.dtos.admin;
 
 import lombok.*;
 import org.spring.mockprojectwebapp.entities.Comment.Status;

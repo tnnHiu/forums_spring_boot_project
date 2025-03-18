@@ -1,10 +1,9 @@
-package org.spring.mockprojectwebapp.dtos;
+package org.spring.mockprojectwebapp.dtos.admin;
 
 import lombok.*;
 import org.spring.mockprojectwebapp.entities.User.Status;
 
 import java.time.LocalDateTime;
-
 
 @Builder
 @Getter

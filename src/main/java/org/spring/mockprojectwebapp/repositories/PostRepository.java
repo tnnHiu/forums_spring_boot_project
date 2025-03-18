@@ -12,8 +12,11 @@ import java.util.List;
 @Repository
 public interface PostRepository extends JpaRepository<Post, Integer> {
     Post findPostById(int postId);
+
     @Query("SELECT p FROM Post p WHERE p.title LIKE %:keyword% OR p.content LIKE %:keyword%")
     Page<Post> findByTitleContainingOrContentContainingIgnoreCase(String keyword, Pageable pageable);
+
     @Query("SELECT p FROM Post p ORDER BY p.createdAt DESC LIMIT 10")
     List<Post> findTop10ByOrderByCreatedAtDesc();
+
 }

@@ -12,213 +12,180 @@
     <link rel="stylesheet" th:href="@{/css/user-detail-post}" media="screen" type="text/css"/>
 </head>
 
-<body class="bg-light">
-
-<div class="container-sm py-4 px-3 px-sm-4 mx-auto" style="max-width: 1000px;">
+<body>
+<div class="container py-5">
     <!-- Bài viết -->
-    <div class="card shadow-sm mb-4 border-0 rounded-4 overflow-hidden">
+    <div class="card shadow-lg mb-5 border-0 rounded-4 overflow-hidden">
         <div class="ratio ratio-16x9">
             <img th:src="${postDTO.imageUrl}" class="w-100 h-100 object-fit-cover" alt="Ảnh bài viết">
         </div>
-
-        <div class="card-body">
-            <div class="d-flex justify-content-between align-items-center mb-3">
-                <h3 class="card-title fw-bold" th:text="${postDTO.title}">Bún Bò Huế - Hương Vị Đậm Đà Miền Trung</h3>
-                <div>
-                    <button class="btn btn-outline-primary me-2"><i class="bi bi-bookmark"></i> Lưu</button>
+        <div class="card-body p-4">
+            <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
+                <h2 class="card-title fw-bold mb-0" th:text="${postDTO.title}">Bún Bò Huế - Hương Vị Đậm Đà Miền
+                    Trung</h2>
+                <div class="d-flex gap-2">
+                    <button class="btn btn-outline-primary"><i class="bi bi-bookmark"></i> Lưu</button>
                     <button class="btn btn-outline-danger"><i class="bi bi-heart"></i> 25</button>
                 </div>
             </div>
 
-            <div class="d-flex align-items-center text-muted mb-2">
-                <i class="bi bi-folder2 me-2"></i><span>Danh mục: <span th:text="${postDTO.categoryName}">Món chính</span></span>
-            </div>
-            <div class="d-flex align-items-center text-muted mb-3">
-                <i class="bi bi-person-circle me-2"></i><span>Người đăng: <span th:text="${postDTO.username}">Admin</span></span>
+            <div class="d-flex flex-wrap gap-3 text-muted mb-3">
+                <span><i class="bi bi-folder2 me-1"></i>Danh mục: <span
+                        th:text="${postDTO.categoryName}">Món chính</span></span>
+                <span><i class="bi bi-person-circle me-1"></i>Người đăng: <span
+                        th:text="${postDTO.username}">Admin</span></span>
             </div>
             <hr>
-            <h5 class="fw-bold text-primary"><i class="bi bi-card-checklist me-2"></i>Nguyên liệu</h5>
-            <div class="row">
+            <h5 class="fw-bold text-primary mb-3"><i class="bi bi-card-checklist me-2"></i>Nguyên liệu</h5>
+            <div class="row g-3">
                 <div class="col-md-6">
-                    <ul class="list-unstyled">
-                        <li>500g bắp bò</li>
-                        <li>500g giò heo</li>
-                        <li>300g chả lụa</li>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item border-0">500g bắp bò</li>
+                        <li class="list-group-item border-0">500g giò heo</li>
+                        <li class="list-group-item border-0">300g chả lụa</li>
                     </ul>
                 </div>
                 <div class="col-md-6">
-                    <ul class="list-unstyled">
-                        <li>200g huyết heo</li>
-                        <li>500g bún sợi to</li>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item border-0">200g huyết heo</li>
+                        <li class="list-group-item border-0">500g bún sợi to</li>
                     </ul>
                 </div>
             </div>
 
-            <h5 class="fw-bold text-primary mt-4"><i class="bi bi-scissors me-2"></i>Sơ chế</h5>
-            <p>- Rửa sạch thịt bò, giò heo với nước muối loãng.<br>- Chần qua nước sôi để khử mùi hôi.<br>- Sả đập
-                dập, cắt khúc.<br>- Hành tây bổ đôi.<br>- Huyết heo luộc chín, cắt miếng vừa ăn.</p>
+            <h5 class="fw-bold text-primary mt-4 mb-3"><i class="bi bi-scissors me-2"></i>Sơ chế</h5>
+            <p class="lh-lg">- Rửa sạch thịt bò, giò heo với nước muối loãng.<br>- Chần qua nước sôi để khử mùi hôi.<br>-
+                Sả đập dập, cắt khúc.<br>- Hành tây bổ đôi.<br>- Huyết heo luộc chín, cắt miếng vừa ăn.</p>
 
-            <h5 class="fw-bold text-primary mt-4"><i class="bi bi-clock-history me-2"></i>Thực hiện</h5>
-            <p>1. Hầm giò heo cùng sả và hành tây trong khoảng 60 phút để nước dùng ngọt thanh.<br>2. Luộc bắp bò
-                riêng, sau đó thái mỏng.<br>3. Cho mắm ruốc Huế hòa với nước lọc, lắng cặn rồi đổ vào nồi nước
-                dùng.<br>4. Nêm nếm gia vị vừa ăn.<br>5. Xếp bún vào tô, thêm thịt bò, giò heo, huyết, chả lụa và
-                chan nước dùng.</p>
+            <h5 class="fw-bold text-primary mt-4 mb-3"><i class="bi bi-clock-history me-2"></i>Thực hiện</h5>
+            <p class="lh-lg">1. Hầm giò heo cùng sả và hành tây trong khoảng 60 phút để nước dùng ngọt thanh.<br>2. Luộc
+                bắp bò riêng, sau đó thái mỏng.<br>3. Cho mắm ruốc Huế hòa với nước lọc, lắng cặn rồi đổ vào nồi nước
+                dùng.<br>4. Nêm nếm gia vị vừa ăn.<br>5. Xếp bún vào tô, thêm thịt bò, giò heo, huyết, chả lụa và chan
+                nước dùng.</p>
 
-            <h5 class="fw-bold text-primary mt-4"><i class="bi bi-lightbulb me-2"></i>Mẹo</h5>
-            <p>- Sử dụng mắm ruốc Huế đúng cách để nước dùng có vị đặc trưng.<br>- Hầm xương lâu giúp nước dùng ngọt
-                thanh.<br>- Nên chần bún qua nước sôi trước khi ăn để bún không bị dai.</p>
+            <h5 class="fw-bold text-primary mt-4 mb-3"><i class="bi bi-lightbulb me-2"></i>Mẹo</h5>
+            <p class="lh-lg">- Sử dụng mắm ruốc Huế đúng cách để nước dùng có vị đặc trưng.<br>- Hầm xương lâu giúp nước
+                dùng ngọt thanh.<br>- Nên chần bún qua nước sôi trước khi ăn để bún không bị dai.</p>
 
-            <div class="mb-3">
-                <span class="badge bg-primary">#ẨmThựcViệt</span>
-                <span class="badge bg-primary">#BúnBòHuế</span>
+            <div class="mt-4">
+                <span class="badge bg-primary me-2">#ẨmThựcViệt</span>
+                <span class="badge bg-primary me-2">#BúnBòHuế</span>
                 <span class="badge bg-primary">#MónNgonMiềnTrung</span>
             </div>
         </div>
     </div>
 
     <!-- Bình luận -->
-    <div class="card shadow-sm mb-4">
-        <div class="card-body">
-            <h5 class="fw-bold"><i class="bi bi-chat-dots me-2"></i>Bình luận</h5>
-            <div class="mb-3">
-                <input class="form-control" placeholder="Viết bình luận của bạn...">
-                <button class="btn btn-primary mt-2">Gửi bình luận</button>
-            </div>
-            <div class="comment-section">
-                <div class="d-flex mb-3">
-                    <img src="../assets/img/img_avatar.jpg" class="rounded-circle me-2" width="40" height="40"
-                         alt="User">
-                    <div>
-                        <strong>Bạn</strong> <small class="text-muted">• 2 phút trước</small>
-                        <p class="mb-1">Bình luận của bạn...</p>
-                        <div class="btn-group">
-                            <button class="btn btn-sm btn-outline-primary"><i class="bi bi-hand-thumbs-up"></i>
-                                5</button>
-                            <button class="btn btn-sm btn-outline-secondary"><i class="bi bi-hand-thumbs-down"></i>
-                                0</button>
-                            <button class="btn btn-sm btn-outline-danger"><i class="bi bi-trash"></i> Xóa</button>
-                            <button class="btn btn-sm btn-outline-warning"><i class="bi bi-pencil"></i> Sửa</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="d-flex mb-3">
-                    <img src="../assets/img/img_avatar.jpg" class="rounded-circle me-2" width="40" height="40"
-                         alt="User">
-                    <div>
-                        <strong>Người dùng</strong> <small class="text-muted">• 5 phút trước</small>
-                        <p class="mb-1">Nội dung bình luận...</p>
-                        <div class="btn-group">
-                            <button class="btn btn-sm btn-outline-primary"><i class="bi bi-hand-thumbs-up"></i>
-                                10</button>
-                            <button class="btn btn-sm btn-outline-secondary"><i class="bi bi-hand-thumbs-down"></i>
-                                2</button>
-                            <button class="btn btn-sm btn-outline-info"><i class="bi bi-reply"></i> Trả lời</button>
+    <div class="card shadow-lg mb-5 border-0 rounded-4">
+        <div class="card-body p-4">
+            <h4 class="fw-bold mb-4"><i class="bi bi-chat-left-text me-2"></i>Bình luận</h4>
+            <!--            &#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;form bình luận&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;-->
+            <div class="card mb-4 border-0" style="background-color: #f8f9fa;">
+                <div class="card-body">
+                    <div class="d-flex flex-start w-100">
+                        <img class="rounded-circle shadow-sm me-3"
+                             src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(19).webp"
+                             alt="avatar" width="40"
+                             height="40"/>
+                        <div class="w-100">
+                            <form>
+                                <textarea class="form-control mb-2" id="textAreaExample" rows="3"
+                                          placeholder="Viết bình luận của bạn..." required></textarea>
+                                <div class="d-flex justify-content-end gap-2">
+                                    <button type="submit" class="btn btn-primary btn-sm">Đăng bình luận</button>
+                                    <button type="reset" class="btn btn-outline-secondary btn-sm">Hủy</button>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>
             </div>
-            <a href="#" class="btn btn-link text-decoration-none">Xem thêm bình luận <i
-                    class="bi bi-arrow-right"></i></a>
+            <div th:each="comment : ${userCommentDTOS}">
+                <div class="mb-3">
+                    <div class="d-flex flex-start align-items-center mb-3">
+                        <img class="rounded-circle shadow-sm me-3"
+                             src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(19).webp"
+                             alt="avatar"
+                             width="50"
+                             height="50"/>
+                        <div>
+                            <h6 class="fw-bold text-primary mb-1" th:text="${comment.getUserName()}"></h6>
+                        </div>
+                    </div>
+                    <p class="mb-3" th:text="${comment.getComment()}">Lorem ipsum dolor sit amet, consectetur adipiscing
+                        elit, sed do eiusmod tempor
+                        incididunt ut labore et dolore magna aliqua.</p>
+                    <div class="d-flex gap-3 text-muted small">
+                        <a href="#!" class="text-decoration-none"><i class="bi bi-hand-thumbs-up me-1"></i>Thích</a>
+                        <a href="#!" class="text-decoration-none"><i class="bi bi-chat-dots me-1"></i>Trả lời</a>
+                    </div>
+                    <hr>
+                </div>
+            </div>
         </div>
     </div>
 
-
-
     <!-- Gợi ý bài viết -->
-    <div class="card shadow-sm">
-        <div class="card-body">
-            <div class="d-flex flex-wrap justify-content-between align-items-center">
-                <h5 class="fw-bold mb-3"><i class="bi bi-lightning-charge me-2"></i>Gợi Ý Cho Bạn</h5>
-                <a href="#" class="text-decoration-none text-black">Xem thêm <i class="bi bi-arrow-right"></i></a>
+    <div class="card shadow-lg border-0 rounded-4">
+        <div class="card-body p-4">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h4 class="fw-bold mb-0"><i class="bi bi-lightning-charge me-2"></i>Gợi Ý Cho Bạn</h4>
+                <a href="#" class="text-decoration-none text-dark fw-medium">Xem thêm <i class="bi bi-arrow-right"></i></a>
             </div>
-
             <div class="row g-4">
-                <div class="col-md-6 col-lg-4">
-                    <div class="card h-100">
+                <div class="col-md-4">
+                    <div class="card h-100 border-0 shadow-sm">
                         <div class="ratio ratio-16x9">
-                            <img th:src="@{/img/img_post.jpg}" class="card-img-top img-fluid object-fit-cover" alt="Gợi ý 1">
+                            <img th:src="@{/img/img_post.jpg}" class="card-img-top object-fit-cover" alt="Gợi ý 1">
                         </div>
                         <div class="card-body">
                             <h6 class="card-title fw-bold text-truncate">Cách làm Phở Bò ngon như ngoài hàng</h6>
-                            <p class="text-muted small text-truncate">
-                                Khám phá bí quyết nấu phở bò thơm ngon đúng điệu với nước dùng trong và ngọt tự nhiên...
-                            </p>
-                            <div class="d-flex justify-content-between align-items-center mt-3">
-                                <div class="d-flex align-items-center gap-2">
-                                    <i class="bi bi-chat-left-text"></i>
-                                    <span class="small">15</span>
-                                </div>
-                                <div class="d-flex align-items-center gap-2">
-                                    <i class="bi bi-heart text-danger"></i>
-                                    <span class="small">45</span>
-                                </div>
-                                <div class="d-flex align-items-center gap-2">
-                                    <i class="bi bi-bookmark text-primary"></i>
-                                    <span class="small">20</span>
-                                </div>
+                            <p class="text-muted small text-truncate">Khám phá bí quyết nấu phở bò thơm ngon đúng
+                                điệu...</p>
+                            <div class="d-flex justify-content-between text-muted small">
+                                <span><i class="bi bi-chat-left-text me-1"></i>15</span>
+                                <span><i class="bi bi-heart text-danger me-1"></i>45</span>
+                                <span><i class="bi bi-bookmark text-primary me-1"></i>20</span>
                             </div>
                         </div>
                     </div>
                 </div>
-
-                <div class="col-md-6 col-lg-4">
-                    <div class="card h-100">
+                <div class="col-md-4">
+                    <div class="card h-100 border-0 shadow-sm">
                         <div class="ratio ratio-16x9">
-                            <img th:src="@{/img/bunbohue.jpg}" class="card-img-top img-fluid object-fit-cover" alt="Gợi ý 1">
+                            <img th:src="@{/img/bunbohue.jpg}" class="card-img-top object-fit-cover" alt="Gợi ý 2">
                         </div>
                         <div class="card-body">
                             <h6 class="card-title fw-bold text-truncate">Cách làm Phở Bò ngon như ngoài hàng</h6>
-                            <p class="text-muted small text-truncate">
-                                Khám phá bí quyết nấu phở bò thơm ngon đúng điệu với nước dùng trong và ngọt tự nhiên...
-                            </p>
-                            <div class="d-flex justify-content-between align-items-center mt-3">
-                                <div class="d-flex align-items-center gap-2">
-                                    <i class="bi bi-chat-left-text"></i>
-                                    <span class="small">15</span>
-                                </div>
-                                <div class="d-flex align-items-center gap-2">
-                                    <i class="bi bi-heart text-danger"></i>
-                                    <span class="small">45</span>
-                                </div>
-                                <div class="d-flex align-items-center gap-2">
-                                    <i class="bi bi-bookmark text-primary"></i>
-                                    <span class="small">20</span>
-                                </div>
+                            <p class="text-muted small text-truncate">Khám phá bí quyết nấu phở bò thơm ngon đúng
+                                điệu...</p>
+                            <div class="d-flex justify-content-between text-muted small">
+                                <span><i class="bi bi-chat-left-text me-1"></i>15</span>
+                                <span><i class="bi bi-heart text-danger me-1"></i>45</span>
+                                <span><i class="bi bi-bookmark text-primary me-1"></i>20</span>
                             </div>
                         </div>
                     </div>
                 </div>
-
-                <div class="col-md-6 col-lg-4">
-                    <div class="card h-100">
+                <div class="col-md-4">
+                    <div class="card h-100 border-0 shadow-sm">
                         <div class="ratio ratio-16x9">
-                            <img th:src="@{/img/banhmy.jpg}" class="card-img-top img-fluid object-fit-cover" alt="Gợi ý 1">
+                            <img th:src="@{/img/banhmy.jpg}" class="card-img-top object-fit-cover" alt="Gợi ý 3">
                         </div>
                         <div class="card-body">
                             <h6 class="card-title fw-bold text-truncate">Cách làm Phở Bò ngon như ngoài hàng</h6>
-                            <p class="text-muted small text-truncate">
-                                Khám phá bí quyết nấu phở bò thơm ngon đúng điệu với nước dùng trong và ngọt tự nhiên...
-                            </p>
-                            <div class="d-flex justify-content-between align-items-center mt-3">
-                                <div class="d-flex align-items-center gap-2">
-                                    <i class="bi bi-chat-left-text"></i>
-                                    <span class="small">15</span>
-                                </div>
-                                <div class="d-flex align-items-center gap-2">
-                                    <i class="bi bi-heart text-danger"></i>
-                                    <span class="small">45</span>
-                                </div>
-                                <div class="d-flex align-items-center gap-2">
-                                    <i class="bi bi-bookmark text-primary"></i>
-                                    <span class="small">20</span>
-                                </div>
+                            <p class="text-muted small text-truncate">Khám phá bí quyết nấu phở bò thơm ngon đúng
+                                điệu...</p>
+                            <div class="d-flex justify-content-between text-muted small">
+                                <span><i class="bi bi-chat-left-text me-1"></i>15</span>
+                                <span><i class="bi bi-heart text-danger me-1"></i>45</span>
+                                <span><i class="bi bi-bookmark text-primary me-1"></i>20</span>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-
-            <div class="text-center mt-3">
+            <div class="text-center mt-4">
                 <a href="#" class="btn btn-outline-primary">Xem thêm <i class="bi bi-arrow-right"></i></a>
             </div>
         </div>
@@ -227,3 +194,4 @@
 </body>
 
 </html>
+

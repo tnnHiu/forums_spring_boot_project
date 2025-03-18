@@ -1,6 +1,6 @@
 package org.spring.mockprojectwebapp.services;
 
-import org.spring.mockprojectwebapp.dtos.PostDTO;
+import org.spring.mockprojectwebapp.dtos.admin.PostDTO;
 import org.spring.mockprojectwebapp.entities.Post;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
