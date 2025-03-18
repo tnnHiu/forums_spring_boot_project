@@ -1,6 +1,6 @@
 package org.spring.mockprojectwebapp.services;
 
-import org.spring.mockprojectwebapp.dtos.PostDTO;
+import org.spring.mockprojectwebapp.dtos.admin.PostDTO;
 import org.spring.mockprojectwebapp.entities.Post;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -15,4 +15,5 @@ public interface PostService {
     List<PostDTO> getRecentPosts();
     Page<PostDTO> filterPosts(String keyword, Integer status, Integer categoryId, Integer isPremium, int page, int size);
     void deletePost(int id);
+    List<PostDTO> getUserPosts(int userId);
 }

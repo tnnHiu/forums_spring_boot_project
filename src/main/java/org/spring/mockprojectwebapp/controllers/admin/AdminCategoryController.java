@@ -1,7 +1,7 @@
 package org.spring.mockprojectwebapp.controllers.admin;
 
 import jakarta.servlet.http.HttpServletRequest;
-import org.spring.mockprojectwebapp.dtos.CategoryDTO;
+import org.spring.mockprojectwebapp.dtos.admin.CategoryDTO;
 import org.spring.mockprojectwebapp.services.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

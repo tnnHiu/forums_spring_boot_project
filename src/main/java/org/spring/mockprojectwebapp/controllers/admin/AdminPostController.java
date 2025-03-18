@@ -1,7 +1,7 @@
 package org.spring.mockprojectwebapp.controllers.admin;
 
 import jakarta.servlet.http.HttpServletRequest;
-import org.spring.mockprojectwebapp.dtos.PostDTO;
+import org.spring.mockprojectwebapp.dtos.admin.PostDTO;
 import org.spring.mockprojectwebapp.entities.Post;
 import org.spring.mockprojectwebapp.services.CategoryService;
 import org.spring.mockprojectwebapp.services.PostService;

@@ -1,6 +1,6 @@
 package org.spring.mockprojectwebapp.services.implement;
 
-import org.spring.mockprojectwebapp.dtos.CategoryDTO;
+import org.spring.mockprojectwebapp.dtos.admin.CategoryDTO;
 import org.spring.mockprojectwebapp.entities.Category;
 import org.spring.mockprojectwebapp.repositories.CategoryRepository;
 import org.spring.mockprojectwebapp.services.CategoryService;
@@ -75,7 +75,6 @@ public class CategoryServiceImpl implements CategoryService {
                 .toList();
     }
 
-
     private CategoryDTO mapToDTO(Category category) {
         return CategoryDTO.builder()
                 .categoryId(category.getCategoryId())
@@ -95,6 +94,4 @@ public class CategoryServiceImpl implements CategoryService {
         category.setUpdatedAt(categoryDTO.getUpdatedAt());
         return category;
     }
-
-
 }

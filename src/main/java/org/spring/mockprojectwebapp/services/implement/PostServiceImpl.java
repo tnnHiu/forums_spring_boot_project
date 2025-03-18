@@ -1,6 +1,6 @@
 package org.spring.mockprojectwebapp.services.implement;
 
-import org.spring.mockprojectwebapp.dtos.PostDTO;
+import org.spring.mockprojectwebapp.dtos.admin.PostDTO;
 import org.spring.mockprojectwebapp.entities.Category;
 import org.spring.mockprojectwebapp.entities.Post;
 import org.spring.mockprojectwebapp.entities.User;
@@ -46,15 +46,19 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public List<PostDTO> getRecentPosts() {
-        return postRepository.findTop10ByOrderByCreatedAtDesc().stream()
+        return postRepository.findTop10ByOrderByCreatedAtDesc().stream().map(this::mapToDTO).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<PostDTO> getUserPosts(int userId) {
+        return postRepository.findPostByUser(userId).stream()
                 .map(this::mapToDTO)
                 .collect(Collectors.toList());
     }
 
     @Override
     public void updatePostStatus(int postId, Post.Status status) {
-        Post existingPost = postRepository.findById(postId)
-                .orElseThrow(() -> new RuntimeException("Post not found with id: " + postId));
+        Post existingPost = postRepository.findById(postId).orElseThrow(() -> new RuntimeException("Post not found with id: " + postId));
 
         // Cập nhật trạng thái và thời gian cập nhật
         existingPost.setStatus(status);
@@ -114,19 +118,7 @@ public class PostServiceImpl implements PostService {
     }
 
     private PostDTO mapToDTO(Post post) {
-        return PostDTO.builder()
-                .postId(post.getId())
-                .title(post.getTitle())
-                .content(post.getContent())
-                .imageUrl(post.getImageUrl())
-                .description(post.getDescription())
-                .createdAt(post.getCreatedAt())
-                .updatedAt(post.getUpdatedAt())
-                .status(post.getStatus().ordinal())
-                .isPremium(post.isPremium())
-                .categoryName(post.getCategory().getCategoryName())
-                .username(post.getUser().getUsername())
-                .build();
+        return PostDTO.builder().postId(post.getId()).title(post.getTitle()).content(post.getContent()).imageUrl(post.getImageUrl()).description(post.getDescription()).createdAt(post.getCreatedAt()).updatedAt(post.getUpdatedAt()).status(post.getStatus().ordinal()).isPremium(post.isPremium()).categoryName(post.getCategory().getCategoryName()).username(post.getUser().getUsername()).build();
     }
 
     private Post mapToEntity(PostDTO postDTO) {

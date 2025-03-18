@@ -21,14 +21,6 @@ public interface ReportRepository extends JpaRepository<Report, Integer> {
     @Query("SELECT r FROM Report r LEFT JOIN FETCH r.reporter LEFT JOIN FETCH r.reportedPost where r.status = 'pending' order by r.createdAt desc ")
     Page<Report> findAllReports(Pageable pageable);
 
-    @Query("SELECT r FROM Report r WHERE " +
-            "(:reportType IS NULL OR r.reportType = :reportType) AND " +
-            "(:status IS NULL OR r.status = :status) AND " +
-            "(:oldest IS NULL OR r.createdAt <= :oldest) " +
-            "ORDER BY r.createdAt DESC")
-    Page<Report> findFilteredReports(
-            @Param("reportType") Report.ReportType reportType,
-            @Param("status") Report.Status status,
-            @Param("oldest") LocalDateTime oldest,
-            Pageable pageable);
+    @Query("SELECT r FROM Report r WHERE " + "(:reportType IS NULL OR r.reportType = :reportType) AND " + "(:status IS NULL OR r.status = :status) AND " + "(:oldest IS NULL OR r.createdAt <= :oldest) " + "ORDER BY r.createdAt DESC")
+    Page<Report> findFilteredReports(@Param("reportType") Report.ReportType reportType, @Param("status") Report.Status status, @Param("oldest") LocalDateTime oldest, Pageable pageable);
 }

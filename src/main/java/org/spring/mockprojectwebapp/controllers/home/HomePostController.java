@@ -2,8 +2,12 @@ package org.spring.mockprojectwebapp.controllers.home;
 
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
-import org.spring.mockprojectwebapp.dtos.PostDTO;
+import org.spring.mockprojectwebapp.dtos.admin.CommentDTO;
+import org.spring.mockprojectwebapp.dtos.admin.PostDTO;
+import org.spring.mockprojectwebapp.dtos.user.UserCommentDTO;
+import org.spring.mockprojectwebapp.entities.Comment;
 import org.spring.mockprojectwebapp.services.CategoryService;
+import org.spring.mockprojectwebapp.services.CommentService;
 import org.spring.mockprojectwebapp.services.PostService;
 import org.spring.mockprojectwebapp.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +22,7 @@ import java.io.File;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 
 @Controller
@@ -31,15 +36,23 @@ public class HomePostController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private CommentService commentService;
+
+
     @GetMapping("/post/{id}")
     public String showPostDetail(@PathVariable("id") int id, Model model) {
         PostDTO postDTO = postService.findPostById(id);
         if (postDTO == null) {
             return "redirect:/error";
         }
+        List<UserCommentDTO> userCommentDTOS = commentService.getCommentsByPostId(id);
+        model.addAttribute("", postDTO);
         model.addAttribute("postDTO", postDTO);
+        model.addAttribute("userCommentDTOS", userCommentDTOS);
         return "user/post-detail";
     }
+
 
     @GetMapping("/post/create")
     public String showCreatePostPage(Model model) {
@@ -49,12 +62,7 @@ public class HomePostController {
     }
 
     @PostMapping("/post/create")
-    public String createPost(
-            Model model,
-            @Valid @ModelAttribute PostDTO postDTO,
-            @RequestParam("imageFile") MultipartFile imageFile,
-            @RequestParam("categoryId") int categoryId,
-            HttpSession session) {
+    public String createPost(Model model, @Valid @ModelAttribute PostDTO postDTO, @RequestParam("imageFile") MultipartFile imageFile, @RequestParam("categoryId") int categoryId, HttpSession session) {
         String imageUrl = saveImageFile(imageFile);
         if (imageUrl == null || imageUrl.isEmpty()) {
             model.addAttribute("errorMessage", "Có lỗi xảy ra khi tải ảnh lên.");
@@ -75,7 +83,6 @@ public class HomePostController {
         return "redirect:/";
     }
 
-
     @Autowired
     private ResourceLoader resourceLoader;
 
@@ -83,9 +90,7 @@ public class HomePostController {
         if (file.isEmpty()) {
             return null;
         }
-
         try {
-
             Resource resource = resourceLoader.getResource("classpath:static/img");
             File uploadDir = resource.getFile();
 
@@ -106,39 +111,6 @@ public class HomePostController {
             throw new RuntimeException("Lỗi khi lưu file: " + e.getMessage(), e);
         }
     }
-
-
-//    private String saveImageFile(MultipartFile file) {
-//        if  (file.isEmpty()) {
-//            return null;
-//        }
-//
-//        try {
-//
-//            File uploadDir = new File("D:\\Source Java\\v7\\forums_spring_boot_project\\src\\main\\resources\\static\\uploads");
-//
-//            // Tạo thư mục nếu nó không tồn tại
-//            if (!uploadDir.exists()) {
-//                if (!uploadDir.mkdirs()) {
-//                    throw new IOException("Không thể tạo thư mục: " + uploadDir.getAbsolutePath());
-//                }
-//            }
-//
-//            // Tạo tên file duy nhất
-//            String fileName = file.getOriginalFilename();
-//            String uniqueFileName = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss")) + "_" + fileName;
-//
-//            // Lưu file
-//            File dest = new File(uploadDir, uniqueFileName);
-//            file.transferTo(dest);
-//
-//            // Trả về đường dẫn tương đối để hiển thị trên frontend
-//            return "/uploads/" + uniqueFileName;
-//        } catch (IOException e) {
-//            throw new RuntimeException("Lỗi khi lưu file: " + e.getMessage(), e);
-//        } }
-
-
 }
 
 

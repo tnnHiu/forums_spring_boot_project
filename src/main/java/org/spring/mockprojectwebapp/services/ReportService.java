@@ -1,7 +1,6 @@
 package org.spring.mockprojectwebapp.services;
 
-import org.spring.mockprojectwebapp.dtos.ReportDTO;
-import org.spring.mockprojectwebapp.entities.Category;
+import org.spring.mockprojectwebapp.dtos.admin.ReportDTO;
 import org.spring.mockprojectwebapp.entities.Report;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

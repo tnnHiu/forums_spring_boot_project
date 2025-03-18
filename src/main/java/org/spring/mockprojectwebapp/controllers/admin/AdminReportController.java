@@ -1,7 +1,7 @@
 package org.spring.mockprojectwebapp.controllers.admin;
 
 import jakarta.servlet.http.HttpServletRequest;
-import org.spring.mockprojectwebapp.dtos.ReportDTO;
+import org.spring.mockprojectwebapp.dtos.admin.ReportDTO;
 import org.spring.mockprojectwebapp.entities.Report;
 import org.spring.mockprojectwebapp.services.ReportService;
 import org.springframework.beans.factory.annotation.Autowired;
