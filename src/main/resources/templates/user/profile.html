@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trang Cá Nhân</title>
+    <link rel="stylesheet" th:href="@{/bootstrap-5.3.3-dist/css/bootstrap.min.css}">
+    <script th:src="@{/bootstrap-5.3.3-dist/js/bootstrap.bundle.min.js}"></script>
+    <link rel="stylesheet" th:href="@{/bootstrap-icons-1.11.3/font/bootstrap-icons.min.css}">
+    <link rel="stylesheet" th:href="@{/css/user-profile.css}">
+</head>
+
+<body>
+<!-- Header -->
+<header class="profile-header">
+    <div class="container">
+        <div class="d-flex align-items-center justify-content-between">
+            <div class="d-flex align-items-center">
+                <div class="profile-img">
+                    <!-- <img th:src="${userDTO.avatarUrl != null ? userDTO.avatarUrl : '/img/default-avartar.jpg'}" alt="Profile Image"> -->
+                </div>
+                <div class="ms-3">
+                    <div class="username" th:text="${userDTO.username != null ? userDTO.username : 'Tên người dùng'}"></div>
+                    <div class="stats">
+                        <!-- <span th:text="${userDTO.postCount} + ' bài viết'"></span> -->
+                        <!-- <span th:text="${userDTO.followers} + ' người theo dõi'"></span> -->
+                    </div>
+                </div>
+            </div>
+            <a th:href="@{/user/edit-profile}" class="btn btn-edit-profile">Chỉnh sửa</a>
+        </div>
+    </div>
+</header>
+
+<main class="container my-5 mx-auto w-75 px-5">
+    <div class="row">
+        <!-- Right Column: Action Buttons & About -->
+        <aside class="col-lg-4 order-1 order-lg-2 d-flex flex-column gap-3">
+            <div class="card mb-4">
+                <div class="card-body">
+                    <div class="d-flex justify-content-around action-buttons">
+                        <a th:href="@{/user/posts}"><i class="bi bi-pencil-square fs-3"></i></a>
+                        <a th:href="@{/user/images}"><i class="bi bi-image fs-3"></i></a>
+                        <a th:href="@{/user/upgrade}"><i class="bi bi-gem fs-3"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-body about-section">
+                    <h5 class="card-title">Giới thiệu</h5>
+                    <p class="card-text" th:text="'Đã tham gia ngày ' + ${userDTO.createdAt}"></p>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Left Column: Posts -->
+        <section class="col-lg-8 order-2 order-lg-1">
+            <ul class="nav nav-tabs mb-3 d-flex w-100">
+                <li class="nav-item flex-fill">
+                    <a class="nav-link active text-center" href="#posts" data-bs-toggle="tab">
+                        <i class="bi bi-file-earmark-text"></i> Bài viết
+                    </a>
+                </li>
+                <li class="nav-item flex-fill">
+                    <a class="nav-link text-center" href="#liked" data-bs-toggle="tab">
+                        <i class="bi bi-heart"></i> Đã thích
+                    </a>
+                </li>
+                <li class="nav-item flex-fill">
+                    <a class="nav-link text-center" href="#saved" data-bs-toggle="tab">
+                        <i class="bi bi-bookmark"></i> Đã lưu
+                    </a>
+                </li>
+            </ul>
+
+            <div class="tab-content">
+                <!-- Posts Tab -->
+                <div class="tab-pane fade show active" id="posts">
+                    <div th:if="${postDTOs != null and not #lists.isEmpty(postDTOs)}">
+                        <article class="card mb-4" th:each="postDTO : ${postDTOs}">
+                            <div class="position-relative">
+                                <img th:src="${postDTO.imageUrl}"
+                                     onerror="this.onerror=null; this.src='/img/default-image.jpg';"
+                                     class="card-img-top"
+                                     alt="Hình ảnh bài viết">
+                                <a th:href="@{/post/{id}(id=${postDTO.postId})}" class="overlay-btn btn btn-sm">Xem chi tiết</a>
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title" th:text="${postDTO.title}"></h5>
+                                <p class="card-text" th:text="${postDTO.description}"></p>
+                                <div class="interactions">
+                                    <!-- <span th:text="${postDTO.likes} + ' lượt thích'"></span> -->
+                                    <!-- <span th:text="${postDTO.comments} + ' bình luận'"></span> -->
+                                </div>
+                                <div class="d-flex justify-content-around align-items-center mt-3">
+                                    <div class="d-flex align-items-center gap-2 clickable">
+                                        <i class="bi bi-heart fs-5"></i>
+                                        <span class="small">Yêu thích</span>
+                                    </div>
+                                    <div class="d-flex align-items-center gap-2 clickable">
+                                        <i class="bi bi-chat-left-text fs-5"></i>
+                                        <span class="small">Bình luận</span>
+                                    </div>
+                                    <div class="d-flex align-items-center gap-2 clickable">
+                                        <i class="bi bi-bookmark fs-5"></i>
+                                        <span class="small">Lưu</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+                    <div th:unless="${postDTOs != null and not #lists.isEmpty(postDTOs)}" class="card mb-3">
+                        <div class="card-body">
+                            <p>Chưa có bài viết nào.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Liked Tab -->
+                <div class="tab-pane fade" id="liked">
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <p>Chưa có bài viết nào được thích.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Saved Tab -->
+                <div class="tab-pane fade" id="saved">
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <p>Chưa có bài viết nào được lưu.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</main>
+
+<!-- Footer -->
+<footer th:fragment="footer" class="text-center py-3">
+    <p>© 2025 MyWebsite. All rights reserved.</p>
+</footer>
+</body>
+
+</html>

@@ -25,6 +25,12 @@ public class UserServiceImpl implements UserService {
         return users.stream().map(this::mapToUserDTO).collect(Collectors.toList());
     }
 
+    @Override
+    public UserDTO findUserById(int userId) {
+        User user = userRepository.findByUserId(userId);
+        return mapToUserDTO(user);
+    }
+
 
     @Override
     public List<UserDTO> searchUsers(String keyword) {
@@ -74,5 +80,4 @@ public class UserServiceImpl implements UserService {
 
         return userDTO;
     }
-
 }

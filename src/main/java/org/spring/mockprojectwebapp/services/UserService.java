@@ -20,4 +20,6 @@ public interface UserService {
 
     UserDTO mapToUserDTO(User user);
 
+    UserDTO findUserById(int userId);
+
 }

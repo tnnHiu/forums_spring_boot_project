@@ -50,6 +50,13 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
+    public List<PostDTO> getUserPosts(int userId) {
+        return postRepository.findPostByUser(userId).stream()
+                .map(this::mapToDTO)
+                .collect(Collectors.toList());
+    }
+
+    @Override
     public void updatePostStatus(int postId, Post.Status status) {
         Post existingPost = postRepository.findById(postId)
                 .orElseThrow(() -> new RuntimeException("Post not found with id: " + postId));
