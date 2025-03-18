@@ -2,8 +2,8 @@ package org.spring.mockprojectwebapp.controllers.home;
 
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
-import org.spring.mockprojectwebapp.dtos.UpdatePasswordDTO;
-import org.spring.mockprojectwebapp.dtos.UpdateUsernameDTO;
+import org.spring.mockprojectwebapp.dtos.user.UpdatePasswordDTO;
+import org.spring.mockprojectwebapp.dtos.user.UpdateUsernameDTO;
 import org.spring.mockprojectwebapp.entities.User;
 import org.spring.mockprojectwebapp.services.ProfileService;
 import org.springframework.beans.factory.annotation.Autowired;
