@@ -21,5 +21,7 @@ public interface UserService {
 
     UserDTO mapToUserDTO(User user);
 
+    UserDTO findUserById(int userId);
+
     Page<User> getAccounts(String keyword, Pageable pageable);
 }
