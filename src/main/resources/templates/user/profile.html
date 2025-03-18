@@ -22,7 +22,8 @@
                     <!-- <img th:src="${userDTO.avatarUrl != null ? userDTO.avatarUrl : '/img/default-avartar.jpg'}" alt="Profile Image"> -->
                 </div>
                 <div class="ms-3">
-                    <div class="username" th:text="${userDTO.username != null ? userDTO.username : 'Tên người dùng'}"></div>
+                    <div class="username"
+                         th:text="${userDTO.username != null ? userDTO.username : 'Tên người dùng'}"></div>
                     <div class="stats">
                         <!-- <span th:text="${userDTO.postCount} + ' bài viết'"></span> -->
                         <!-- <span th:text="${userDTO.followers} + ' người theo dõi'"></span> -->
@@ -42,7 +43,7 @@
             <div class="card mb-4">
                 <div class="card-body">
                     <div class="d-flex justify-content-around action-buttons">
-                        <a th:href="@{/user/posts}"><i class="bi bi-pencil-square fs-3"></i></a>
+                        <a th:href="@{/new-post}"><i class="bi bi-pencil-square fs-3"></i></a>
                         <a th:href="@{/}"><i class="bi bi-house fs-3"></i></a>
                         <a th:href="@{/user/upgrade}"><i class="bi bi-gem fs-3"></i></a>
                     </div>
@@ -86,7 +87,8 @@
                                      onerror="this.onerror=null; this.src='/img/default-image.jpg';"
                                      class="card-img-top"
                                      alt="Hình ảnh bài viết">
-                                <a th:href="@{/post/{id}(id=${postDTO.postId})}" class="overlay-btn btn btn-sm">Xem chi tiết</a>
+                                <a th:href="@{/post/{id}(id=${postDTO.postId})}" class="overlay-btn btn btn-sm">Xem chi
+                                    tiết</a>
                             </div>
                             <div class="card-body">
                                 <h5 class="card-title" th:text="${postDTO.title}"></h5>
