@@ -4,12 +4,10 @@
         <div th:each="comment : ${userCommentDTOs}" class="mb-3 comment-item">
             <div class="d-flex flex-start align-items-center mb-3">
                 <img class="rounded-circle shadow-sm me-3"
-                     src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(19).webp"
-                     alt="avatar"
-                     width="50"
+                     src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(19).webp" alt="avatar" width="50"
                      height="50"/>
                 <div>
-                    <h6 class="fw-bold text-primary mb-1" th:text="${comment.username}"></h6>
+                    <h6 class="fw-bold text-primary mb-1" th:text="${comment.userName}"></h6>
                 </div>
             </div>
             <p class="mb-3" th:text="${comment.comment}"></p>

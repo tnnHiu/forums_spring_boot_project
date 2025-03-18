@@ -25,7 +25,7 @@ public class SecurityConfig {
                         .requestMatchers("/", "/css/**", "/js/**", "/img/**", "/bootstrap-5.3.3-dist/**", "/bootstrap-icons-1.11.3/**").permitAll()
                         .requestMatchers("/register", "/login").permitAll()
                         .requestMatchers("/admin/**").hasRole("ADMIN")
-                        .requestMatchers("/post/*").permitAll()
+                        .requestMatchers("/post/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .formLogin(form -> form
