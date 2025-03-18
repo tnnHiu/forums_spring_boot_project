@@ -2,14 +2,11 @@ package org.spring.mockprojectwebapp.controllers.home;
 
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
-import org.spring.mockprojectwebapp.dtos.admin.CommentDTO;
 import org.spring.mockprojectwebapp.dtos.admin.PostDTO;
 import org.spring.mockprojectwebapp.dtos.user.UserCommentDTO;
-import org.spring.mockprojectwebapp.entities.Comment;
 import org.spring.mockprojectwebapp.services.CategoryService;
 import org.spring.mockprojectwebapp.services.CommentService;
 import org.spring.mockprojectwebapp.services.PostService;
-import org.spring.mockprojectwebapp.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
@@ -24,7 +21,6 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
-
 @Controller
 @RequestMapping("/")
 public class HomePostController {
@@ -33,12 +29,12 @@ public class HomePostController {
     private PostService postService;
     @Autowired
     private CategoryService categoryService;
-    @Autowired
-    private UserService userService;
 
     @Autowired
     private CommentService commentService;
 
+    @Autowired
+    private ResourceLoader resourceLoader;
 
     @GetMapping("/post/{id}")
     public String showPostDetail(@PathVariable("id") int id, Model model) {
@@ -46,13 +42,40 @@ public class HomePostController {
         if (postDTO == null) {
             return "redirect:/error";
         }
-        List<UserCommentDTO> userCommentDTOS = commentService.getCommentsByPostId(id);
-        model.addAttribute("", postDTO);
+
+        List<UserCommentDTO> firstThreeComments = commentService.getCommentsByPostId(id).stream().limit(3).toList();
+
+        int totalComments = commentService.getCommentsByPostId(id).size();
+
         model.addAttribute("postDTO", postDTO);
-        model.addAttribute("userCommentDTOS", userCommentDTOS);
+        model.addAttribute("userCommentDTOs", firstThreeComments);
+        model.addAttribute("totalComments", totalComments);
+
         return "user/post-detail";
     }
 
+    @GetMapping("/post/{postId}/load-more-comments")
+    public String loadMoreComments(@PathVariable("postId") int postId, @RequestParam("offset") int offset, Model model) {
+        List<UserCommentDTO> allComments = commentService.getCommentsByPostId(postId);
+        List<UserCommentDTO> moreComments = allComments.stream().skip(offset).limit(3).toList();
+        model.addAttribute("userCommentDTOs", moreComments);
+        return "fragments/post-comment :: commentList";
+    }
+
+    @PostMapping("/post/create-comment")
+    public String createComment(@RequestParam("postId") int postId, @RequestParam("comment") String commentContent, HttpSession session, Model model) {
+
+        int userId = (int) session.getAttribute("userId");
+
+        UserCommentDTO userCommentDTO = UserCommentDTO.builder().postId(postId).userId(userId).comment(commentContent).createdAt(LocalDateTime.now()).commentStatus("ACTIVE").build();
+
+        commentService.saveComment(userCommentDTO);
+
+        List<UserCommentDTO> userCommentDTOs = commentService.getCommentsByPostId(postId);
+        model.addAttribute("userCommentDTOs", userCommentDTOs);
+
+        return "fragments/post-comment :: commentList";
+    }
 
     @GetMapping("/post/create")
     public String showCreatePostPage(Model model) {
@@ -71,20 +94,16 @@ public class HomePostController {
             return "user/create-post";
         }
 
-
         postDTO.setImageUrl(imageUrl);
         postDTO.setCategoryId(categoryId);
-        int userId = (int) session.getAttribute("userId");
+        Integer userId = (Integer) session.getAttribute("userId");
+
         postDTO.setUserId(userId);
         postDTO.setStatus(1);
-
 
         postService.savePost(postDTO);
         return "redirect:/";
     }
-
-    @Autowired
-    private ResourceLoader resourceLoader;
 
     private String saveImageFile(MultipartFile file) {
         if (file.isEmpty()) {
@@ -112,8 +131,3 @@ public class HomePostController {
         }
     }
 }
-
-
-
-
-

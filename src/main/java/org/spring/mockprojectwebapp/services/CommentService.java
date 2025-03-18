@@ -10,4 +10,6 @@ public interface CommentService {
 
     List<UserCommentDTO> getCommentsByPostId(int postId);
 
+    void saveComment(UserCommentDTO userCommentDTO);
+
 }
