@@ -13,6 +13,7 @@
 
 <body>
 <!-- Header -->
+
 <header class="profile-header">
     <div class="container">
         <div class="d-flex align-items-center justify-content-between">
@@ -33,6 +34,7 @@
     </div>
 </header>
 
+
 <main class="container my-5 mx-auto w-75 px-5">
     <div class="row">
         <!-- Right Column: Action Buttons & About -->
@@ -41,7 +43,7 @@
                 <div class="card-body">
                     <div class="d-flex justify-content-around action-buttons">
                         <a th:href="@{/user/posts}"><i class="bi bi-pencil-square fs-3"></i></a>
-                        <a th:href="@{/user/images}"><i class="bi bi-image fs-3"></i></a>
+                        <a th:href="@{/}"><i class="bi bi-house fs-3"></i></a>
                         <a th:href="@{/user/upgrade}"><i class="bi bi-gem fs-3"></i></a>
                     </div>
                 </div>
@@ -140,9 +142,8 @@
 </main>
 
 <!-- Footer -->
-<footer th:fragment="footer" class="text-center py-3">
-    <p>© 2025 MyWebsite. All rights reserved.</p>
-</footer>
+<div th:replace="/fragments/footer :: footer"></div>
+
 </body>
 
 </html>

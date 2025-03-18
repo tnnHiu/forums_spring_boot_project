@@ -18,6 +18,7 @@ import java.util.stream.Collectors;
 
 @Service
 public class PostServiceImpl implements PostService {
+
     @Autowired
     private PostRepository postRepository;
 
@@ -30,8 +31,8 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public PostDTO findPostById(int postId) {
-    Post post = postRepository.findPostById(postId);
-    return mapToDTO(post);
+        Post post = postRepository.findPostById(postId);
+        return mapToDTO(post);
     }
 
     @Override

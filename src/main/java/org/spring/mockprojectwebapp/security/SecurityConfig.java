@@ -38,6 +38,7 @@ public class SecurityConfig {
 
                                     request.getSession().setAttribute("userId", user.getUserId());
                                     request.getSession().setAttribute("userEmail", user.getEmail());
+                                    request.getSession().setAttribute("userName", user.getUsername());
 
                                     var authorities = authentication.getAuthorities();
                                     for (var authority : authorities) {
@@ -69,3 +70,4 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
 }
+

@@ -1,5 +1,6 @@
 package org.spring.mockprojectwebapp.controllers.home;
 
+
 import jakarta.servlet.http.HttpSession;
 import org.spring.mockprojectwebapp.dtos.PostDTO;
 import org.spring.mockprojectwebapp.dtos.UserDTO;
@@ -8,20 +9,21 @@ import org.spring.mockprojectwebapp.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
 
 @Controller
 @RequestMapping("/profile")
-public class ProfileController {
+public class HomeProfileController {
     @Autowired
     private PostService postService;
     @Autowired
     private UserService userService;
 
     @RequestMapping
-    public String showProfilePage( HttpSession session, Model model) {
+    public String showProfilePage(HttpSession session, Model model) {
         int userId = (int) session.getAttribute("userId");
         UserDTO userDTO = userService.findUserById(userId);
         List<PostDTO> postDTOs = postService.getUserPosts(userId);
@@ -29,5 +31,4 @@ public class ProfileController {
         model.addAttribute("postDTOs", postDTOs);
         return "user/profile";
     }
-
 }

@@ -63,6 +63,8 @@
                                            placeholder="Xác nhận mật khẩu" required/>
                                     <p th:if="${#fields.hasErrors('confirmPassword')}" th:errors="*{confirmPassword}"
                                        class="text-danger"></p>
+                                    <input type="hidden" name="roleId" value="2" /> <!-- Default USER role -->
+
                                 </div>
                                 <div class="col-12 text-center">
                                     <button type="submit" class="btn btn-primary">Đăng ký</button>
