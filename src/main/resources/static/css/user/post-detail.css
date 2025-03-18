@@ -45,65 +45,6 @@ body {
     padding: 2.5rem;
 }
 
-/* Button styles */
-.btn-primary {
-    background: linear-gradient(135deg, var(--primary-color), var(--primary-hover));
-    border: none;
-    border-radius: 25px;
-    color: var(--text-color);
-    padding: 0.75rem 2rem;
-    font-weight: 600;
-    transition: var(--transition-default);
-}
-
-.btn-primary:hover {
-    background: var(--primary-hover);
-    transform: translateY(-3px);
-    color: var(--text-color);
-    box-shadow: var(--shadow);
-}
-
-.btn-outline-primary {
-    color: var(--primary-color);
-    border-color: var(--primary-color);
-    border-radius: 25px;
-    padding: 0.5rem 1.5rem;
-    transition: var(--transition-default);
-}
-
-.btn-outline-primary:hover {
-    background-color: var(--primary-color);
-    color: var(--text-color);
-    transform: translateY(-3px);
-    box-shadow: var(--shadow);
-}
-
-.btn-outline-danger {
-    color: #dc3545;
-    border-color: #dc3545;
-    border-radius: 25px;
-    padding: 0.5rem 1.5rem;
-    transition: var(--transition-default);
-}
-
-.btn-outline-danger:hover {
-    background-color: #dc3545;
-    color: var(--text-color);
-    transform: translateY(-3px);
-    box-shadow: var(--shadow);
-}
-
-.btn-outline-secondary {
-    border-radius: 25px;
-    padding: 0.5rem 1.5rem;
-    transition: var(--transition-default);
-}
-
-.btn-outline-secondary:hover {
-    transform: translateY(-3px);
-    box-shadow: var(--shadow);
-}
-
 /* Text styles */
 .text-primary {
     color: var(--primary-color) !important;
