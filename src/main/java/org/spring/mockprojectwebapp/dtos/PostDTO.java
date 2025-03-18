@@ -2,8 +2,6 @@ package org.spring.mockprojectwebapp.dtos;
 
 import lombok.*;
 
-
-
 import java.time.LocalDateTime;
 
 @Builder

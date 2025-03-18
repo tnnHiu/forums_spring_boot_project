@@ -1,7 +1,7 @@
 package org.spring.mockprojectwebapp.controllers.admin;
 
 import org.spring.mockprojectwebapp.dtos.HashtagDTO;
-import org.spring.mockprojectwebapp.services.implement.HashtagServiceImpl;
+import org.spring.mockprojectwebapp.services.HashtagService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
@@ -12,12 +12,8 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/admin")
 public class AdminHashtagController {
 
-    private final HashtagServiceImpl hashtagServiceImpl;
-
     @Autowired
-    public AdminHashtagController(HashtagServiceImpl hashtagServiceImpl) {
-        this.hashtagServiceImpl = hashtagServiceImpl;
-    }
+    private HashtagService hashtagService;
 
     @GetMapping("/hashtags")
     public String listHashtags(@RequestParam(defaultValue = "0") int page,
@@ -26,9 +22,9 @@ public class AdminHashtagController {
         Page<HashtagDTO> hashtags;
         int size = 10; // Default page size
         if (keyword != null && !keyword.isEmpty()) {
-            hashtags = hashtagServiceImpl.searchHashtags(keyword, page, size);
+            hashtags = hashtagService.searchHashtags(keyword, page, size);
         } else {
-            hashtags = hashtagServiceImpl.getAllHashtags(page, size);
+            hashtags = hashtagService.getAllHashtags(page, size);
         }
         model.addAttribute("hashtags", hashtags.getContent());
         model.addAttribute("currentPage", page);
@@ -39,20 +35,20 @@ public class AdminHashtagController {
 
     @PostMapping("/hashtags/add")
     public String addHashtag(@ModelAttribute HashtagDTO hashtagDTO) {
-        hashtagServiceImpl.saveHashtag(hashtagDTO);
+        hashtagService.saveHashtag(hashtagDTO);
         return "redirect:/admin/hashtags";
     }
 
     @PostMapping("/hashtags/update/{id}")
     public String updateHashtag(@PathVariable int id, @ModelAttribute HashtagDTO hashtagDTO) {
         hashtagDTO.setId(id);
-        hashtagServiceImpl.saveHashtag(hashtagDTO);
+        hashtagService.saveHashtag(hashtagDTO);
         return "redirect:/admin/hashtags";
     }
 
     @PostMapping("/hashtags/delete/{id}")
     public String deleteHashtag(@PathVariable int id) {
-        hashtagServiceImpl.deleteHashtag(id);
+        hashtagService.deleteHashtag(id);
         return "redirect:/admin/hashtags";
     }
 }

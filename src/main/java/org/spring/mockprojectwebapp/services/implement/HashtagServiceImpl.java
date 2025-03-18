@@ -36,7 +36,7 @@ public class HashtagServiceImpl implements HashtagService {
     @Override
     public HashtagDTO getHashtagById(int id) {
         Hashtag hashtag = hashtagRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Hashtag không tồn tại"));
+                .orElseThrow(() -> new RuntimeException("Hashtag not found"));
         return convertToDTO(hashtag);
     }
 
@@ -47,7 +47,7 @@ public class HashtagServiceImpl implements HashtagService {
             hashtag.setCreatedAt(LocalDateTime.now());
         } else {
             Hashtag existingHashtag = hashtagRepository.findById(hashtag.getId())
-                    .orElseThrow(() -> new RuntimeException("Hashtag không tồn tại"));
+                    .orElseThrow(() -> new RuntimeException("Hashtag not found"));
             hashtag.setCreatedAt(existingHashtag.getCreatedAt());
         }
         hashtagRepository.save(hashtag);
@@ -56,7 +56,7 @@ public class HashtagServiceImpl implements HashtagService {
     @Override
     public void deleteHashtag(int id) {
         if (!hashtagRepository.existsById(id)) {
-            throw new RuntimeException("Hashtag không tồn tại");
+            throw new RuntimeException("Hashtag not found");
         }
         hashtagRepository.deleteById(id);
     }

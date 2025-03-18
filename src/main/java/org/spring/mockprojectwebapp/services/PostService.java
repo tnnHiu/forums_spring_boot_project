@@ -13,4 +13,6 @@ public interface PostService {
     PostDTO savePost(PostDTO postDTO);
     Page<PostDTO> getPosts(String keyword, Pageable pageable);
     List<PostDTO> getRecentPosts();
+    Page<PostDTO> filterPosts(String keyword, Integer status, Integer categoryId, Integer isPremium, int page, int size);
+    void deletePost(int id);
 }

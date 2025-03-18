@@ -4,7 +4,7 @@
        aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
-        <form th:action="@{/admin/hashtags/add}" method="post">
+        <form th:action="@{/admin/hashtags/add}" method="post" class="hashtag-form">
           <div class="modal-header">
             <h5 class="modal-title" id="addHashtagModalLabel">Thêm Hashtag</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -12,8 +12,10 @@
           <div class="modal-body">
             <div class="mb-3">
               <label class="form-label">Tên Hashtag</label>
-              <input type="text" class="form-control" name="hashtagName" placeholder="Nhập tên hashtag"
+              <input type="text" class="form-control hashtag-input" name="hashtagName" placeholder="Nhập tên hashtag"
+                     pattern="^(#)?[a-zA-Z0-9_]+$" title="Hashtag chỉ được chứa chữ cái, số, dấu gạch dưới, và có thể bắt đầu bằng #"
                      required>
+              <div class="invalid-feedback">Hashtag chỉ được nhập định dạng abc hoặc #abc</div>
             </div>
           </div>
           <div class="modal-footer">
@@ -31,7 +33,7 @@
          aria-labelledby="editHashtagModalLabel" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
-          <form th:action="@{/admin/hashtags/update/{id}(id=${hashtag.id})}" method="post">
+          <form th:action="@{/admin/hashtags/update/{id}(id=${hashtag.id})}" method="post" class="hashtag-form">
             <div class="modal-header">
               <h5 class="modal-title">Sửa Hashtag</h5>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -40,8 +42,11 @@
               <input type="hidden" name="id" th:value="${hashtag.id}">
               <div class="mb-3">
                 <label class="form-label">Tên Hashtag</label>
-                <input type="text" class="form-control" name="hashtagName"
-                       th:value="${hashtag.hashtagName}" required>
+                <input type="text" class="form-control hashtag-input" name="hashtagName"
+                       th:value="${hashtag.hashtagName}"
+                       pattern="^(#)?[a-zA-Z0-9_]+$" title="Hashtag chỉ được chứa chữ cái, số, dấu gạch dưới, và có thể bắt đầu bằng #"
+                       required>
+                <div class="invalid-feedback">Hashtag chỉ được nhập định dạng abc hoặc #abc</div>
               </div>
             </div>
             <div class="modal-footer">
@@ -54,3 +59,4 @@
     </div>
   </th:block>
 </div>
+<script th:src="@{/js/admin-post.js}"></script>
