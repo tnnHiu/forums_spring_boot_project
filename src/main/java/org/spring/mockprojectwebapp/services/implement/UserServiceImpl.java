@@ -34,7 +34,6 @@ public class UserServiceImpl implements UserService {
         return users.stream().map(this::mapToUserDTO).collect(Collectors.toList());
     }
 
-
     @Override
     public List<UserDTO> searchUsers(String keyword) {
         List<User> users = userRepository.findByUsernameContainingOrEmailContaining(keyword);

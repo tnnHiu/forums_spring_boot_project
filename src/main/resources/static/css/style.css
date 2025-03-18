@@ -108,3 +108,19 @@ body{
     padding: 12px;
 
 }
+.featured-image {
+    margin-top: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+.custom-text {
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: 600;
+}
+
+.custom-description {
+    width: 17rem;
+    font-family: 'Courier New', Courier, monospace;
+}
