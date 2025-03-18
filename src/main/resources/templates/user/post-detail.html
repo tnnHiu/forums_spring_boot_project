@@ -79,6 +79,8 @@
     <div class="card mb-5">
         <div class="card-body">
             <h4 class="fw-bold mb-4"><i class="bi bi-chat-left-text me-2"></i>Bình luận</h4>
+            <!-- Input ẩn chứa postId -->
+            <input type="hidden" id="postIdHidden" th:value="${postDTO.getPostId()}"/>
             <div class="mb-4" sec:authorize="isAuthenticated()">
                 <div class="d-flex">
                     <img class="rounded-circle me-3" src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(19).webp"
@@ -108,72 +110,73 @@
             </div>
         </div>
     </div>
+</div>
 
-    <!-- Gợi ý bài viết -->
-    <div class="card">
-        <div class="card-body">
-            <div class="d-flex justify-content-between align-items-center mb-4">
-                <h4 class="fw-bold mb-0"><i class="bi bi-lightning-charge me-2"></i>Gợi Ý Cho Bạn</h4>
-                <a href="#" class="text-dark fw-medium text-decoration-none">Xem thêm <i class="bi bi-arrow-right"></i></a>
-            </div>
-            <div class="row row-cols-1 row-cols-md-3 g-4">
-                <div class="col">
-                    <div class="card h-100">
-                        <div class="ratio ratio-16x9">
-                            <img th:src="@{/img/img_post.jpg}" class="card-img-top" alt="Gợi ý 1">
-                        </div>
-                        <div class="card-body">
-                            <h6 class="card-title fw-bold text-truncate">Cách làm Phở Bò ngon như ngoài hàng</h6>
-                            <p class="text-muted small text-truncate">Khám phá bí quyết nấu phở bò thơm ngon đúng
-                                điệu...</p>
-                            <div class="d-flex justify-content-between text-muted small">
-                                <span><i class="bi bi-chat-left-text me-1"></i>15</span>
-                                <span><i class="bi bi-heart text-danger me-1"></i>45</span>
-                                <span><i class="bi bi-bookmark text-primary me-1"></i>20</span>
-                            </div>
-                        </div>
+<!-- Gợi ý bài viết -->
+<div class="card">
+    <div class="card-body">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h4 class="fw-bold mb-0"><i class="bi bi-lightning-charge me-2"></i>Gợi Ý Cho Bạn</h4>
+            <a href="#" class="text-dark fw-medium text-decoration-none">Xem thêm <i class="bi bi-arrow-right"></i></a>
+        </div>
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+            <div class="col">
+                <div class="card h-100">
+                    <div class="ratio ratio-16x9">
+                        <img th:src="@{/img/img_post.jpg}" class="card-img-top" alt="Gợi ý 1">
                     </div>
-                </div>
-                <div class="col">
-                    <div class="card h-100">
-                        <div class="ratio ratio-16x9">
-                            <img th:src="@{/img/bunbohue.jpg}" class="card-img-top" alt="Gợi ý 2">
-                        </div>
-                        <div class="card-body">
-                            <h6 class="card-title fw-bold text-truncate">Cách làm Phở Bò ngon như ngoài hàng</h6>
-                            <p class="text-muted small text-truncate">Khám phá bí quyết nấu phở bò thơm ngon đúng
-                                điệu...</p>
-                            <div class="d-flex justify-content-between text-muted small">
-                                <span><i class="bi bi-chat-left-text me-1"></i>15</span>
-                                <span><i class="bi bi-heart text-danger me-1"></i>45</span>
-                                <span><i class="bi bi-bookmark text-primary me-1"></i>20</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="card h-100">
-                        <div class="ratio ratio-16x9">
-                            <img th:src="@{/img/banhmy.jpg}" class="card-img-top" alt="Gợi ý 3">
-                        </div>
-                        <div class="card-body">
-                            <h6 class="card-title fw-bold text-truncate">Cách làm Phở Bò ngon như ngoài hàng</h6>
-                            <p class="text-muted small text-truncate">Khám phá bí quyết nấu phở bò thơm ngon đúng
-                                điệu...</p>
-                            <div class="d-flex justify-content-between text-muted small">
-                                <span><i class="bi bi-chat-left-text me-1"></i>15</span>
-                                <span><i class="bi bi-heart text-danger me-1"></i>45</span>
-                                <span><i class="bi bi-bookmark text-primary me-1"></i>20</span>
-                            </div>
+                    <div class="card-body">
+                        <h6 class="card-title fw-bold text-truncate">Cách làm Phở Bò ngon như ngoài hàng</h6>
+                        <p class="text-muted small text-truncate">Khám phá bí quyết nấu phở bò thơm ngon đúng
+                            điệu...</p>
+                        <div class="d-flex justify-content-between text-muted small">
+                            <span><i class="bi bi-chat-left-text me-1"></i>15</span>
+                            <span><i class="bi bi-heart text-danger me-1"></i>45</span>
+                            <span><i class="bi bi-bookmark text-primary me-1"></i>20</span>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="text-center mt-4">
-                <a href="#" class="btn btn-outline-primary">Xem thêm <i class="bi bi-arrow-right"></i></a>
+            <div class="col">
+                <div class="card h-100">
+                    <div class="ratio ratio-16x9">
+                        <img th:src="@{/img/bunbohue.jpg}" class="card-img-top" alt="Gợi ý 2">
+                    </div>
+                    <div class="card-body">
+                        <h6 class="card-title fw-bold text-truncate">Cách làm Phở Bò ngon như ngoài hàng</h6>
+                        <p class="text-muted small text-truncate">Khám phá bí quyết nấu phở bò thơm ngon đúng
+                            điệu...</p>
+                        <div class="d-flex justify-content-between text-muted small">
+                            <span><i class="bi bi-chat-left-text me-1"></i>15</span>
+                            <span><i class="bi bi-heart text-danger me-1"></i>45</span>
+                            <span><i class="bi bi-bookmark text-primary me-1"></i>20</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card h-100">
+                    <div class="ratio ratio-16x9">
+                        <img th:src="@{/img/banhmy.jpg}" class="card-img-top" alt="Gợi ý 3">
+                    </div>
+                    <div class="card-body">
+                        <h6 class="card-title fw-bold text-truncate">Cách làm Phở Bò ngon như ngoài hàng</h6>
+                        <p class="text-muted small text-truncate">Khám phá bí quyết nấu phở bò thơm ngon đúng
+                            điệu...</p>
+                        <div class="d-flex justify-content-between text-muted small">
+                            <span><i class="bi bi-chat-left-text me-1"></i>15</span>
+                            <span><i class="bi bi-heart text-danger me-1"></i>45</span>
+                            <span><i class="bi bi-bookmark text-primary me-1"></i>20</span>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
+        <div class="text-center mt-4">
+            <a href="#" class="btn btn-outline-primary">Xem thêm <i class="bi bi-arrow-right"></i></a>
+        </div>
     </div>
+</div>
 </div>
 
 <div th:replace="/fragments/footer :: footer"></div>

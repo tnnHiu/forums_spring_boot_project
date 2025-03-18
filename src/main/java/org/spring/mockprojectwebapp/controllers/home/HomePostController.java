@@ -63,7 +63,8 @@ public class HomePostController {
     }
 
     @PostMapping("/post/create-comment")
-    public String createComment(@RequestParam("postId") int postId, @RequestParam("comment") String commentContent, HttpSession session, Model model) {
+    public String createComment(@RequestParam("postId") int postId,
+                                @RequestParam("comment") String commentContent, HttpSession session, Model model) {
 
         int userId = (int) session.getAttribute("userId");
 

@@ -33,9 +33,37 @@ public class ReportServiceImpl implements ReportService {
     private UserService userService;
 
     @Override
-    public void createReport(ReportPostDTO reportDTO) {
+    public void createPostReport(ReportPostDTO reportDTO) {
         Report report = new Report();
+        User user = new User();
+        user.setUserId(reportDTO.getReporterId());
+        report.setReporter(user);
+        Post post = new Post();
+        post.setId(reportDTO.getPostId());
+        report.setReportedPost(post);
+        report.setReportType(Report.ReportType.COMMENT);
+        report.setReason(reportDTO.getReason());
+        report.setStatus(Report.Status.PENDING);
+        report.setCreatedAt(LocalDateTime.now());
+        reportRepository.save(report);
     }
+
+    @Override
+    public void createCommentReport(ReportPostDTO reportDTO) {
+        Report report = new Report();
+        User user = new User();
+        user.setUserId(reportDTO.getReporterId());
+        report.setReporter(user);
+        Comment comment = new Comment();
+        comment.setId(reportDTO.getCommentId());
+        report.setReportedComment(comment);
+        report.setReportType(Report.ReportType.COMMENT);
+        report.setReason(reportDTO.getReason());
+        report.setStatus(Report.Status.PENDING);
+        report.setCreatedAt(LocalDateTime.now());
+        reportRepository.save(report);
+    }
+
 
     @Override
     public ReportDTO findById(Integer id) {
@@ -91,18 +119,17 @@ public class ReportServiceImpl implements ReportService {
         return reportPage.map(this::mapToDTO);
     }
 
-
     // Chuyển đổi từ Entity sang DTO
     private ReportDTO mapToDTO(Report report) {
         return ReportDTO.builder().reportId(report.getReportId()).reporterName(report.getReporter().getUsername()).reporterId(report.getReporter().getUserId()).reportedPostId(report.getReportedPost() != null ? report.getReportedPost().getId() : null).reportedPostTitle(report.getReportedPost() != null ? report.getReportedPost().getTitle() : "N/A").reportedCommentId(report.getReportedComment() != null ? report.getReportedComment().getId() : null).reportedCommentContent(report.getReportedComment() != null ? report.getReportedComment().getContent() : "N/A").reportedUserId(report.getReportedUser() != null ? report.getReportedUser().getUserId() : null).reportedUserName(report.getReportedUser() != null ? report.getReportedUser().getUsername() : "N/A").reason(report.getReason()).status(report.getStatus()).reportType(report.getReportType()).createdAt(report.getCreatedAt()).updatedAt(report.getUpdatedAt()).build();
     }
 
     // Chuyển đổi từ DTO sang Entity
-    private Report mapToEntity(ReportDTO reportDTO) {
-        Report report = new Report();
-        report.setReportId(reportDTO.getReportId());
-        report.setCreatedAt(reportDTO.getCreatedAt());
-        report.setUpdatedAt(reportDTO.getUpdatedAt());
-        return report;
-    }
+//    private Report mapToEntity(ReportDTO reportDTO) {
+//        Report report = new Report();
+//        report.setReportId(reportDTO.getReportId());
+//        report.setCreatedAt(reportDTO.getCreatedAt());
+//        report.setUpdatedAt(reportDTO.getUpdatedAt());
+//        return report;
+//    }
 }

@@ -80,8 +80,6 @@ public class PostServiceImpl implements PostService {
         post.setUpdatedAt(LocalDateTime.now());
         post.setPremium(postDTO.isPremium());
         post.setStatus(postDTO.getStatus() == 1 ? Post.Status.ACTIVE : Post.Status.INACTIVE);
-
-
         // Set User and Category (only need ID)
         User user = new User();
         user.setUserId(postDTO.getUserId());
