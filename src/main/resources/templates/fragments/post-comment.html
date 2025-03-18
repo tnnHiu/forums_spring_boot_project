@@ -1,0 +1,26 @@
+<div th:fragment="commentList" id="commentList">
+    <div id="commentsContainer">
+        <!--/*@thymesVar id="userCommentDTOs" type=""*/-->
+        <div th:each="comment : ${userCommentDTOs}" class="mb-3 comment-item">
+            <div class="d-flex flex-start align-items-center mb-3">
+                <img class="rounded-circle shadow-sm me-3"
+                     src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(19).webp"
+                     alt="avatar"
+                     width="50"
+                     height="50"/>
+                <div>
+                    <h6 class="fw-bold text-primary mb-1" th:text="${comment.username}"></h6>
+                </div>
+            </div>
+            <p class="mb-3" th:text="${comment.comment}"></p>
+            <div class="d-flex gap-3 text-muted small">
+                <a href="#!" class="text-decoration-none"><i class="bi bi-hand-thumbs-up me-1"></i>Thích</a>
+                <a href="#!" class="text-decoration-none"><i class="bi bi-chat-dots me-1"></i>Trả lời</a>
+            </div>
+            <hr>
+        </div>
+        <div th:if="${#lists.isEmpty(userCommentDTOs)}" class="text-muted">
+            Chưa có bình luận nào.
+        </div>
+    </div>
+</div>

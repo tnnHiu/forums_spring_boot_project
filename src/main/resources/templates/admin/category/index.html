@@ -32,9 +32,46 @@
         <button class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#addCategoryModal">+ Thêm</button>
 
         <!-- Thanh tìm kiếm -->
-        <form th:action="@{/admin/categories}" method="get" class="d-flex gap-2 mb-3">
+        <form th:action="@{/admin/categories}" method="get" class="d-flex gap-2 mb-3 align-items-center">
+            <!-- Ô tìm kiếm theo từ khóa -->
             <input type="text" name="keyword" class="form-control w-25" placeholder="Tìm kiếm..." th:value="${keyword}">
-            <button type="submit" class="btn btn-primary">Tìm</button>
+            <button type="submit" class="btn btn-primary">
+                <i class="bi bi-search"></i> Tìm
+            </button>
+
+            <!-- Nút lọc dropdown -->
+            <div class="dropdown">
+                <button class="btn btn-outline-primary dropdown-toggle d-flex align-items-center" type="button" data-bs-toggle="dropdown">
+                    <i class="bi bi-funnel me-2"></i> Bộ lọc
+                </button>
+                <div class="dropdown-menu p-3" style="width: 300px;" onclick="event.stopPropagation()">
+                    <!-- Tiêu đề bộ lọc -->
+                    <h6 class="dropdown-header fw-bold">Bộ lọc nâng cao</h6>
+
+                    <!-- Lọc theo ngày tạo -->
+                    <div class="mb-3">
+                        <label for="startDate" class="form-label text-secondary">Từ ngày</label>
+                        <input type="date" name="startDate" id="startDate" class="form-control" th:value="${startDate}">
+                    </div>
+                    <div class="mb-3">
+                        <label for="endDate" class="form-label text-secondary">Đến ngày</label>
+                        <input type="date" name="endDate" id="endDate" class="form-control" th:value="${endDate}">
+                    </div>
+
+                    <!-- Phân cách -->
+                    <hr class="my-2">
+
+                    <!-- Nút hành động -->
+                    <div class="d-flex justify-content-between mt-2">
+                        <button type="button" class="btn btn-outline-danger btn-sm" onclick="clearFilters()">
+                            <i class="bi bi-x-circle me-1"></i> Bỏ chọn
+                        </button>
+                        <button type="submit" class="btn btn-primary btn-sm">
+                            <i class="bi bi-check-circle me-1"></i> Áp dụng
+                        </button>
+                    </div>
+                </div>
+            </div>
         </form>
 
         <!-- Bảng danh mục -->

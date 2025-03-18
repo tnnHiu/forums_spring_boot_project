@@ -2,10 +2,9 @@ package org.spring.mockprojectwebapp.controllers;
 
 
 import jakarta.validation.Valid;
-import org.spring.mockprojectwebapp.dtos.LoginDTO;
 
 
-import org.spring.mockprojectwebapp.dtos.RegisterDTO;
+import org.spring.mockprojectwebapp.dtos.admin.RegisterDTO;
 import org.spring.mockprojectwebapp.services.implement.AuthServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,6 +14,7 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
+//@RequestMapping("/")
 public class AuthController {
 
     @Autowired
@@ -24,7 +24,6 @@ public class AuthController {
     public String showLoginPage() {
         return "login";
     }
-
 
     @GetMapping("/register")
     public String showRegisterPage(Model model) {
@@ -51,7 +50,7 @@ public class AuthController {
         try {
             authService.save(registerDTO);
             model.addAttribute("registerDTO", new RegisterDTO());
-//            model.addAttribute("success", true);
+            model.addAttribute("success", true);
         } catch (Exception e) {
             result.addError(new FieldError("registerDTO", "username", e.getMessage()));
         }

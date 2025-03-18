@@ -1,9 +1,6 @@
 package org.spring.mockprojectwebapp.services.implement;
 
-import org.spring.mockprojectwebapp.dtos.CommentDTO;
-import org.spring.mockprojectwebapp.dtos.PostDTO;
-import org.spring.mockprojectwebapp.dtos.ReportDTO;
-import org.spring.mockprojectwebapp.dtos.UserDTO;
+import org.spring.mockprojectwebapp.dtos.admin.ReportDTO;
 import org.spring.mockprojectwebapp.entities.Comment;
 import org.spring.mockprojectwebapp.entities.Post;
 import org.spring.mockprojectwebapp.entities.Report;

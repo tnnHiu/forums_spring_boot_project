@@ -1,4 +1,4 @@
-package org.spring.mockprojectwebapp.dtos;
+package org.spring.mockprojectwebapp.dtos.admin;
 
 import lombok.Builder;
 import lombok.AllArgsConstructor;
@@ -11,8 +11,8 @@ import java.time.LocalDateTime;
 @Builder
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 public class CategoryDTO {
     private int categoryId;
     private String categoryName;

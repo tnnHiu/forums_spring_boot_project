@@ -7,6 +7,10 @@ import org.spring.mockprojectwebapp.dtos.UpdateUsernameDTO;
 import org.spring.mockprojectwebapp.entities.User;
 import org.spring.mockprojectwebapp.services.ProfileService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.spring.mockprojectwebapp.dtos.admin.PostDTO;
+import org.spring.mockprojectwebapp.dtos.admin.UserDTO;
+import org.spring.mockprojectwebapp.services.PostService;
+import org.spring.mockprojectwebapp.services.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -16,9 +20,25 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.List;
+
 @Controller
 @RequestMapping("/profile")
 public class HomeProfileController {
+    @Autowired
+    private PostService postService;
+    @Autowired
+    private UserService userService;
+
+    @RequestMapping
+    public String showProfilePage(HttpSession session, Model model) {
+        int userId = (int) session.getAttribute("userId");
+        UserDTO userDTO = userService.findUserById(userId);
+        List<PostDTO> postDTOs = postService.getUserPosts(userId);
+        model.addAttribute("userDTO", userDTO);
+        model.addAttribute("postDTOs", postDTOs);
+        return "user/profile";
+    }
 
     @Autowired
     private ProfileService profileService;
@@ -109,4 +129,5 @@ public class HomeProfileController {
         // Redirect đến /logout để Spring Security xử lý đăng xuất
         return "redirect:/logout";
     }
+
 }

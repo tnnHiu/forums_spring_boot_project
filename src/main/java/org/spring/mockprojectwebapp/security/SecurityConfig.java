@@ -25,6 +25,7 @@ public class SecurityConfig {
                         .requestMatchers("/", "/css/**", "/js/**", "/img/**", "/bootstrap-5.3.3-dist/**", "/bootstrap-icons-1.11.3/**").permitAll()
                         .requestMatchers("/register", "/login").permitAll()
                         .requestMatchers("/admin/**").hasRole("ADMIN")
+                        .requestMatchers("/post/*").permitAll()
                         .anyRequest().authenticated()
                 )
                 .formLogin(form -> form
@@ -32,14 +33,11 @@ public class SecurityConfig {
                         .permitAll()
                         .successHandler(
                                 (request, response, authentication) -> {
-
                                     String email = authentication.getName();
                                     User user = authService.findByEmail(email);
-
                                     request.getSession().setAttribute("userId", user.getUserId());
                                     request.getSession().setAttribute("userEmail", user.getEmail());
                                     request.getSession().setAttribute("userName", user.getUsername());
-
                                     var authorities = authentication.getAuthorities();
                                     for (var authority : authorities) {
                                         if (authority.getAuthority().equals("ROLE_ADMIN")) {

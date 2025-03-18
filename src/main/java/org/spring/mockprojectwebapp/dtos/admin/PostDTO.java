@@ -1,11 +1,7 @@
-package org.spring.mockprojectwebapp.dtos;
+package org.spring.mockprojectwebapp.dtos.admin;
 
-import lombok.Builder;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import org.spring.mockprojectwebapp.entities.Post;
+import lombok.*;
+
 
 
 import java.time.LocalDateTime;
@@ -21,9 +17,13 @@ public class PostDTO {
     private String content;
     private String imageUrl;
     private String description;
-    private String author;
-    private Post.Status status;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
-    private CategoryDTO category;
+    private int status;
+    private boolean isPremium;
+    private String imagePath;
+    private String categoryName;
+    private String username;
+    private int userId;
+    private int categoryId;
 }

@@ -1,6 +1,6 @@
 package org.spring.mockprojectwebapp.services.implement;
 
-import org.spring.mockprojectwebapp.dtos.CategoryDTO;
+import org.spring.mockprojectwebapp.dtos.admin.CategoryDTO;
 import org.spring.mockprojectwebapp.entities.Category;
 import org.spring.mockprojectwebapp.repositories.CategoryRepository;
 import org.spring.mockprojectwebapp.services.CategoryService;
@@ -8,20 +8,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
-
 @Service
 public class CategoryServiceImpl implements CategoryService {
 
-    private final CategoryRepository categoryRepository;
-
     @Autowired
-    public CategoryServiceImpl(CategoryRepository categoryRepository) {
-        this.categoryRepository = categoryRepository;
-    }
+    private CategoryRepository categoryRepository;
 
     @Override
     public CategoryDTO findById(Integer id) {
@@ -79,7 +75,6 @@ public class CategoryServiceImpl implements CategoryService {
                 .toList();
     }
 
-
     private CategoryDTO mapToDTO(Category category) {
         return CategoryDTO.builder()
                 .categoryId(category.getCategoryId())
@@ -99,6 +94,4 @@ public class CategoryServiceImpl implements CategoryService {
         category.setUpdatedAt(categoryDTO.getUpdatedAt());
         return category;
     }
-
-
 }
