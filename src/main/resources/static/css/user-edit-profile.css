@@ -1,0 +1,33 @@
+body {
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+}
+
+.btn-custom {
+    background-color: #007bff;
+    border-color: #007bff;
+    color: white;
+    transition: all 0.3s ease;
+}
+.btn-custom:hover {
+    background-color: #0056b3;
+    border-color: #0056b3;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.shadow-sm {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.breadcrumb-item a:hover {
+    color: #007bff;
+    text-decoration: underline;
+}
+
+.success-message {
+    animation: fadeIn 0.5s ease-in;
+}
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
