@@ -39,7 +39,7 @@
 
             <!-- Bộ lọc Status -->
             <select name="status" class="form-select" style="width: 150px;">
-                <option value="">-- Trạng thái --</option>
+                <option value="">Trạng thái</option>
                 <option value="0" th:selected="${status == 0}">ACTIVE</option>
                 <option value="1" th:selected="${status == 1}">INACTIVE</option>
                 <option value="2" th:selected="${status == 2}">BANNED</option>
@@ -47,7 +47,7 @@
 
             <!-- Bộ lọc Category -->
             <select name="categoryId" class="form-select" style="width: 180px;">
-                <option value="">-- Danh mục --</option>
+                <option value="">Danh mục</option>
                 <option th:each="cat : ${categories}"
                         th:value="${cat.categoryId}"
                         th:text="${cat.categoryName}"
@@ -56,7 +56,7 @@
 
             <!-- Bộ lọc Premium -->
             <select name="isPremium" class="form-select" style="width: 150px;">
-                <option value="">-- Premium --</option>
+                <option value="">Tài khoản</option>
                 <option value="1" th:selected="${isPremium == 1}">Premium</option>
                 <option value="0" th:selected="${isPremium == 0}">Free</option>
             </select>

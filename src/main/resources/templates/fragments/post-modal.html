@@ -1,33 +1,4 @@
 <div th:fragment="post-modal">
-    <!-- Modal Thêm Bài Đăng -->
-    <div class="modal fade" id="addPostModal" tabindex="-1" aria-labelledby="addPostModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <form th:action="@{/admin/posts/add}" method="post">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="addPostModalLabel">Thêm Bài Đăng</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="mb-3">
-                            <label class="form-label">Tiêu Đề</label>
-                            <input type="text" class="form-control" name="title" placeholder="Nhập tiêu đề" required>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Nội Dung</label>
-                            <textarea class="form-control" name="content" placeholder="Nhập nội dung"
-                                      required></textarea>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
-                        <button type="submit" class="btn btn-primary">Lưu</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-
     <!-- Modal Xem Bài Đăng -->
     <th:block th:each="postDTO : ${postDTOs}">
         <div class="modal fade" th:id="'viewPostModal' + ${postDTO.postId}" tabindex="-1"
@@ -39,6 +10,14 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
+                        <!-- Image section -->
+                        <div class="mb-4" th:if="${postDTO.imageUrl != null && !postDTO.imageUrl.isEmpty()}">
+                            <h6 class="fw-bold text-primary">Hình ảnh</h6>
+                            <div class="text-center border rounded p-3">
+                                <img th:src="${postDTO.imageUrl}" alt="Post image" class="img-fluid rounded"
+                                     style="max-height: 400px;">
+                            </div>
+                        </div>
                         <div class="mb-4">
                             <h6 class="fw-bold text-primary">Nội dung</h6>
                             <div class="border rounded p-3" style="min-height: 200px;" th:text="${postDTO.content}">
@@ -100,10 +79,7 @@
                 </div>
             </div>
         </div>
-    </th:block>
 
-    <<!-- Modal Sửa Bài Đăng -->
-    <th:block th:each="postDTO : ${postDTOs}">
         <div class="modal fade" th:id="'editPostModal' + ${postDTO.postId}" tabindex="-1"
              aria-labelledby="editPostModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-lg">
@@ -120,10 +96,18 @@
                                 <label class="form-label">Tiêu Đề</label>
                                 <p class="border rounded p-2" th:text="${postDTO.title}"></p>
                             </div>
+                            <div class="mb-4" th:if="${postDTO.imageUrl != null && !postDTO.imageUrl.isEmpty()}">
+                                <h6 class="fw-bold text-primary">Hình ảnh</h6>
+                                <div class="text-center border rounded p-3">
+                                    <img th:src="${postDTO.imageUrl}" alt="Post image" class="img-fluid rounded"
+                                         style="max-height: 400px;">
+                                </div>
+                            </div>
                             <!-- read-only -->
                             <div class="mb-3">
                                 <label class="form-label">Nội Dung</label>
-                                <div class="border rounded p-3" style="min-height: 100px;" th:text="${postDTO.content}"></div>
+                                <div class="border rounded p-3" style="min-height: 100px;"
+                                     th:text="${postDTO.content}"></div>
                             </div>
                             <!-- read-only -->
                             <div class="mb-3">
