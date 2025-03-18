@@ -13,5 +13,6 @@ import lombok.Setter;
 public class ReportPostDTO {
     private int postId;
     private int reporterId;
+    private int commentId;
     private String reason;
 }

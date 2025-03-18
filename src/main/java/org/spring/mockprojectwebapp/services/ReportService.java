@@ -20,6 +20,7 @@ public interface ReportService {
 
     Page<ReportDTO> getFilteredReports(Report.ReportType reportType, Report.Status status, LocalDateTime oldest, Pageable pageable);
 
-    void createReport(ReportPostDTO reportDTO);
+    void createPostReport(ReportPostDTO reportDTO);
 
+    void createCommentReport(ReportPostDTO reportDTO);
 }
