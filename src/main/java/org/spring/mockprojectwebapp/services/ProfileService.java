@@ -1,7 +1,7 @@
 package org.spring.mockprojectwebapp.services;
 
-import org.spring.mockprojectwebapp.dtos.UpdatePasswordDTO;
-import org.spring.mockprojectwebapp.dtos.UpdateUsernameDTO;
+import org.spring.mockprojectwebapp.dtos.user.UpdatePasswordDTO;
+import org.spring.mockprojectwebapp.dtos.user.UpdateUsernameDTO;
 import org.spring.mockprojectwebapp.entities.User;
 
 public interface ProfileService {

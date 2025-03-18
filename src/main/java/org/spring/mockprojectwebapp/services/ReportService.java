@@ -1,6 +1,7 @@
 package org.spring.mockprojectwebapp.services;
 
 import org.spring.mockprojectwebapp.dtos.admin.ReportDTO;
+import org.spring.mockprojectwebapp.dtos.user.ReportPostDTO;
 import org.spring.mockprojectwebapp.entities.Report;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -18,4 +19,7 @@ public interface ReportService {
     ReportDTO update(Integer id, ReportDTO reportDTO, String postStatus, String commentStatus, String userStatus);
 
     Page<ReportDTO> getFilteredReports(Report.ReportType reportType, Report.Status status, LocalDateTime oldest, Pageable pageable);
+
+    void createReport(ReportPostDTO reportDTO);
+
 }

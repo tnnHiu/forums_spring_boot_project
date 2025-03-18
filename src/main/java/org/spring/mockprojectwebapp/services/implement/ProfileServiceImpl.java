@@ -1,12 +1,11 @@
 package org.spring.mockprojectwebapp.services.implement;
 
-import org.spring.mockprojectwebapp.dtos.UpdatePasswordDTO;
-import org.spring.mockprojectwebapp.dtos.UpdateUsernameDTO;
+import org.spring.mockprojectwebapp.dtos.user.UpdatePasswordDTO;
+import org.spring.mockprojectwebapp.dtos.user.UpdateUsernameDTO;
 import org.spring.mockprojectwebapp.entities.User;
 import org.spring.mockprojectwebapp.repositories.UserRepository;
 import org.spring.mockprojectwebapp.services.ProfileService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
