@@ -2,14 +2,13 @@ package org.spring.mockprojectwebapp.controllers.home;
 
 
 import jakarta.servlet.http.HttpSession;
-import org.spring.mockprojectwebapp.dtos.PostDTO;
-import org.spring.mockprojectwebapp.dtos.UserDTO;
+import org.spring.mockprojectwebapp.dtos.admin.PostDTO;
+import org.spring.mockprojectwebapp.dtos.admin.UserDTO;
 import org.spring.mockprojectwebapp.services.PostService;
 import org.spring.mockprojectwebapp.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
