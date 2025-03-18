@@ -77,14 +77,14 @@ public class HomePostController {
         return "fragments/post-comment :: commentList";
     }
 
-    @GetMapping("/post/create")
+    @GetMapping("/new-post")
     public String showCreatePostPage(Model model) {
         model.addAttribute("postDTO", new PostDTO());
         model.addAttribute("categoryDTOs", categoryService.getAllCategories());
         return "user/create-post";
     }
 
-    @PostMapping("/post/create")
+    @PostMapping("/new-post")
     public String createPost(Model model, @Valid @ModelAttribute PostDTO postDTO, @RequestParam("imageFile") MultipartFile imageFile, @RequestParam("categoryId") int categoryId, HttpSession session) {
         String imageUrl = saveImageFile(imageFile);
         if (imageUrl == null || imageUrl.isEmpty()) {
@@ -118,7 +118,6 @@ public class HomePostController {
                     throw new IOException("Không thể tạo thư mục: " + uploadDir.getAbsolutePath());
                 }
             }
-
             String fileName = file.getOriginalFilename();
             String uniqueFileName = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss")) + "_" + fileName;
 

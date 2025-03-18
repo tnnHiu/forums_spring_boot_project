@@ -33,14 +33,11 @@ public class SecurityConfig {
                         .permitAll()
                         .successHandler(
                                 (request, response, authentication) -> {
-
                                     String email = authentication.getName();
                                     User user = authService.findByEmail(email);
-
                                     request.getSession().setAttribute("userId", user.getUserId());
                                     request.getSession().setAttribute("userEmail", user.getEmail());
                                     request.getSession().setAttribute("userName", user.getUsername());
-
                                     var authorities = authentication.getAuthorities();
                                     for (var authority : authorities) {
                                         if (authority.getAuthority().equals("ROLE_ADMIN")) {

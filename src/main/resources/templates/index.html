@@ -46,12 +46,15 @@
                                  onerror="this.onerror=null; this.src='/img/default-image.jpg';"
                                  alt="Post Image"
                                  class="card-img-top">
-                            <a th:href="@{/post/{id}(id=${postDTO.postId})}" class="btn btn-light hover-btn">Xem chi tiết</a>
+                            <a th:href="@{/post/{id}(id=${postDTO.postId})}" class="btn btn-light hover-btn">Xem chi
+                                tiết</a>
                         </div>
                         <div class="card-body">
-                            <p class="fw-bold title" th:text="${postDTO.title}">Phở Bò - Món ăn truyền thống của Việt Nam</p>
+                            <p class="fw-bold title" th:text="${postDTO.title}">Phở Bò - Món ăn truyền thống của Việt
+                                Nam</p>
                             <p class="text-muted description" th:text="${postDTO.description}">
-                                Món ăn truyền thống của Việt Nam với nước dùng đậm đà, hương vị đặc trưng từ xương bò hầm.
+                                Món ăn truyền thống của Việt Nam với nước dùng đậm đà, hương vị đặc trưng từ xương bò
+                                hầm.
                             </p>
                             <div class="d-flex justify-content-around align-items-center mt-3">
                                 <div class="d-flex align-items-center gap-2">
@@ -73,48 +76,48 @@
             </div>
 
             <!-- Nổi bật -->
-<!--            <div class="d-flex flex-wrap justify-content-between align-items-center mt-5">-->
-<!--                <h5 class="fw-bold">NỔI BẬT</h5>-->
-<!--                <a href="#" class="text-decoration-none text-black">Xem thêm <i class="bi bi-arrow-right"></i></a>-->
-<!--            </div>-->
+            <!--            <div class="d-flex flex-wrap justify-content-between align-items-center mt-5">-->
+            <!--                <h5 class="fw-bold">NỔI BẬT</h5>-->
+            <!--                <a href="#" class="text-decoration-none text-black">Xem thêm <i class="bi bi-arrow-right"></i></a>-->
+            <!--            </div>-->
 
-<!--            <div class="row mt-4" th:if="${recentPosts != null}">-->
-<!--                <div class="col-lg-6 col-12 mb-4" th:each="post : ${recentPosts}">-->
-<!--                    <div class="card">-->
-<!--                        <div class="image-container">-->
-<!--                            <img th:src="@{/img/image-food-test.jpg}" alt="Món ăn" class="card-img-top">-->
-<!--                            <button class="btn btn-light hover-btn">Xem chi tiết</button>-->
-<!--                        </div>-->
-<!--                        <div class="card-body">-->
-<!--                            <p class="fw-bold title" th:text="${post.title}">Phở Bò - Món ăn truyền thống của Việt Nam</p>-->
-<!--                            <p class="text-muted description" th:text="${post.content}">-->
-<!--                                Món ăn truyền thống của Việt Nam với nước dùng đậm đà, hương vị đặc trưng từ xương bò hầm.-->
-<!--                            </p>-->
-<!--                            <div class="d-flex justify-content-around align-items-center mt-3">-->
-<!--                                <div class="d-flex align-items-center gap-2">-->
-<!--                                    <i class="bi bi-chat-left-text fs-5 icon-btn"></i>-->
-<!--                                    <span class="small">Bình luận</span>-->
-<!--                                </div>-->
-<!--                                <div class="d-flex align-items-center gap-2">-->
-<!--                                    <i class="bi bi-heart fs-5 text-danger icon-btn like-btn"></i>-->
-<!--                                    <span class="small">Yêu thích</span>-->
-<!--                                </div>-->
-<!--                                <div class="d-flex align-items-center gap-2">-->
-<!--                                    <i class="bi bi-bookmark fs-5 text-primary icon-btn save-btn"></i>-->
-<!--                                    <span class="small">Lưu</span>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--            </div>-->
+            <!--            <div class="row mt-4" th:if="${recentPosts != null}">-->
+            <!--                <div class="col-lg-6 col-12 mb-4" th:each="post : ${recentPosts}">-->
+            <!--                    <div class="card">-->
+            <!--                        <div class="image-container">-->
+            <!--                            <img th:src="@{/img/image-food-test.jpg}" alt="Món ăn" class="card-img-top">-->
+            <!--                            <button class="btn btn-light hover-btn">Xem chi tiết</button>-->
+            <!--                        </div>-->
+            <!--                        <div class="card-body">-->
+            <!--                            <p class="fw-bold title" th:text="${post.title}">Phở Bò - Món ăn truyền thống của Việt Nam</p>-->
+            <!--                            <p class="text-muted description" th:text="${post.content}">-->
+            <!--                                Món ăn truyền thống của Việt Nam với nước dùng đậm đà, hương vị đặc trưng từ xương bò hầm.-->
+            <!--                            </p>-->
+            <!--                            <div class="d-flex justify-content-around align-items-center mt-3">-->
+            <!--                                <div class="d-flex align-items-center gap-2">-->
+            <!--                                    <i class="bi bi-chat-left-text fs-5 icon-btn"></i>-->
+            <!--                                    <span class="small">Bình luận</span>-->
+            <!--                                </div>-->
+            <!--                                <div class="d-flex align-items-center gap-2">-->
+            <!--                                    <i class="bi bi-heart fs-5 text-danger icon-btn like-btn"></i>-->
+            <!--                                    <span class="small">Yêu thích</span>-->
+            <!--                                </div>-->
+            <!--                                <div class="d-flex align-items-center gap-2">-->
+            <!--                                    <i class="bi bi-bookmark fs-5 text-primary icon-btn save-btn"></i>-->
+            <!--                                    <span class="small">Lưu</span>-->
+            <!--                                </div>-->
+            <!--                            </div>-->
+            <!--                        </div>-->
+            <!--                    </div>-->
+            <!--                </div>-->
+            <!--            </div>-->
         </div>
 
         <!-- Phần chọn activities -->
         <div class="col-lg-3 mt-5 sticky-icons">
             <div class="d-flex flex-column align-items-center gap-3">
                 <div class="d-flex justify-content-around border w-100 p-3 rounded-4 gap-4">
-                    <a th:href="@{/post/create}" class="text-dark text-decoration-none">
+                    <a th:href="@{/new-post}" class="text-dark text-decoration-none">
                         <i class="bi bi-pencil-square fs-1 icon-btn"></i>
                     </a>
                     <a href="#" class="text-dark text-decoration-none">
