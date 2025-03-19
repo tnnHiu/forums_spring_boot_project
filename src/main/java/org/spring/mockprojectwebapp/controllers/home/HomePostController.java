@@ -59,6 +59,7 @@ public class HomePostController {
         List<UserCommentDTO> allComments = commentService.getCommentsByPostId(postId);
         List<UserCommentDTO> moreComments = allComments.stream().skip(offset).limit(3).toList();
         model.addAttribute("userCommentDTOs", moreComments);
+        model.addAttribute("postId", postId);
         return "fragments/post-comment :: commentList";
     }
 
@@ -74,7 +75,7 @@ public class HomePostController {
 
         List<UserCommentDTO> userCommentDTOs = commentService.getCommentsByPostId(postId);
         model.addAttribute("userCommentDTOs", userCommentDTOs);
-
+        model.addAttribute("postId", postId);
         return "fragments/post-comment :: commentList";
     }
 
