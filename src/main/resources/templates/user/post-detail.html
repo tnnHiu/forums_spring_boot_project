@@ -99,11 +99,16 @@
             <div class="text-center mb-4" sec:authorize="isAnonymous()">
                 <p>Vui lòng <a th:href="@{/login}" class="text-primary fw-bold">đăng nhập</a> để bình luận.</p>
             </div>
-            <div id="commentList" th:replace="/fragments/post-comment :: commentList"></div>
+
+            <div id="commentList"
+                 th:replace="/fragments/post-comment :: commentList(postId=${postDTO.getPostId()})"></div>
+
             <input type="hidden" id="totalCommentsHidden" th:value="${totalComments}"/>
+
             <div class="mt-4 text-center" sec:authorize="isAuthenticated()" th:if="${totalComments > 3}">
                 <button class="btn btn-outline-primary" id="loadMoreBtn" data-offset="3">Xem thêm bình luận</button>
             </div>
+
             <div class="mt-4 text-center" sec:authorize="isAnonymous()" th:if="${totalComments > 3}">
                 <a th:href="@{/login}" class="btn btn-outline-warning"><i class="bi bi-lock me-2"></i>Đăng nhập để xem
                     thêm bình luận</a>
@@ -176,7 +181,6 @@
             <a href="#" class="btn btn-outline-primary">Xem thêm <i class="bi bi-arrow-right"></i></a>
         </div>
     </div>
-</div>
 </div>
 
 <div th:replace="/fragments/footer :: footer"></div>
