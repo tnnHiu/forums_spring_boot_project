@@ -16,4 +16,5 @@ public interface PostService {
     Page<PostDTO> filterPosts(String keyword, Integer status, Integer categoryId, Integer isPremium, int page, int size);
     void deletePost(int id);
     List<PostDTO> getUserPosts(int userId);
+    Page<PostDTO> searchPosts(String keyword, Pageable pageable);
 }

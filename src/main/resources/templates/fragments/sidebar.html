@@ -19,7 +19,7 @@
             </a>
         </li>
         <li class="nav-item">
-            <a th:href="@{/admin/hashtags}" class="nav-link">
+            <a th:href="@{/admin/hashtags}" th:classappend="${currentUri == '/admin/hashtags' ? 'active' : ''}" class="nav-link">
                 <i class="bi bi-tags"></i> <span>HASHTAG</span>
             </a>
         </li>

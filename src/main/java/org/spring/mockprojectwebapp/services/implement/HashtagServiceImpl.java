@@ -1,6 +1,6 @@
 package org.spring.mockprojectwebapp.services.implement;
 
-import org.spring.mockprojectwebapp.dtos.HashtagDTO;
+import org.spring.mockprojectwebapp.dtos.admin.HashtagDTO;
 import org.spring.mockprojectwebapp.entities.Hashtag;
 import org.spring.mockprojectwebapp.repositories.HashtagRepository;
 import org.spring.mockprojectwebapp.services.HashtagService;
@@ -23,26 +23,26 @@ public class HashtagServiceImpl implements HashtagService {
     @Override
     public List<HashtagDTO> getAllHashtags() {
         return hashtagRepository.findAll().stream()
-                .map(this::convertToDTO)
+                .map(this::mapToDTO)
                 .collect(Collectors.toList());
     }
 
     @Override
     public Page<HashtagDTO> getAllHashtags(int page, int size) {
         Pageable pageable = PageRequest.of(page, size);
-        return hashtagRepository.findAll(pageable).map(this::convertToDTO);
+        return hashtagRepository.findAll(pageable).map(this::mapToDTO);
     }
 
     @Override
     public HashtagDTO getHashtagById(int id) {
         Hashtag hashtag = hashtagRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Hashtag not found"));
-        return convertToDTO(hashtag);
+        return mapToDTO(hashtag);
     }
 
     @Override
     public void saveHashtag(HashtagDTO hashtagDTO) {
-        Hashtag hashtag = convertToEntity(hashtagDTO);
+        Hashtag hashtag = mapToEntity(hashtagDTO);
         if (hashtag.getId() == 0) {
             hashtag.setCreatedAt(LocalDateTime.now());
         } else {
@@ -65,20 +65,27 @@ public class HashtagServiceImpl implements HashtagService {
     public Page<HashtagDTO> searchHashtags(String keyword, int page, int size) {
         Pageable pageable = PageRequest.of(page, size);
         return hashtagRepository.findByHashtagNameContainingIgnoreCase(keyword, pageable)
-                .map(this::convertToDTO);
+                .map(this::mapToDTO);
     }
 
-    private HashtagDTO convertToDTO(Hashtag hashtag) {
-        HashtagDTO hashtagDTO = new HashtagDTO();
-        hashtagDTO.setId(hashtag.getId());
-        hashtagDTO.setHashtagName(hashtag.getHashtagName());
-        hashtagDTO.setCreatedAt(hashtag.getCreatedAt());
-        return hashtagDTO;
+    public Page<HashtagDTO> searchHashtags(String keyword, Pageable pageable) {
+        Page<Hashtag> hashtagPage;
+        hashtagPage = hashtagRepository.findByHashtagNameContainingIgnoreCase(keyword, pageable);
+        return hashtagPage.map(this::mapToDTO);
     }
 
-    private Hashtag convertToEntity(HashtagDTO hashtagDTO) {
+    private HashtagDTO mapToDTO(Hashtag hashtag) {
+//        HashtagDTO hashtagDTO = new HashtagDTO();
+//        hashtagDTO.setHashtagId(hashtag.getId());
+//        hashtagDTO.setHashtagName(hashtag.getHashtagName());
+//        hashtagDTO.setCreatedAt(hashtag.getCreatedAt());
+//        return hashtagDTO;
+        return HashtagDTO.builder().hashtagId(hashtag.getId()).hashtagName(hashtag.getHashtagName()).createdAt(hashtag.getCreatedAt()).build();
+    }
+
+    private Hashtag mapToEntity(HashtagDTO hashtagDTO) {
         Hashtag hashtag = new Hashtag();
-        hashtag.setId(hashtagDTO.getId());
+        hashtag.setId(hashtagDTO.getHashtagId());
 
         // Thêm ký tự "#" vào đầu hashtag nếu thiếu
         String hashtagName = hashtagDTO.getHashtagName();

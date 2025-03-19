@@ -1,0 +1,297 @@
+:root {
+    --primary-color: #F07900;
+    --primary-hover: #e06b00;
+    --text-color: #ffffff;
+    --shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+    --glow: 0 0 10px rgba(240, 121, 0, 0.2);
+    --transition-default: all 0.3s ease-in-out;
+    --spacing-unit: 1rem; /* Biến đồng bộ khoảng cách */
+}
+
+body {
+    background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+    font-family: 'Poppins', sans-serif;
+    min-height: 100vh;
+    margin: 0;
+    padding: calc(var(--spacing-unit) * 2) 0;
+}
+
+.container {
+    max-width: 960px;
+    padding: 0 var(--spacing-unit);
+}
+
+/* Card */
+.card {
+    border: none;
+    border-radius: 25px;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    transition: var(--transition-default);
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
+}
+
+/* Header */
+.text-bg-primary {
+    background: linear-gradient(135deg, var(--primary-color), rgba(240, 121, 0, 0.85));
+    color: var(--text-color);
+    padding: calc(var(--spacing-unit) * 2.5);
+    text-align: center;
+    position: relative;
+}
+
+.text-bg-primary::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.1), transparent);
+    opacity: 0.5;
+}
+
+.text-bg-primary h2 {
+    font-size: clamp(1.75rem, 4vw, 2.25rem);
+    font-weight: 700;
+    letter-spacing: 1.2px;
+    margin-bottom: calc(var(--spacing-unit) * 0.5);
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.text-bg-primary p {
+    font-size: clamp(1rem, 3vw, 1.15rem);
+    line-height: 1.6;
+    margin: 0;
+    opacity: 0.9;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Card Body */
+.card-body {
+    padding: calc(var(--spacing-unit) * 2);
+    background: #fff;
+    border-radius: 0 0 25px 25px;
+    flex-grow: 1;
+}
+
+/* Form */
+.input-group {
+    align-items: center;
+}
+
+.input-group-text {
+    border: none;
+    padding: calc(var(--spacing-unit) * 0.75);
+    background: transparent;
+}
+
+.form-control {
+    border-radius: 15px;
+    padding: calc(var(--spacing-unit) * 0.85) calc(var(--spacing-unit) * 1.25);
+    border: 1px solid #d1d5db;
+    font-size: 1.1rem;
+    transition: var(--transition-default);
+}
+
+.form-control:focus {
+    border-color: var(--primary-color);
+    box-shadow: var(--glow);
+    outline: none;
+}
+
+/* Buttons */
+.btn-primary {
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-hover));
+    border: none;
+    border-radius: 30px;
+    padding: calc(var(--spacing-unit) * 0.85) calc(var(--spacing-unit) * 2.5);
+    font-weight: 600;
+    font-size: 1.1rem;
+    color: var(--text-color);
+    transition: var(--transition-default);
+    box-shadow: var(--shadow);
+}
+
+.btn-primary:hover {
+    background: var(--primary-hover);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(240, 121, 0, 0.3);
+}
+
+/* Search Results */
+#searchResults {
+    opacity: 0;
+    transition: opacity 0.4s ease-in-out;
+}
+
+#searchResults.fade-in {
+    opacity: 1;
+}
+
+.result-card {
+    border-radius: 20px;
+    box-shadow: var(--shadow);
+    transition: var(--transition-default);
+    min-height: 300px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.result-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.1);
+}
+
+.card-img-top {
+    height: 200px;
+    object-fit: cover;
+    transition: filter 0.3s ease;
+}
+
+.result-card:hover .card-img-top {
+    filter: brightness(0.92);
+}
+
+.result-card .card-body {
+    padding: calc(var(--spacing-unit) * 1.5);
+    flex-grow: 1;
+}
+
+/* User Card */
+.user-card {
+    min-height: 150px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border-radius: 20px;
+    transition: var(--transition-default);
+    padding: calc(var(--spacing-unit) * 1.5);
+    overflow: hidden;
+}
+
+.user-card:hover {
+    transform: scale(1.03);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Hashtag Badge */
+.hashtag-badge {
+    background: var(--primary-color);
+    color: var(--text-color);
+    font-size: 1rem;
+    padding: calc(var(--spacing-unit) * 0.6) calc(var(--spacing-unit) * 1.5);
+    border-radius: 15px;
+    max-width: 130px;
+    min-width: 100px;
+    text-align: center;
+    transition: var(--transition-default);
+    display: inline-block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    box-sizing: border-box;
+}
+
+.hashtag-badge:hover {
+    background: var(--primary-hover);
+    transform: scale(1.05);
+    box-shadow: var(--glow);
+}
+
+/* Typography */
+.card-title {
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: calc(var(--spacing-unit) * 0.5);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.card-text {
+    font-size: 1rem;
+    color: #666;
+    margin-bottom: calc(var(--spacing-unit) * 0.75);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.text-muted {
+    font-size: 0.9rem;
+    font-weight: 400;
+    color: #888;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* HR */
+hr {
+    border-color: #e5e7eb;
+    margin: calc(var(--spacing-unit) * 2.5) 0;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .text-bg-primary {
+        padding: calc(var(--spacing-unit) * 2);
+    }
+
+    .card-body {
+        padding: calc(var(--spacing-unit) * 1.5);
+    }
+
+    .btn-primary {
+        padding: calc(var(--spacing-unit) * 0.75) calc(var(--spacing-unit) * 2);
+    }
+
+    .card-img-top {
+        height: 160px;
+    }
+
+    .user-card {
+        min-height: 140px;
+    }
+
+    .hashtag-badge {
+        min-width: 90px;
+        font-size: 0.9rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .card-body {
+        padding: calc(var(--spacing-unit) * 1.2);
+    }
+
+    .btn-primary {
+        width: 100%;
+        padding: calc(var(--spacing-unit) * 0.85);
+    }
+
+    .input-group-text {
+        padding: calc(var(--spacing-unit) * 0.6);
+    }
+
+    .user-card {
+        min-height: 130px;
+    }
+
+    .hashtag-badge {
+        min-width: 80px;
+        font-size: 0.85rem;
+    }
+}

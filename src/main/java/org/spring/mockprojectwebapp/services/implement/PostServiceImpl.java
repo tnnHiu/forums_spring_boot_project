@@ -57,6 +57,14 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
+    public Page<PostDTO> searchPosts(String keyword, Pageable pageable) {
+        if (keyword == null || keyword.isBlank()) {
+            return postRepository.findAll(pageable).map(this::mapToDTO);
+        }
+        return postRepository.findByTitleContainingOrContentContainingIgnoreCase(keyword, pageable).map(this::mapToDTO);
+    }
+
+    @Override
     public void updatePostStatus(int postId, Post.Status status) {
         Post existingPost = postRepository.findById(postId).orElseThrow(() -> new RuntimeException("Post not found with id: " + postId));
 
@@ -86,8 +94,12 @@ public class PostServiceImpl implements PostService {
         if (keyword != null && !keyword.isEmpty()) {
             spec = spec.and((root, query, cb) ->
                     cb.or(
-                            cb.like(cb.lower(root.get("title")), "%" + keyword.toLowerCase() + "%")
-                            //cb.like(cb.lower(root.get("content")), "%" + keyword.toLowerCase() + "%")
+                            cb.like(cb.lower(root.get("title")), "%" + keyword.toLowerCase() + "%"),
+                            cb.like(
+                                    cb.lower(root.get("content").as(String.class)),
+                                    "%" + keyword.toLowerCase() + "%"
+                            )
+
                     )
             );
         }
@@ -118,7 +130,20 @@ public class PostServiceImpl implements PostService {
     }
 
     private PostDTO mapToDTO(Post post) {
-        return PostDTO.builder().postId(post.getId()).title(post.getTitle()).content(post.getContent()).imageUrl(post.getImageUrl()).description(post.getDescription()).createdAt(post.getCreatedAt()).updatedAt(post.getUpdatedAt()).status(post.getStatus().ordinal()).isPremium(post.isPremium()).categoryName(post.getCategory().getCategoryName()).username(post.getUser().getUsername()).build();
+        return PostDTO
+                .builder()
+                .postId(post.getId())
+                .title(post.getTitle())
+                .content(post.getContent())
+                .imageUrl(post.getImageUrl())
+                .description(post.getDescription())
+                .createdAt(post.getCreatedAt())
+                .updatedAt(post.getUpdatedAt())
+                .status(post.getStatus().ordinal())
+                .isPremium(post.isPremium())
+                .categoryName(post.getCategory().getCategoryName())
+                .username(post.getUser().getUsername())
+                .build();
     }
 
     private Post mapToEntity(PostDTO postDTO) {

@@ -1,6 +1,6 @@
 package org.spring.mockprojectwebapp.controllers.admin;
 
-import org.spring.mockprojectwebapp.dtos.HashtagDTO;
+import org.spring.mockprojectwebapp.dtos.admin.HashtagDTO;
 import org.spring.mockprojectwebapp.services.HashtagService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -26,7 +26,7 @@ public class AdminHashtagController {
         } else {
             hashtags = hashtagService.getAllHashtags(page, size);
         }
-        model.addAttribute("hashtags", hashtags.getContent());
+        model.addAttribute("hashtagDTOs", hashtags.getContent());
         model.addAttribute("currentPage", page);
         model.addAttribute("totalPages", hashtags.getTotalPages());
         model.addAttribute("keyword", keyword);
@@ -41,7 +41,7 @@ public class AdminHashtagController {
 
     @PostMapping("/hashtags/update/{id}")
     public String updateHashtag(@PathVariable int id, @ModelAttribute HashtagDTO hashtagDTO) {
-        hashtagDTO.setId(id);
+        hashtagDTO.setHashtagId(id);
         hashtagService.saveHashtag(hashtagDTO);
         return "redirect:/admin/hashtags";
     }

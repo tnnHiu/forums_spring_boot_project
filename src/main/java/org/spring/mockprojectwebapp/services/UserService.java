@@ -1,6 +1,7 @@
 package org.spring.mockprojectwebapp.services;
 
 import org.spring.mockprojectwebapp.dtos.admin.UserDTO;
+import org.spring.mockprojectwebapp.dtos.user.UserSearchDTO;
 import org.spring.mockprojectwebapp.entities.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -14,6 +15,8 @@ public interface UserService {
     boolean doesUserExist(Integer userId);
 
     List<UserDTO> searchUsers(String keyword);
+
+    Page<UserSearchDTO> searchUsersWithPageable(String keyword, Pageable pageable);
 
     void deleteUserById(Integer userId);
 

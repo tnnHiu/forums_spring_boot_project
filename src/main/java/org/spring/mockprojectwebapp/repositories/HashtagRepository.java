@@ -4,12 +4,8 @@ import org.spring.mockprojectwebapp.entities.Hashtag;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-import org.springframework.transaction.annotation.Transactional;
-
-import java.util.Optional;
 
 public interface HashtagRepository extends JpaRepository<Hashtag, Integer> {
     @Query("SELECT h FROM Hashtag h WHERE LOWER(h.hashtagName) LIKE LOWER(CONCAT('%', :keyword, '%'))")

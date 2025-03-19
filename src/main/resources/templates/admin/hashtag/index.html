@@ -34,7 +34,9 @@
     <!-- Thanh tìm kiếm -->
     <form th:action="@{/admin/hashtags}" method="get" class="d-flex gap-2 mb-3">
       <input type="text" name="keyword" class="form-control w-25" placeholder="Tìm kiếm..." th:value="${keyword}">
-      <button type="submit" class="btn btn-primary">Tìm</button>
+      <button type="submit" class="btn btn-primary">
+        <i class="bi bi-search"></i> Tìm
+      </button>
     </form>
 
     <!-- Bảng hashtag -->
@@ -47,20 +49,16 @@
       </tr>
       </thead>
       <tbody>
-      <tr th:each="hashtag : ${hashtags}">
-        <td th:text="${hashtag.hashtagName}"></td>
-        <td th:text="${#temporals.format(hashtag.createdAt, 'dd/MM/yyyy')}"></td>
+      <tr th:each="hashtagDTO : ${hashtagDTOs}">
+        <td th:text="${hashtagDTO.hashtagName}"></td>
+        <td th:text="${#temporals.format(hashtagDTO.createdAt, 'dd/MM/yyyy')}"></td>
         <td>
-<!--          <button class="btn btn-outline-primary btn-sm btn-action btn-view"-->
-<!--                  th:attr="data-hashtag-id=${hashtag.id}">-->
-<!--            <i class="bi bi-eye"></i>-->
-<!--          </button>-->
           <button class="btn btn-outline-primary btn-sm btn-action"
                   data-bs-toggle="modal"
-                  th:attr="data-bs-target='#editHashtagModal' + ${hashtag.id}">
+                  th:attr="data-bs-target='#editHashtagModal' + ${hashtagDTO.hashtagId}">
             <i class="bi bi-pencil"></i>
           </button>
-          <form th:action="@{/admin/hashtags/delete/{id}(id=${hashtag.id})}" method="post"
+          <form th:action="@{/admin/hashtags/delete/{id}(id=${hashtagDTO.hashtagId})}" method="post"
                 style="display:inline;"
                 onsubmit="return confirm('Bạn có chắc chắn muốn xóa hashtag này không?');">
             <input type="hidden" name="_method" value="delete">
@@ -69,6 +67,9 @@
             </button>
           </form>
         </td>
+      </tr>
+      <tr th:if="${hashtagDTOs.isEmpty()}">
+        <td colspan="4" class="text-muted">Không tìm thấy hashtag.</td>
       </tr>
       </tbody>
     </table>

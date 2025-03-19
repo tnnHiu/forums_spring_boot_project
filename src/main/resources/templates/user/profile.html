@@ -9,7 +9,6 @@
     <script th:src="@{/bootstrap-5.3.3-dist/js/bootstrap.bundle.min.js}"></script>
     <link rel="stylesheet" th:href="@{/bootstrap-icons-1.11.3/font/bootstrap-icons.min.css}">
     <link rel="stylesheet" th:href="@{/css/user/user-profile.css}">
-    <link rel="stylesheet" th:href="@{/css/fragment/footer.css}">
 </head>
 
 <body>
@@ -31,7 +30,7 @@
                     </div>
                 </div>
             </div>
-            <a th:href="@{/profile/edit-profile}" class="btn btn-edit-profile z-1">Chỉnh sửa</a>
+            <a th:href="@{/user/edit-profile}" class="btn btn-edit-profile">Chỉnh sửa</a>
         </div>
     </div>
 </header>
@@ -46,7 +45,7 @@
                     <div class="d-flex justify-content-around action-buttons">
                         <a th:href="@{/new-post}"><i class="bi bi-pencil-square fs-3"></i></a>
                         <a th:href="@{/}"><i class="bi bi-house fs-3"></i></a>
-                        <a th:href="@{/user/upgrade}"><i class="bi bi-gem fs-3"></i></a>
+                        <a th:href="@{/profile}"><i class="bi bi-gem fs-3"></i></a>
                     </div>
                 </div>
             </div>
@@ -54,6 +53,13 @@
                 <div class="card-body about-section">
                     <h5 class="card-title">Giới thiệu</h5>
                     <p class="card-text" th:text="'Đã tham gia ngày ' + ${userDTO.createdAt}"></p>
+                    <p class="card-text" th:text="'Chưa có mô tả'"></p>
+                    <p class="card-text" th:text="'Chưa có mô tả'"></p>
+                    <p class="card-text" th:text="'Chưa có mô tả'"></p>
+                    <p class="card-text" th:text="'Chưa có mô tả'"></p>
+                    <p class="card-text" th:text="'Chưa có mô tả'"></p>
+                    <p class="card-text" th:text="'Chưa có mô tả'"></p>
+
                 </div>
             </div>
         </aside>
@@ -130,7 +136,6 @@
                         </div>
                     </div>
                 </div>
-
                 <!-- Saved Tab -->
                 <div class="tab-pane fade" id="saved">
                     <div class="card mb-3">

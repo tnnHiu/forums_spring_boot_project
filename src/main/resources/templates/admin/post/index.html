@@ -28,9 +28,6 @@
             </div>
         </div>
 
-        <!-- Nút thêm -->
-        <button class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#addCategoryModal">+ Thêm</button>
-
         <!-- Bộ lọc và tìm kiếm -->
         <form th:action="@{/admin/posts}" method="get" class="d-flex gap-2 mb-3 flex-wrap">
             <!-- Ô tìm kiếm theo từ khoá -->
@@ -102,7 +99,7 @@
                 </td>
             </tr>
             <tr th:if="${postDTOs.isEmpty()}">
-                <td colspan="4" class="text-muted">Không có dữ liệu bài viết.</td>
+                <td colspan="4" class="text-muted">Không tìm thấy bài viết.</td>
             </tr>
             </tbody>
         </table>

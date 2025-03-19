@@ -16,6 +16,13 @@
                     <button class="btn btn-outline-light me-2" type="submit"><i class="bi bi-search"></i></button>
                     <input class="form-control rounded-pill me-auto" type="search" name="q" placeholder="Tìm kiếm">
                 </form>
+                <!-- Nút Thông báo -->
+                <a th:href="@{/notification}" class="btn btn-outline-light position-relative me-3">
+                    <i class="bi bi-bell"></i>
+                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+                          th:if="${notificationCount > 0}" th:text="${notificationCount}">
+                    </span>
+                </a>
                 <!-- Nếu có session đăng nhập thì hiển thị dropdown -->
                 <div sec:authorize="isAuthenticated()">
                     <!-- Avatar Dropdown -->
