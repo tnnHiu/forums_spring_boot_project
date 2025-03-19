@@ -1,6 +1,7 @@
 package org.spring.mockprojectwebapp.services.implement;
 
 import org.spring.mockprojectwebapp.dtos.admin.ReportDTO;
+import org.spring.mockprojectwebapp.dtos.user.ReportPostDTO;
 import org.spring.mockprojectwebapp.entities.Comment;
 import org.spring.mockprojectwebapp.entities.Post;
 import org.spring.mockprojectwebapp.entities.Report;
@@ -22,34 +23,57 @@ import java.util.Optional;
 @Service
 public class ReportServiceImpl implements ReportService {
 
-    private final ReportRepository reportRepository;
-    private final PostService postService;
-    private final CommentService commentService;
-    private final UserService userService;
-
     @Autowired
-    public ReportServiceImpl(
-            ReportRepository reportRepository,
-            PostService postService,
-            CommentService commentService,
-            UserService userService) {
-        this.reportRepository = reportRepository;
-        this.postService = postService;
-        this.commentService = commentService;
-        this.userService = userService;
+    private ReportRepository reportRepository;
+    @Autowired
+    private PostService postService;
+    @Autowired
+    private CommentService commentService;
+    @Autowired
+    private UserService userService;
+
+    @Override
+    public void createPostReport(ReportPostDTO reportDTO) {
+        Report report = new Report();
+        User user = new User();
+        user.setUserId(reportDTO.getReporterId());
+        report.setReporter(user);
+        Post post = new Post();
+        post.setId(reportDTO.getPostId());
+        report.setReportedPost(post);
+        report.setReportType(Report.ReportType.COMMENT);
+        report.setReason(reportDTO.getReason());
+        report.setStatus(Report.Status.PENDING);
+        report.setCreatedAt(LocalDateTime.now());
+        reportRepository.save(report);
     }
+
+    @Override
+    public void createCommentReport(ReportPostDTO reportDTO) {
+        Report report = new Report();
+        User user = new User();
+        user.setUserId(reportDTO.getReporterId());
+        report.setReporter(user);
+        Comment comment = new Comment();
+        comment.setId(reportDTO.getCommentId());
+        report.setReportedComment(comment);
+        report.setReportType(Report.ReportType.COMMENT);
+        report.setReason(reportDTO.getReason());
+        report.setStatus(Report.Status.PENDING);
+        report.setCreatedAt(LocalDateTime.now());
+        reportRepository.save(report);
+    }
+
 
     @Override
     public ReportDTO findById(Integer id) {
         Optional<Report> report = reportRepository.findById(id);
-        return report.map(this::mapToDTO)
-                .orElseThrow(() -> new RuntimeException("report not found with id: " + id));
+        return report.map(this::mapToDTO).orElseThrow(() -> new RuntimeException("report not found with id: " + id));
     }
 
     @Override
     public ReportDTO update(Integer id, ReportDTO reportDTO, String postStatus, String commentStatus, String userStatus) {
-        Report existingReport = reportRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Report not found with id: " + id));
+        Report existingReport = reportRepository.findById(id).orElseThrow(() -> new RuntimeException("Report not found with id: " + id));
 
         // Cập nhật trạng thái của đối tượng bị báo cáo (nếu có)
         if (existingReport.getReportedPost() != null && postStatus != null) {
@@ -62,7 +86,6 @@ public class ReportServiceImpl implements ReportService {
             userService.updateUserStatus(existingReport.getReportedUser().getUserId(), User.Status.valueOf(userStatus));
         }
 
-        // Set status của báo cáo thành RESOLVED
         existingReport.setStatus(Report.Status.RESOLVED);
         existingReport.setUpdatedAt(LocalDateTime.now());
 
@@ -98,30 +121,15 @@ public class ReportServiceImpl implements ReportService {
 
     // Chuyển đổi từ Entity sang DTO
     private ReportDTO mapToDTO(Report report) {
-        return ReportDTO.builder()
-                .reportId(report.getReportId())
-                .reporterName(report.getReporter().getUsername())
-                .reporterId(report.getReporter().getUserId())
-                .reportedPostId(report.getReportedPost() != null ? report.getReportedPost().getId() : null)
-                .reportedPostTitle(report.getReportedPost() != null ? report.getReportedPost().getTitle() : "N/A")
-                .reportedCommentId(report.getReportedComment() != null ? report.getReportedComment().getId() : null)
-                .reportedCommentContent(report.getReportedComment() != null ? report.getReportedComment().getContent() : "N/A")
-                .reportedUserId(report.getReportedUser() != null ? report.getReportedUser().getUserId() : null)
-                .reportedUserName(report.getReportedUser() != null ? report.getReportedUser().getUsername() : "N/A")
-                .reason(report.getReason())
-                .status(report.getStatus())
-                .reportType(report.getReportType())
-                .createdAt(report.getCreatedAt())
-                .updatedAt(report.getUpdatedAt())
-                .build();
+        return ReportDTO.builder().reportId(report.getReportId()).reporterName(report.getReporter().getUsername()).reporterId(report.getReporter().getUserId()).reportedPostId(report.getReportedPost() != null ? report.getReportedPost().getId() : null).reportedPostTitle(report.getReportedPost() != null ? report.getReportedPost().getTitle() : "N/A").reportedCommentId(report.getReportedComment() != null ? report.getReportedComment().getId() : null).reportedCommentContent(report.getReportedComment() != null ? report.getReportedComment().getContent() : "N/A").reportedUserId(report.getReportedUser() != null ? report.getReportedUser().getUserId() : null).reportedUserName(report.getReportedUser() != null ? report.getReportedUser().getUsername() : "N/A").reason(report.getReason()).status(report.getStatus()).reportType(report.getReportType()).createdAt(report.getCreatedAt()).updatedAt(report.getUpdatedAt()).build();
     }
 
     // Chuyển đổi từ DTO sang Entity
-    private Report mapToEntity(ReportDTO reportDTO) {
-        Report report = new Report();
-        report.setReportId(reportDTO.getReportId());
-        report.setCreatedAt(reportDTO.getCreatedAt());
-        report.setUpdatedAt(reportDTO.getUpdatedAt());
-        return report;
-    }
+//    private Report mapToEntity(ReportDTO reportDTO) {
+//        Report report = new Report();
+//        report.setReportId(reportDTO.getReportId());
+//        report.setCreatedAt(reportDTO.getCreatedAt());
+//        report.setUpdatedAt(reportDTO.getUpdatedAt());
+//        return report;
+//    }
 }

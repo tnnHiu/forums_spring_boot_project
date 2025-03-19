@@ -33,6 +33,10 @@ public class CommentServiceImpl implements CommentService {
                 .collect(Collectors.toList());
     }
 
+    public int getTotalCommentsByPostId(int postId) {
+        return commentRepository.countByPostId(postId);
+    }
+
     @Override
     public void saveComment(UserCommentDTO userCommentDTO) {
         Comment comment = mapToEntity(userCommentDTO);

@@ -59,11 +59,13 @@ public class HomePostController {
         List<UserCommentDTO> allComments = commentService.getCommentsByPostId(postId);
         List<UserCommentDTO> moreComments = allComments.stream().skip(offset).limit(3).toList();
         model.addAttribute("userCommentDTOs", moreComments);
+        model.addAttribute("postId", postId);
         return "fragments/post-comment :: commentList";
     }
 
     @PostMapping("/post/create-comment")
-    public String createComment(@RequestParam("postId") int postId, @RequestParam("comment") String commentContent, HttpSession session, Model model) {
+    public String createComment(@RequestParam("postId") int postId,
+                                @RequestParam("comment") String commentContent, HttpSession session, Model model) {
 
         int userId = (int) session.getAttribute("userId");
 
@@ -73,18 +75,18 @@ public class HomePostController {
 
         List<UserCommentDTO> userCommentDTOs = commentService.getCommentsByPostId(postId);
         model.addAttribute("userCommentDTOs", userCommentDTOs);
-
+        model.addAttribute("postId", postId);
         return "fragments/post-comment :: commentList";
     }
 
-    @GetMapping("/new_post")
+    @GetMapping("/new-post")
     public String showCreatePostPage(Model model) {
         model.addAttribute("postDTO", new PostDTO());
         model.addAttribute("categoryDTOs", categoryService.getAllCategories());
         return "user/create-post";
     }
 
-    @PostMapping("/new_post")
+    @PostMapping("/new-post")
     public String createPost(Model model, @Valid @ModelAttribute PostDTO postDTO, @RequestParam("imageFile") MultipartFile imageFile, @RequestParam("categoryId") int categoryId, HttpSession session) {
         String imageUrl = saveImageFile(imageFile);
         if (imageUrl == null || imageUrl.isEmpty()) {
@@ -118,7 +120,6 @@ public class HomePostController {
                     throw new IOException("Không thể tạo thư mục: " + uploadDir.getAbsolutePath());
                 }
             }
-
             String fileName = file.getOriginalFilename();
             String uniqueFileName = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss")) + "_" + fileName;
 

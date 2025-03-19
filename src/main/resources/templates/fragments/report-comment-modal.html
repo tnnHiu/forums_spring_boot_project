@@ -1,0 +1,26 @@
+<div th:fragment="reportCommentModal(commentId, postId)" class="modal fade" th:id="'reportCommentModal' + ${commentId}"
+     tabindex="-1" th:aria-labelledby="'reportCommentModalLabel' + ${commentId}" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" th:id="'reportCommentModalLabel' + ${commentId}">Báo cáo bình luận</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form th:action="@{/report/comment}" method="post">
+                <div class="modal-body">
+                    <input type="hidden" name="postId" th:value="${postId}">
+                    <input type="hidden" name="commentId" th:value="${commentId}"/>
+                    <div class="mb-3">
+                        <label for="reportCommentReason" class="form-label">Lý do báo cáo</label>
+                        <textarea class="form-control" id="reportCommentReason" name="reason" rows="3"
+                                  placeholder="Vui lòng nhập lý do..." required></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                    <button type="submit" class="btn btn-danger">Gửi báo cáo</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
