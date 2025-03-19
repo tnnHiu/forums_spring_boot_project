@@ -1,5 +1,6 @@
 package org.spring.mockprojectwebapp.repositories;
 
+import org.spring.mockprojectwebapp.entities.Hashtag;
 import org.spring.mockprojectwebapp.entities.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

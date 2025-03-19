@@ -2,6 +2,7 @@ package org.spring.mockprojectwebapp.services.implement;
 
 import jakarta.persistence.EntityNotFoundException;
 import org.spring.mockprojectwebapp.dtos.admin.UserDTO;
+import org.spring.mockprojectwebapp.dtos.user.UserSearchDTO;
 import org.spring.mockprojectwebapp.entities.User;
 import org.spring.mockprojectwebapp.repositories.UserRepository;
 import org.spring.mockprojectwebapp.services.UserService;
@@ -48,6 +49,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public Page<UserSearchDTO> searchUsersWithPageable (String keyword, Pageable pageable) {
+        Page<User> userPage = userRepository.findByUsernameContainingIgnoreCase(keyword, pageable);
+        return userPage.map(this::mapToUserSearchDTO);
+    }
+
+    @Override
     public void deleteUserById(Integer userId) {
         Optional<User> userOptional = userRepository.findById(userId);
         userOptional.ifPresent(userRepository::delete);
@@ -75,5 +82,14 @@ public class UserServiceImpl implements UserService {
         userDTO.setStatus(user.getStatus());
 
         return userDTO;
+    }
+
+    private UserSearchDTO mapToUserSearchDTO(User user) {
+        return UserSearchDTO.builder()
+                .userId(user.getUserId())
+                .username(user.getUsername())
+                .email(user.getEmail())
+                .status(user.getStatus().ordinal())
+                .build();
     }
 }

@@ -9,7 +9,6 @@
     <script th:src="@{/bootstrap-5.3.3-dist/js/bootstrap.bundle.min.js}"></script>
     <link rel="stylesheet" th:href="@{/bootstrap-icons-1.11.3/font/bootstrap-icons.min.css}">
     <link rel="stylesheet" th:href="@{/css/user/user-profile.css}">
-    <link rel="stylesheet" th:href="@{/css/fragment/footer.css}">
 </head>
 
 <body>
@@ -23,15 +22,14 @@
                     <!-- <img th:src="${userDTO.avatarUrl != null ? userDTO.avatarUrl : '/img/default-avartar.jpg'}" alt="Profile Image"> -->
                 </div>
                 <div class="ms-3">
-                    <div class="username"
-                         th:text="${userDTO.username != null ? userDTO.username : 'Tên người dùng'}"></div>
+                    <div class="username" th:text="${userDTO.username != null ? userDTO.username : 'Tên người dùng'}"></div>
                     <div class="stats">
                         <!-- <span th:text="${userDTO.postCount} + ' bài viết'"></span> -->
                         <!-- <span th:text="${userDTO.followers} + ' người theo dõi'"></span> -->
                     </div>
                 </div>
             </div>
-            <a th:href="@{/profile/edit-profile}" class="btn btn-edit-profile z-1">Chỉnh sửa</a>
+            <a th:href="@{/user/edit-profile}" class="btn btn-edit-profile">Chỉnh sửa</a>
         </div>
     </div>
 </header>
@@ -46,7 +44,7 @@
                     <div class="d-flex justify-content-around action-buttons">
                         <a th:href="@{/new-post}"><i class="bi bi-pencil-square fs-3"></i></a>
                         <a th:href="@{/}"><i class="bi bi-house fs-3"></i></a>
-                        <a th:href="@{/user/upgrade}"><i class="bi bi-gem fs-3"></i></a>
+                        <a th:href="@{/profile}"><i class="bi bi-gem fs-3"></i></a>
                     </div>
                 </div>
             </div>
@@ -54,6 +52,13 @@
                 <div class="card-body about-section">
                     <h5 class="card-title">Giới thiệu</h5>
                     <p class="card-text" th:text="'Đã tham gia ngày ' + ${userDTO.createdAt}"></p>
+                    <p class="card-text" th:text="'Chưa có mô tả'"></p>
+                    <p class="card-text" th:text="'Chưa có mô tả'"></p>
+                    <p class="card-text" th:text="'Chưa có mô tả'"></p>
+                    <p class="card-text" th:text="'Chưa có mô tả'"></p>
+                    <p class="card-text" th:text="'Chưa có mô tả'"></p>
+                    <p class="card-text" th:text="'Chưa có mô tả'"></p>
+
                 </div>
             </div>
         </aside>
@@ -88,8 +93,7 @@
                                      onerror="this.onerror=null; this.src='/img/default-image.jpg';"
                                      class="card-img-top"
                                      alt="Hình ảnh bài viết">
-                                <a th:href="@{/post/{id}(id=${postDTO.postId})}" class="overlay-btn btn btn-sm">Xem chi
-                                    tiết</a>
+                                <a th:href="@{/post/{id}(id=${postDTO.postId})}" class="overlay-btn btn btn-sm">Xem chi tiết</a>
                             </div>
                             <div class="card-body">
                                 <h5 class="card-title" th:text="${postDTO.title}"></h5>
