@@ -13,7 +13,7 @@
 </head>
 <body>
 <!-- Navbar -->
-<div th:replace="/fragments/header :: header"></div>
+<div th:replace="/fragments/header :: header(userName=${userName})"></div>
 
 <div class="container mt-5 rounded-4 p-0">
     <!-- Phần banner -->
@@ -27,7 +27,7 @@
             <div class="placeholder-text w-75 mt-4">
                 Khám phá kho tàng công thức nấu ăn phong phú, từ món ăn gia đình ấm cúng đến ẩm thực quốc tế đặc sắc.
             </div>
-            <button class="btn btn-light mt-4 w-25 seeMore-btn">Tìm hiểu thêm</button>
+            <button class="btn btn-light mt-4 w-25">Tìm hiểu thêm</button>
         </div>
     </div>
 
@@ -48,15 +48,12 @@
                                  onerror="this.onerror=null; this.src='/img/default-image.jpg';"
                                  alt="Post Image"
                                  class="card-img-top">
-                            <a th:href="@{/post/{id}(id=${postDTO.postId})}" class="btn hover-btn">Xem chi
-                                tiết</a>
+                            <a th:href="@{/post/{id}(id=${postDTO.postId})}" class="btn btn-light hover-btn">Xem chi tiết</a>
                         </div>
                         <div class="card-body">
-                            <p class="fw-bold title" th:text="${postDTO.title}">Phở Bò - Món ăn truyền thống của Việt
-                                Nam</p>
+                            <p class="fw-bold title" th:text="${postDTO.title}">Phở Bò - Món ăn truyền thống của Việt Nam</p>
                             <p class="text-muted description" th:text="${postDTO.description}">
-                                Món ăn truyền thống của Việt Nam với nước dùng đậm đà, hương vị đặc trưng từ xương bò
-                                hầm.
+                                Món ăn truyền thống của Việt Nam với nước dùng đậm đà, hương vị đặc trưng từ xương bò hầm.
                             </p>
                             <div class="d-flex justify-content-around align-items-center mt-3">
                                 <div class="d-flex align-items-center gap-2">
@@ -81,8 +78,8 @@
         <!-- Phần chọn activities -->
         <div class="col-lg-3 mt-5 sticky-icons">
             <div class="d-flex flex-column align-items-center gap-3">
-                <div class="d-flex justify-content-around w-100 gap-4">
-                    <a th:href="@{/new-post}" class="text-dark text-decoration-none">
+                <div class="d-flex justify-content-around border w-100 p-3 rounded-4 gap-4">
+                    <a th:href="@{/new_post}" class="text-dark text-decoration-none">
                         <i class="bi bi-pencil-square fs-1 icon-btn"></i>
                     </a>
                     <a href="#" class="text-dark text-decoration-none">
@@ -91,6 +88,9 @@
                     <a href="#" class="text-dark text-decoration-none">
                         <i class="bi bi-people fs-1 icon-btn"></i>
                     </a>
+                </div>
+                <div class="border p-5 rounded-3 bg-light d-flex justify-content-center align-items-center w-100">
+                    <i class="bi bi-bar-chart-line fs-1 icon-btn"></i>
                 </div>
             </div>
         </div>
@@ -127,7 +127,6 @@
     document.addEventListener("DOMContentLoaded", function () {
         const likeButtons = document.querySelectorAll(".like-btn");
         const saveButtons = document.querySelectorAll(".save-btn");
-        const seeMoreButton = document.querySelectorAll(".seeMore-btn");
 
         likeButtons.forEach(button => {
             button.addEventListener("click", function () {
@@ -141,15 +140,6 @@
         saveButtons.forEach(button => {
             button.addEventListener("click", function () {
                 this.classList.toggle("saved");
-            });
-        });
-
-        seeMoreButton.forEach(button => {
-            button.addEventListener("click", function () {
-                window.scrollTo({
-                    top: 750,
-                    behavior: "smooth"
-                });
             });
         });
     });

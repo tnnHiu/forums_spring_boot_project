@@ -14,4 +14,5 @@ public interface PostService {
     Page<PostDTO> getPosts(String keyword, Pageable pageable);
     List<PostDTO> getRecentPosts();
     List<PostDTO> getUserPosts(int userId);
+    Page<PostDTO> searchPosts(String keyword, Pageable pageable);
 }
