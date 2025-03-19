@@ -37,6 +37,12 @@ public class Post {
     @Column(name = "title", nullable = false)
     private String title;
 
+    @Column(name = "image_url")
+    private String imageUrl;
+
+    @Column(name = "description", nullable = false)
+    private String description;
+
     @Lob // Dùng khi đây là trường có dữ liệu lớn
     @Column(name = "content", nullable = false)
     private String content;
@@ -47,7 +53,8 @@ public class Post {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
-    @Column(name = "status")
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status", nullable = false)
     private Status status;
 
     @Column(name = "is_premium")
@@ -57,7 +64,7 @@ public class Post {
     @JoinTable(name = "post_hashtag", joinColumns = @JoinColumn(name = "post_id"), inverseJoinColumns = @JoinColumn(name = "hashtag_id"))
     Set<Hashtag> hashtags;
 
-    private enum Status {
+    public enum Status {
         ACTIVE, INACTIVE, BANNED
     }
 }

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="vi">
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,7 +8,7 @@
     <link rel="stylesheet" th:href="@{/bootstrap-5.3.3-dist/css/bootstrap.min.css}">
     <script th:src="@{/bootstrap-5.3.3-dist/js/bootstrap.bundle.min.js}"></script>
     <link rel="stylesheet" th:href="@{/bootstrap-icons-1.11.3/font/bootstrap-icons.min.css}">
-    <link rel="stylesheet" th:href="@{/css/admin-category.css}" media="screen" type="text/css"/>
+    <link rel="stylesheet" th:href="@{/css/admin.css}" media="screen" type="text/css"/>
 </head>
 <body></body>
 <div class="d-flex">
@@ -32,9 +32,46 @@
         <button class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#addCategoryModal">+ Thêm</button>
 
         <!-- Thanh tìm kiếm -->
-        <form th:action="@{/admin/categories}" method="get" class="d-flex gap-2 mb-3">
+        <form th:action="@{/admin/categories}" method="get" class="d-flex gap-2 mb-3 align-items-center">
+            <!-- Ô tìm kiếm theo từ khóa -->
             <input type="text" name="keyword" class="form-control w-25" placeholder="Tìm kiếm..." th:value="${keyword}">
-            <button type="submit" class="btn btn-primary">Tìm</button>
+            <button type="submit" class="btn btn-primary">
+                <i class="bi bi-search"></i> Tìm
+            </button>
+
+            <!-- Nút lọc dropdown -->
+            <div class="dropdown">
+                <button class="btn btn-outline-primary dropdown-toggle d-flex align-items-center" type="button" data-bs-toggle="dropdown">
+                    <i class="bi bi-funnel me-2"></i> Bộ lọc
+                </button>
+                <div class="dropdown-menu p-3" style="width: 300px;" onclick="event.stopPropagation()">
+                    <!-- Tiêu đề bộ lọc -->
+                    <h6 class="dropdown-header fw-bold">Bộ lọc nâng cao</h6>
+
+                    <!-- Lọc theo ngày tạo -->
+                    <div class="mb-3">
+                        <label for="startDate" class="form-label text-secondary">Từ ngày</label>
+                        <input type="date" name="startDate" id="startDate" class="form-control" th:value="${startDate}">
+                    </div>
+                    <div class="mb-3">
+                        <label for="endDate" class="form-label text-secondary">Đến ngày</label>
+                        <input type="date" name="endDate" id="endDate" class="form-control" th:value="${endDate}">
+                    </div>
+
+                    <!-- Phân cách -->
+                    <hr class="my-2">
+
+                    <!-- Nút hành động -->
+                    <div class="d-flex justify-content-between mt-2">
+                        <button type="button" class="btn btn-outline-danger btn-sm" onclick="clearFilters()">
+                            <i class="bi bi-x-circle me-1"></i> Bỏ chọn
+                        </button>
+                        <button type="submit" class="btn btn-primary btn-sm">
+                            <i class="bi bi-check-circle me-1"></i> Áp dụng
+                        </button>
+                    </div>
+                </div>
+            </div>
         </form>
 
         <!-- Bảng danh mục -->
@@ -48,22 +85,22 @@
             </tr>
             </thead>
             <tbody>
-            <tr th:each="category : ${categories}">
-                <td th:text="${category.categoryName}"></td>
-                <td th:text="${category.description}"></td>
-                <td th:text="${#temporals.format(category.createdAt, 'dd/MM/yyyy')}"></td>
+            <tr th:each="categoryDTO : ${categoryDTOs}">
+                <td th:text="${categoryDTO.categoryName}"></td>
+                <td th:text="${categoryDTO.description}"></td>
+                <td th:text="${#temporals.format(categoryDTO.createdAt, 'dd/MM/yyyy')}"></td>
                 <td>
                     <button class="btn btn-outline-primary btn-sm btn-action btn-view"
-                            th:attr="data-category-id=${category.categoryId}">
+                            th:attr="data-category-id=${categoryDTO.categoryId}">
                         <i class="bi bi-eye"></i>
                     </button>
                     <button class="btn btn-outline-primary btn-sm btn-action"
                             data-bs-toggle="modal"
-                            th:attr="data-bs-target='#editCategoryModal' + ${category.categoryId}">
+                            th:attr="data-bs-target='#editCategoryModal' + ${categoryDTO.categoryId}">
                         <i class="bi bi-pencil"></i>
                     </button>
 
-                    <form th:action="@{/admin/categories/delete/{id}(id=${category.categoryId})}" method="post"
+                    <form th:action="@{/admin/categories/delete/{id}(id=${categoryDTO.categoryId})}" method="post"
                           style="display:inline;"
                           onsubmit="return confirm('Bạn có chắc chắn muốn xóa danh mục này không?');">
                         <input type="hidden" name="_method" value="delete">
@@ -72,6 +109,9 @@
                         </button>
                     </form>
                 </td>
+            </tr>
+            <tr th:if="${categoryDTOs.empty}">
+                <td colspan="4" class="text-muted">Không có dữ liệu danh mục.</td>
             </tr>
             </tbody>
         </table>

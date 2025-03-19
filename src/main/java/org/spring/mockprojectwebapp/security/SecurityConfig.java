@@ -1,5 +1,8 @@
 package org.spring.mockprojectwebapp.security;
 
+import org.spring.mockprojectwebapp.entities.User;
+import org.spring.mockprojectwebapp.services.AuthService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -12,32 +15,44 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 public class SecurityConfig {
 
+    @Autowired
+    private AuthService authService;
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/", "/css/**", "/js/**", "/img/**", "/bootstrap-5.3.3-dist/**").permitAll()
+                        .requestMatchers("/", "/css/**", "/js/**", "/img/**", "/bootstrap-5.3.3-dist/**", "/bootstrap-icons-1.11.3/**").permitAll()
                         .requestMatchers("/register", "/login").permitAll()
-                        .requestMatchers("/admin/**").permitAll()
-                        .requestMatchers("/admin/**").permitAll()
+                        .requestMatchers("/admin/**").hasRole("ADMIN")
+                        .requestMatchers("/post/*").permitAll()
                         .anyRequest().authenticated()
                 )
                 .formLogin(form -> form
                         .loginPage("/login")
                         .permitAll()
-                        .successHandler((request, response, authentication) -> {
-                            var authorities = authentication.getAuthorities();
-                            for (var authority : authorities) {
-                                if (authority.getAuthority().equals("ROLE_ADMIN")) {
-                                    response.sendRedirect("/admin");
-                                    return;
-                                } else if (authority.getAuthority().equals("ROLE_USER")) {
+                        .successHandler(
+                                (request, response, authentication) -> {
+
+                                    String email = authentication.getName();
+                                    User user = authService.findByEmail(email);
+
+                                    request.getSession().setAttribute("userId", user.getUserId());
+                                    request.getSession().setAttribute("userEmail", user.getEmail());
+                                    request.getSession().setAttribute("userName", user.getUsername());
+
+                                    var authorities = authentication.getAuthorities();
+                                    for (var authority : authorities) {
+                                        if (authority.getAuthority().equals("ROLE_ADMIN")) {
+                                            response.sendRedirect("/admin");
+                                            return;
+                                        } else if (authority.getAuthority().equals("ROLE_USER")) {
+                                            response.sendRedirect("/");
+                                            return;
+                                        }
+                                    }
                                     response.sendRedirect("/");
-                                    return;
-                                }
-                            }
-                            response.sendRedirect("/");
-                        })
+                                })
                 )
                 .logout(logout -> logout
                         .logoutUrl("/logout")

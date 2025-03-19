@@ -1,11 +1,13 @@
 package org.spring.mockprojectwebapp.services;
 
-import org.spring.mockprojectwebapp.dtos.CommentDTO;
+import org.spring.mockprojectwebapp.dtos.user.UserCommentDTO;
+import org.spring.mockprojectwebapp.entities.Comment;
 
 import java.util.List;
 
 public interface CommentService {
-    void addComment(int postId, String username, String content);
+    void updateCommentStatus(int commentId, Comment.Status status);
 
-    List<CommentDTO> getCommentsByPostId(int postId);
+    List<UserCommentDTO> getCommentsByPostId(int postId);
+
 }

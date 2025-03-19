@@ -1,18 +1,16 @@
 package org.spring.mockprojectwebapp.entities;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
-@Entity
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
+@Builder
+@Entity
 @Table(name = "categories")
 public class Category {
     @Id
@@ -31,5 +29,4 @@ public class Category {
 
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
-
 }

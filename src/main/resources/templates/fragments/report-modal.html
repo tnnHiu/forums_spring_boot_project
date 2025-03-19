@@ -1,0 +1,79 @@
+<div th:fragment="report-modal">
+    <!-- Lặp qua danh sách báo cáo để tạo modal chỉnh sửa tương ứng -->
+    <th:block th:each="reportDTO : ${reportDTOs}">
+        <!--Modal chỉnh sửa báo cáo-->
+        <div class="modal fade" th:id="'editReportModal' + ${reportDTO.reportId}" tabindex="-1"
+             aria-labelledby="editReportModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <form th:action="@{/admin/reports/update/{id}(id=${reportDTO.reportId})}" method="post">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Cập nhật báo cáo</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <input type="hidden" name="reportId" th:value="${reportDTO.reportId}">
+
+                            <div class="mb-3">
+                                <label class="form-label">Người Báo Cáo</label>
+                                <input type="text" class="form-control" th:value="${reportDTO.reporterName}" readonly>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Lý Do</label>
+                                <textarea class="form-control" rows="3" th:text="${reportDTO.reason}" readonly></textarea>
+                            </div>
+                            <!-- Hiển thị BÀI VIẾT BỊ BÁO CÁO nếu tồn tại -->
+                            <div class="mb-3" th:if="${reportDTO.reportedPostId != null}">
+                                <label class="form-label">Bài Viết Bị Báo Cáo</label>
+                                <input type="text" class="form-control" th:value="${reportDTO.reportedPostTitle}" readonly>
+                            </div>
+
+                            <!-- Hiển thị NGƯỜI DÙNG BỊ BÁO CÁO nếu tồn tại -->
+                            <div class="mb-3" th:if="${reportDTO.reportedUserId != null}">
+                                <label class="form-label">Người Dùng Bị Báo Cáo</label>
+                                <input type="text" class="form-control" th:value="${reportDTO.reportedUserName}" readonly>
+                            </div>
+
+                            <!-- Hiển thị BÌNH LUẬN BỊ BÁO CÁO nếu tồn tại -->
+                            <div class="mb-3" th:if="${reportDTO.reportedCommentId != null}">
+                                <label class="form-label">Bình Luận Bị Báo Cáo</label>
+                                <textarea class="form-control" rows="3" th:text="${reportDTO.reportedCommentContent}" readonly></textarea>
+                            </div>
+
+                            <!-- Selector để cập nhật trạng thái của bài viết bị báo cáo -->
+                            <div class="mb-3" th:if="${reportDTO.reportedPostId != null}">
+                                <label class="form-label">Trạng thái bài viết</label>
+                                <select class="form-control" name="postStatus">
+                                    <option value="ACTIVE">Active</option>
+                                    <option value="INACTIVE">Inactive</option>
+                                </select>
+                            </div>
+
+                            <!-- Selector để cập nhật trạng thái của bình luận bị báo cáo -->
+                            <div class="mb-3" th:if="${reportDTO.reportedCommentId != null}">
+                                <label class="form-label">Trạng thái bình luận</label>
+                                <select class="form-control" name="commentStatus">
+                                    <option value="ACTIVE">Active</option>
+                                    <option value="INACTIVE">Inactive</option>
+                                </select>
+                            </div>
+
+                            <!-- Selector để cập nhật trạng thái của người dùng bị báo cáo -->
+                            <div class="mb-3" th:if="${reportDTO.reportedUserId != null}">
+                                <label class="form-label">Trạng thái người dùng</label>
+                                <select class="form-control" name="userStatus">
+                                    <option value="ACTIVE">Active</option>
+                                    <option value="INACTIVE">Inactive</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                            <button type="submit" class="btn btn-primary">Lưu thay đổi</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </th:block>
+</div>

@@ -1,7 +1,7 @@
 package org.spring.mockprojectwebapp.services.implement;
 
 import jakarta.persistence.EntityNotFoundException;
-import org.spring.mockprojectwebapp.dtos.UserDTO;
+import org.spring.mockprojectwebapp.dtos.admin.UserDTO;
 import org.spring.mockprojectwebapp.entities.User;
 import org.spring.mockprojectwebapp.repositories.UserRepository;
 import org.spring.mockprojectwebapp.services.UserService;
@@ -35,6 +35,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public UserDTO findUserById(int userId) {
+        User user = userRepository.findByUserId(userId);
+        return mapToUserDTO(user);
+    }
+
+
+    @Override
     public List<UserDTO> searchUsers(String keyword) {
         List<User> users = userRepository.findByUsernameContainingOrEmailContaining(keyword);
         return users.stream().map(this::mapToUserDTO).collect(Collectors.toList());
@@ -58,6 +65,7 @@ public class UserServiceImpl implements UserService {
         userRepository.save(user);
     }
 
+    // Chuyển đổi từ Entity sang DTO
     @Override
     public UserDTO mapToUserDTO(User user) {
         UserDTO userDTO = new UserDTO();
@@ -68,5 +76,4 @@ public class UserServiceImpl implements UserService {
 
         return userDTO;
     }
-
 }
