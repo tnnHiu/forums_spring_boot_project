@@ -1,0 +1,52 @@
+/*---------Header Navbar----------------*/
+.navbar {
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-hover) 70%, #e67e22 100%);
+    padding: 1.5rem 1rem;
+    box-shadow: var(--shadow);
+}
+
+.navbar-brand, .nav-link {
+    color: var(--text-color) !important;
+    font-weight: 600;
+    transition: color 0.3s ease;
+}
+
+.nav-link:hover {
+    color: var(--primary-light) !important;
+}
+
+.btn-light {
+    background-color: var(--primary-light);
+    border-color: var(--primary-color);
+    color: #000;
+    border-radius: 25px;
+    padding: 0.5rem 1.25rem;
+    font-weight: 600;
+    transition: all 0.4s ease;
+}
+
+.btn-light:hover {
+    background-color: var(--primary-hover);
+    border-color: var(--primary-hover);
+    color: var(--text-color);
+    transform: translateY(-3px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.btn-outline-light {
+    border-color: var(--text-color);
+    color: var(--text-color);
+    border-radius: 20px;
+    padding: 0.5rem 1.25rem;
+}
+
+.btn-outline-light:hover {
+    background-color: var(--primary-hover);
+    color: var(--text-color);
+    border-color: var(--primary-hover);
+}
+
+.form-control {
+    border-radius: 20px;
+    padding: 0.5rem 1.25rem;
+}

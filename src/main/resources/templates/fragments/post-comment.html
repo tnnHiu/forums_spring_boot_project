@@ -1,4 +1,4 @@
-<div th:fragment="commentList" id="commentList" xmlns:sec="http://www.w3.org/1999/xhtml">
+<div th:fragment="commentList(postId)" id="commentList" xmlns:sec="http://www.w3.org/1999/xhtml">
     <div id="commentsContainer">
         <div th:each="comment : ${userCommentDTOs}" class="mb-3">
             <div class="d-flex align-items-center mb-3">
@@ -17,8 +17,8 @@
                 </a>
             </div>
             <div th:replace="/fragments/report-comment-modal :: reportCommentModal(
-            commentId=${comment.commentId},
-            postId=${postDTO.getPostId()})"></div>
+                commentId=${comment.commentId},
+                postId=${postId})"></div>
             <hr>
         </div>
         <div th:if="${#lists.isEmpty(userCommentDTOs)}" class="text-muted text-center">
