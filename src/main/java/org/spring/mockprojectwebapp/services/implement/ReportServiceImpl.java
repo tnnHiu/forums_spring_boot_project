@@ -41,7 +41,7 @@ public class ReportServiceImpl implements ReportService {
         Post post = new Post();
         post.setId(reportDTO.getPostId());
         report.setReportedPost(post);
-        report.setReportType(Report.ReportType.COMMENT);
+        report.setReportType(Report.ReportType.POST);
         report.setReason(reportDTO.getReason());
         report.setStatus(Report.Status.PENDING);
         report.setCreatedAt(LocalDateTime.now());
