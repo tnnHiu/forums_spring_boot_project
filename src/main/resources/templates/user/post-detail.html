@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="vi" xmlns:th="http://www.thymeleaf.org">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,36 +8,31 @@
     <link rel="stylesheet" th:href="@{/bootstrap-5.3.3-dist/css/bootstrap.min.css}">
     <script th:src="@{/bootstrap-5.3.3-dist/js/bootstrap.bundle.min.js}"></script>
     <link rel="stylesheet" th:href="@{/bootstrap-icons-1.11.3/font/bootstrap-icons.min.css}">
-    <link rel="stylesheet" th:href="@{/css/user-detail-post}" media="screen" type="text/css"/>
+    <link rel="stylesheet" th:href="@{/css/user-detail-post.css}">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script th:src="@{/js/post-comment.js}"></script>
 </head>
-
 <body>
-<div class="container py-5">
+<div class="container py-4">
     <!-- Bài viết -->
-    <div class="card shadow-lg mb-5 border-0 rounded-4 overflow-hidden">
+    <div class="card shadow-lg mb-4 border-0 rounded-4 overflow-hidden">
         <div class="ratio ratio-16x9">
-            <img th:src="${postDTO.imageUrl}" class="w-100 h-100 object-fit-cover" alt="Ảnh bài viết">
+            <img th:src="${postDTO.imageUrl}" class="w-100 h-100 object-fit-cover card-img-top" alt="Ảnh bài viết" loading="lazy">
         </div>
-        <div class="card-body p-4">
+        <div class="card-body">
             <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
-                <h2 class="card-title fw-bold mb-0" th:text="${postDTO.title}">Bún Bò Huế - Hương Vị Đậm Đà Miền
-                    Trung</h2>
+                <h2 class="card-title fw-bold mb-0" th:text="${postDTO.title}">Bún Bò Huế - Hương Vị Đậm Đà Miền Trung</h2>
                 <div class="d-flex gap-2">
                     <button class="btn btn-outline-primary"><i class="bi bi-bookmark"></i> Lưu</button>
                     <button class="btn btn-outline-danger"><i class="bi bi-heart"></i> 25</button>
                 </div>
             </div>
-
-            <div class="d-flex flex-wrap gap-3 text-muted mb-3">
-                <span><i class="bi bi-folder2 me-1"></i>Danh mục: <span
-                        th:text="${postDTO.categoryName}">Món chính</span></span>
-                <span><i class="bi bi-person-circle me-1"></i>Người đăng: <span
-                        th:text="${postDTO.username}">Admin</span></span>
+            <div class="d-flex flex-wrap gap-2 text-muted mb-3">
+                <span><i class="bi bi-folder2 me-1"></i>Danh mục: <span th:text="${postDTO.categoryName}">Món chính</span></span>
+                <span><i class="bi bi-person-circle me-1"></i>Người đăng: <span th:text="${postDTO.username}">Admin</span></span>
             </div>
             <hr>
-            <h5 class="fw-bold text-primary mb-3"><i class="bi bi-card-checklist me-2"></i>Nguyên liệu</h5>
+            <h5 class="fw-bold text-primary mb-2"><i class="bi bi-card-checklist me-2"></i>Nguyên liệu</h5>
             <div class="row g-3">
                 <div class="col-md-6">
                     <ul class="list-group list-group-flush">
@@ -54,45 +48,32 @@
                     </ul>
                 </div>
             </div>
-
-            <h5 class="fw-bold text-primary mt-4 mb-3"><i class="bi bi-scissors me-2"></i>Sơ chế</h5>
-            <p class="lh-lg">- Rửa sạch thịt bò, giò heo với nước muối loãng.<br>- Chần qua nước sôi để khử mùi hôi.<br>-
-                Sả đập dập, cắt khúc.<br>- Hành tây bổ đôi.<br>- Huyết heo luộc chín, cắt miếng vừa ăn.</p>
-
-            <h5 class="fw-bold text-primary mt-4 mb-3"><i class="bi bi-clock-history me-2"></i>Thực hiện</h5>
-            <p class="lh-lg">1. Hầm giò heo cùng sả và hành tây trong khoảng 60 phút để nước dùng ngọt thanh.<br>2. Luộc
-                bắp bò riêng, sau đó thái mỏng.<br>3. Cho mắm ruốc Huế hòa với nước lọc, lắng cặn rồi đổ vào nồi nước
-                dùng.<br>4. Nêm nếm gia vị vừa ăn.<br>5. Xếp bún vào tô, thêm thịt bò, giò heo, huyết, chả lụa và chan
-                nước dùng.</p>
-
-            <h5 class="fw-bold text-primary mt-4 mb-3"><i class="bi bi-lightbulb me-2"></i>Mẹo</h5>
-            <p class="lh-lg">- Sử dụng mắm ruốc Huế đúng cách để nước dùng có vị đặc trưng.<br>- Hầm xương lâu giúp nước
-                dùng ngọt thanh.<br>- Nên chần bún qua nước sôi trước khi ăn để bún không bị dai.</p>
-
+            <h5 class="fw-bold text-primary mb-2"><i class="bi bi-scissors me-2"></i>Sơ chế</h5>
+            <p class="lh-lg">- Rửa sạch thịt bò, giò heo với nước muối loãng.<br>- Chần qua nước sôi để khử mùi hôi.<br>- Sả đập dập, cắt khúc.<br>- Hành tây bổ đôi.<br>- Huyết heo luộc chín, cắt miếng vừa ăn.</p>
+            <h5 class="fw-bold text-primary mb-2"><i class="bi bi-clock-history me-2"></i>Thực hiện</h5>
+            <p class="lh-lg">1. Hầm giò heo cùng sả và hành tây trong khoảng 60 phút để nước dùng ngọt thanh.<br>2. Luộc bắp bò riêng, sau đó thái mỏng.<br>3. Cho mắm ruốc Huế hòa với nước lọc, lắng cặn rồi đổ vào nồi nước dùng.<br>4. Nêm nếm gia vị vừa ăn.<br>5. Xếp bún vào tô, thêm thịt bò, giò heo, huyết, chả lụa và chan nước dùng.</p>
+            <h5 class="fw-bold text-primary mb-2"><i class="bi bi-lightbulb me-2"></i>Mẹo</h5>
+            <p class="lh-lg">- Sử dụng mắm ruốc Huế đúng cách để nước dùng có vị đặc trưng.<br>- Hầm xương lâu giúp nước dùng ngọt thanh.<br>- Nên chần bún qua nước sôi trước khi ăn để bún không bị dai.</p>
             <div class="mt-4">
-                <span class="badge bg-primary me-2">#ẨmThựcViệt</span>
-                <span class="badge bg-primary me-2">#BúnBòHuế</span>
-                <span class="badge bg-primary">#MónNgonMiềnTrung</span>
+                <span class="badge me-2">#ẨmThựcViệt</span>
+                <span class="badge me-2">#BúnBòHuế</span>
+                <span class="badge">#MónNgonMiềnTrung</span>
             </div>
         </div>
     </div>
 
     <!-- Bình luận -->
-    <div class="card shadow-lg mb-5 border-0 rounded-4">
-        <div class="card-body p-4">
-            <h4 class="fw-bold mb-4"><i class="bi bi-chat-left-text me-2"></i>Bình luận</h4>
-            <!-- Form bình luận -->
-            <div class="card mb-4 border-0" style="background-color: #f8f9fa;">
+    <div class="card shadow-lg mb-4 border-0 rounded-4">
+        <div class="card-body">
+            <h4 class="fw-bold mb-3"><i class="bi bi-chat-left-text me-2"></i>Bình luận</h4>
+            <div class="card mb-3 border-0" style="background-color: #f8f9fa;">
                 <div class="card-body">
                     <div class="d-flex flex-start w-100">
-                        <img class="rounded-circle shadow-sm me-3"
-                             src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(19).webp"
-                             alt="avatar" width="40" height="40"/>
+                        <img class="rounded-circle shadow-sm me-2" src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(19).webp" alt="avatar" width="40" height="40"/>
                         <div class="w-100">
                             <form id="commentForm" th:action="@{/post/create-comment}" method="post">
                                 <input type="hidden" name="postId" th:value="${postDTO.getPostId()}"/>
-                                <textarea class="form-control mb-2" id="textAreaExample" name="comment" rows="3"
-                                          placeholder="Viết bình luận của bạn..." required></textarea>
+                                <textarea class="form-control mb-2" id="textAreaExample" name="comment" rows="3" placeholder="Viết bình luận của bạn..." required></textarea>
                                 <div class="d-flex justify-content-end gap-2">
                                     <button type="submit" class="btn btn-primary btn-sm">Đăng bình luận</button>
                                     <button type="reset" class="btn btn-outline-secondary btn-sm">Hủy</button>
@@ -102,32 +83,31 @@
                     </div>
                 </div>
             </div>
-            <!-- Danh sách bình luận  -->
             <div id="commentList" th:replace="fragments/post-comment :: commentList"></div>
             <input type="hidden" id="totalCommentsHidden" th:value="${totalComments}"/>
-            <div id="loadMoreWrapper" class="mt-3 text-center"
-                 th:if="${totalComments > 3}">
+            <div id="loadMoreWrapper" class="mt-3 text-center" th:if="${totalComments > 3}">
                 <button class="btn btn-outline-primary" id="loadMoreBtn" data-offset="3">Xem thêm bình luận</button>
             </div>
         </div>
     </div>
+
     <!-- Gợi ý bài viết -->
     <div class="card shadow-lg border-0 rounded-4">
-        <div class="card-body p-4">
-            <div class="d-flex justify-content-between align-items-center mb-4">
+        <div class="card-body">
+            <div class="d-flex justify-content-between align-items-center mb-3">
                 <h4 class="fw-bold mb-0"><i class="bi bi-lightning-charge me-2"></i>Gợi Ý Cho Bạn</h4>
                 <a href="#" class="text-decoration-none text-dark fw-medium">Xem thêm <i class="bi bi-arrow-right"></i></a>
             </div>
-            <div class="row g-4">
+            <div class="row g-3">
                 <div class="col-md-4">
-                    <div class="card h-100 border-0 shadow-sm">
+                    <div class="card h-100 border-0 shadow-sm suggestion-container">
                         <div class="ratio ratio-16x9">
-                            <img th:src="@{/img/img_post.jpg}" class="card-img-top object-fit-cover" alt="Gợi ý 1">
+                            <img th:src="@{/img/img_post.jpg}" class="card-img-top object-fit-cover" alt="Gợi ý 1" loading="lazy">
                         </div>
+                        <a href="#" class="suggestion-btn">Xem chi tiết</a>
                         <div class="card-body">
                             <h6 class="card-title fw-bold text-truncate">Cách làm Phở Bò ngon như ngoài hàng</h6>
-                            <p class="text-muted small text-truncate">Khám phá bí quyết nấu phở bò thơm ngon đúng
-                                điệu...</p>
+                            <p class="text-muted small text-truncate">Khám phá bí quyết nấu phở bò thơm ngon đúng điệu...</p>
                             <div class="d-flex justify-content-between text-muted small">
                                 <span><i class="bi bi-chat-left-text me-1"></i>15</span>
                                 <span><i class="bi bi-heart text-danger me-1"></i>45</span>
@@ -137,14 +117,14 @@
                     </div>
                 </div>
                 <div class="col-md-4">
-                    <div class="card h-100 border-0 shadow-sm">
+                    <div class="card h-100 border-0 shadow-sm suggestion-container">
                         <div class="ratio ratio-16x9">
-                            <img th:src="@{/img/bunbohue.jpg}" class="card-img-top object-fit-cover" alt="Gợi ý 2">
+                            <img th:src="@{/img/bunbohue.jpg}" class="card-img-top object-fit-cover" alt="Gợi ý 2" loading="lazy">
                         </div>
+                        <a href="#" class="suggestion-btn">Xem chi tiết</a>
                         <div class="card-body">
                             <h6 class="card-title fw-bold text-truncate">Cách làm Phở Bò ngon như ngoài hàng</h6>
-                            <p class="text-muted small text-truncate">Khám phá bí quyết nấu phở bò thơm ngon đúng
-                                điệu...</p>
+                            <p class="text-muted small text-truncate">Khám phá bí quyết nấu phở bò thơm ngon đúng điệu...</p>
                             <div class="d-flex justify-content-between text-muted small">
                                 <span><i class="bi bi-chat-left-text me-1"></i>15</span>
                                 <span><i class="bi bi-heart text-danger me-1"></i>45</span>
@@ -154,14 +134,14 @@
                     </div>
                 </div>
                 <div class="col-md-4">
-                    <div class="card h-100 border-0 shadow-sm">
+                    <div class="card h-100 border-0 shadow-sm suggestion-container">
                         <div class="ratio ratio-16x9">
-                            <img th:src="@{/img/banhmy.jpg}" class="card-img-top object-fit-cover" alt="Gợi ý 3">
+                            <img th:src="@{/img/banhmy.jpg}" class="card-img-top object-fit-cover" alt="Gợi ý 3" loading="lazy">
                         </div>
+                        <a href="#" class="suggestion-btn">Xem chi tiết</a>
                         <div class="card-body">
                             <h6 class="card-title fw-bold text-truncate">Cách làm Phở Bò ngon như ngoài hàng</h6>
-                            <p class="text-muted small text-truncate">Khám phá bí quyết nấu phở bò thơm ngon đúng
-                                điệu...</p>
+                            <p class="text-muted small text-truncate">Khám phá bí quyết nấu phở bò thơm ngon đúng điệu...</p>
                             <div class="d-flex justify-content-between text-muted small">
                                 <span><i class="bi bi-chat-left-text me-1"></i>15</span>
                                 <span><i class="bi bi-heart text-danger me-1"></i>45</span>
@@ -178,6 +158,4 @@
     </div>
 </div>
 </body>
-
 </html>
-

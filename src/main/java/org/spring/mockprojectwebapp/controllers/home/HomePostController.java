@@ -77,14 +77,14 @@ public class HomePostController {
         return "fragments/post-comment :: commentList";
     }
 
-    @GetMapping("/post/create")
+    @GetMapping("/new_post")
     public String showCreatePostPage(Model model) {
         model.addAttribute("postDTO", new PostDTO());
         model.addAttribute("categoryDTOs", categoryService.getAllCategories());
         return "user/create-post";
     }
 
-    @PostMapping("/post/create")
+    @PostMapping("/new_post")
     public String createPost(Model model, @Valid @ModelAttribute PostDTO postDTO, @RequestParam("imageFile") MultipartFile imageFile, @RequestParam("categoryId") int categoryId, HttpSession session) {
         String imageUrl = saveImageFile(imageFile);
         if (imageUrl == null || imageUrl.isEmpty()) {
