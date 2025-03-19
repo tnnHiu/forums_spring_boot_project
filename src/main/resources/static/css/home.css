@@ -395,7 +395,7 @@ body {
     text-shadow: 3px 3px 10px rgba(0, 0, 0, 0.3);
 }
 .custom-logo:hover {
-    color: #007bff; /* Đổi sang màu xanh khi hover */
+    color: #007bff;
     transform: scale(1.2) rotate(-3deg);
     text-shadow: 5px 5px 15px rgba(0, 123, 255, 0.5);
 }
