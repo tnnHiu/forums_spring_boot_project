@@ -1,0 +1,25 @@
+<div th:fragment="reportPostModal" class="modal fade" id="reportPostModal" tabindex="-1"
+     aria-labelledby="reportPostModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="reportPostModalLabel">Báo cáo bài viết</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form th:action="@{/report/post}" method="post">
+                <div class="modal-body">
+                    <input type="hidden" name="postId" th:value="${postDTO.getPostId()}"/>
+                    <div class="mb-3">
+                        <label for="reportReason" class="form-label">Lý do báo cáo</label>
+                        <textarea class="form-control" id="reportReason" name="reason" rows="3"
+                                  placeholder="Vui lòng nhập lý do..." required></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                    <button type="submit" class="btn btn-danger">Gửi báo cáo</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

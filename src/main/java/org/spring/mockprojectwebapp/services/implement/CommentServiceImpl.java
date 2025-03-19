@@ -19,12 +19,11 @@ public class CommentServiceImpl implements CommentService {
 
     @Autowired
     private CommentRepository commentRepository;
+    @Autowired
+    private PostRepository postRepository;
 
-//    @Autowired
-//    private PostRepository postRepository;
-//
-//    @Autowired
-//    private UserRepository userRepository;
+    @Autowired
+    private UserRepository userRepository;
 
     @Override
     public List<UserCommentDTO> getCommentsByPostId(int postId) {
@@ -33,6 +32,17 @@ public class CommentServiceImpl implements CommentService {
                 .map(this::mapToDTO)
                 .collect(Collectors.toList());
     }
+
+    public int getTotalCommentsByPostId(int postId) {
+        return commentRepository.countByPostId(postId);
+    }
+
+    @Override
+    public void saveComment(UserCommentDTO userCommentDTO) {
+        Comment comment = mapToEntity(userCommentDTO);
+        commentRepository.save(comment);
+    }
+
 
     @Override
     public void updateCommentStatus(int commentId, Comment.Status status) {
@@ -57,15 +67,15 @@ public class CommentServiceImpl implements CommentService {
                 .build();
     }
 
-//    private Comment mapToEntity(UserCommentDTO dto) {
-//        Comment comment = new Comment();
-//        comment.setId(dto.getCommentId());
-//        comment.setPost(postRepository.findById(dto.getPostId()).orElse(null));
-//        comment.setUser(userRepository.findById(dto.getUserId()).orElse(null));
-//        comment.setContent(dto.getComment());
-//        comment.setStatus(Comment.Status.valueOf(dto.getCommentStatus()));
-//        comment.setCreatedAt(dto.getCreatedAt());
-//        comment.setUpdatedAt(dto.getUpdatedAt());
-//        return comment;
-//    }
+    private Comment mapToEntity(UserCommentDTO dto) {
+        Comment comment = new Comment();
+        comment.setId(dto.getCommentId());
+        comment.setPost(postRepository.findById(dto.getPostId()).orElse(null));
+        comment.setUser(userRepository.findById(dto.getUserId()).orElse(null));
+        comment.setContent(dto.getComment());
+        comment.setStatus(Comment.Status.valueOf(dto.getCommentStatus()));
+        comment.setCreatedAt(dto.getCreatedAt());
+        comment.setUpdatedAt(dto.getUpdatedAt());
+        return comment;
+    }
 }

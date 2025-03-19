@@ -1,0 +1,28 @@
+<div th:fragment="commentList(postId)" id="commentList" xmlns:sec="http://www.w3.org/1999/xhtml">
+    <div id="commentsContainer">
+        <div th:each="comment : ${userCommentDTOs}" class="mb-3">
+            <div class="d-flex align-items-center mb-3">
+                <img class="rounded-circle me-3" src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(19).webp"
+                     alt="avatar" width="50" height="50"/>
+                <h6 class="fw-bold text-primary mb-0" th:text="${comment.userName}"></h6>
+            </div>
+            <p th:text="${comment.comment}"></p>
+            <div class="d-flex gap-3 text-muted small">
+                <a href="#!" class="text-decoration-none"><i class="bi bi-hand-thumbs-up me-1"></i>Thích</a>
+                <a href="#!" class="text-decoration-none"><i class="bi bi-chat-dots me-1"></i>Trả lời</a>
+                <a href="#!" class="text-decoration-none" data-bs-toggle="modal"
+                   th:data-bs-target="'#reportCommentModal' + ${comment.commentId}"
+                   sec:authorize="isAuthenticated()">
+                    <i class="bi bi-flag me-1"></i>Báo cáo
+                </a>
+            </div>
+            <div th:replace="/fragments/report-comment-modal :: reportCommentModal(
+                commentId=${comment.commentId},
+                postId=${postId})"></div>
+            <hr>
+        </div>
+        <div th:if="${#lists.isEmpty(userCommentDTOs)}" class="text-muted text-center">
+            Chưa có bình luận nào.
+        </div>
+    </div>
+</div>

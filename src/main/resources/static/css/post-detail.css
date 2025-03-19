@@ -1,0 +1,114 @@
+:root {
+    --primary-color: #F07900;
+    --primary-hover: #c86200;
+    --primary-light: #f4a261;
+    --text-color: #ffffff;
+    --shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+}
+
+body {
+    background-color: #f5f6f8;
+}
+
+/* Card styles */
+.card {
+    background: #fff;
+    box-shadow: var(--shadow);
+}
+
+.card:hover {
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+/* Button styles */
+.btn-primary {
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-hover));
+    border-color: var(--primary-color);
+    color: var(--text-color);
+}
+
+.btn-primary:hover {
+    background: var(--primary-hover);
+    border-color: var(--primary-hover);
+    box-shadow: var(--shadow);
+}
+
+.btn-outline-primary {
+    color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+.btn-outline-primary:hover {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+    color: var(--text-color);
+    box-shadow: var(--shadow);
+}
+
+.btn-outline-danger {
+    color: #dc3545;
+    border-color: #dc3545;
+}
+
+.btn-outline-danger:hover {
+    background-color: #dc3545;
+    border-color: #dc3545;
+    color: var(--text-color);
+    box-shadow: var(--shadow);
+}
+
+.btn-outline-warning {
+    color: #ffc107;
+    border-color: #ffc107;
+}
+
+.btn-outline-warning:hover {
+    background-color: #ffc107;
+    border-color: #ffc107;
+    color: var(--text-color);
+    box-shadow: var(--shadow);
+}
+
+/* Text styles */
+.text-primary {
+    color: var(--primary-color) !important;
+}
+
+.text-muted {
+    color: #6c757d !important;
+}
+
+/* Badge styles (Hashtags) */
+.badge {
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-hover));
+    color: var(--text-color);
+}
+
+.badge:hover {
+    background: var(--primary-hover);
+}
+
+/* Icon interactions */
+.bi-heart {
+    color: #dc3545;
+}
+
+.bi-bookmark {
+    color: var(--primary-color);
+}
+
+/* Comment section */
+.comment-item {
+    background: #fff;
+    box-shadow: var(--shadow);
+}
+
+.comment-item:hover {
+    background-color: #f8f9fa;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.form-control:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 8px rgba(240, 121, 0, 0.3);
+}
