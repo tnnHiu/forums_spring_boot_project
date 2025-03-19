@@ -12,42 +12,8 @@ body {
     line-height: 1.8;
 }
 
-.navbar {
-    background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-hover) 70%, #e67e22 100%);
-    padding: 1.5rem 1rem;
-    box-shadow: var(--shadow);
-}
-
-.navbar-brand, .nav-link {
-    color: var(--text-color) !important;
-    font-weight: 600;
-    transition: color 0.3s ease;
-}
-
-.nav-link:hover {
-    color: var(--primary-light) !important;
-}
-
-.btn-outline-light {
-    border-color: var(--text-color);
-    color: var(--text-color);
-    border-radius: 20px;
-    padding: 0.5rem 1.25rem;
-}
-
-.btn-outline-light:hover {
-    background-color: var(--primary-hover);
-    color: var(--text-color);
-    border-color: var(--primary-hover);
-}
-
-.form-control {
-    border-radius: 20px;
-    padding: 0.75rem 1.5rem;
-}
-
 .row.banner {
-    background-image: url('../img/dashboard-banner.jpg');
+    background-image: url('../../img/dashboard-banner.jpg');
     background-size: cover;
     background-position: center;
     color: var(--text-color);
@@ -72,28 +38,10 @@ body {
 
 .placeholder-text {
     color: #fff;
-    font-size: 1.5rem;
+    font-size: 1.25rem;
     line-height: 1.6;
     text-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
     font-weight: 500;
-}
-
-.btn-light {
-    background-color: var(--primary-light);
-    border-color: var(--primary-color);
-    color: #000;
-    border-radius: 25px;
-    padding: 0.75rem 2rem;
-    font-weight: 600;
-    transition: all 0.4s ease;
-}
-
-.btn-light:hover {
-    background-color: var(--primary-hover);
-    border-color: var(--primary-hover);
-    color: var(--text-color);
-    transform: translateY(-3px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
 .card {
@@ -120,10 +68,11 @@ body {
     left: 50%;
     transform: translate(-50%, -50%);
     opacity: 0;
-    transition: opacity 0.4s ease, transform 0.4s ease;
+    transition: opacity 0.4s ease, all 0.7s ease;
     background-color: var(--text-color);
     color: var(--primary-color);
     border-radius: 20px;
+    border-color: var(--primary-color);
     padding: 0.5rem 1.5rem;
     font-weight: 600;
 }
@@ -171,7 +120,7 @@ body {
 
 .sticky-icons {
     position: sticky;
-    top: 70px;
+    top: 30px;
     background: linear-gradient(135deg, #fff, #f1f3f5);
     border: 1px solid #e9ecef;
     border-radius: 15px;
@@ -195,10 +144,9 @@ body {
     border-radius: 50%;
     cursor: pointer;
     transition: all 0.3s ease;
-    background: linear-gradient(135deg, var(--primary-color), var(--primary-hover));
+    background: linear-gradient(135deg, var(--primary-light), var(--primary-color));
     color: var(--text-color);
     box-shadow: var(--shadow);
-    display: flex;
     align-items: center;
     justify-content: center;
 }
