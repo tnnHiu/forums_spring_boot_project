@@ -8,7 +8,9 @@ import org.spring.mockprojectwebapp.repositories.PostRepository;
 import org.spring.mockprojectwebapp.services.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -74,6 +76,59 @@ public class PostServiceImpl implements PostService {
         postRepository.save(existingPost);
     }
 
+    // deletePost method
+    @Override
+    public void deletePost(int id) {
+        if (!postRepository.existsById(id)) {
+            throw new RuntimeException("Post not found with id: " + id);
+        }
+        postRepository.deleteById(id);
+    }
+
+    @Override
+    public Page<PostDTO> filterPosts(String keyword, Integer status, Integer categoryId, Integer isPremium, int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+
+        Specification<Post> spec = Specification.where(null);
+
+        if (keyword != null && !keyword.isEmpty()) {
+            spec = spec.and((root, query, cb) ->
+                    cb.or(
+                            cb.like(cb.lower(root.get("title")), "%" + keyword.toLowerCase() + "%"),
+                            cb.like(
+                                    cb.lower(root.get("content").as(String.class)),
+                                    "%" + keyword.toLowerCase() + "%"
+                            )
+
+                    )
+            );
+        }
+
+        if (status != null) {
+            spec = spec.and((root, query, cb) -> {
+                if (status >= 0 && status < Post.Status.values().length) {
+                    return cb.equal(root.get("status"), Post.Status.values()[status]);
+                }
+                return cb.conjunction();
+            });
+        }
+
+        if (categoryId != null) {
+            spec = spec.and((root, query, cb) ->
+                    cb.equal(root.get("category").get("categoryId"), categoryId)
+            );
+        }
+
+        if (isPremium != null) {
+            boolean premium = isPremium == 1;
+            spec = spec.and((root, query, cb) ->
+                    cb.equal(root.get("isPremium"), premium)
+            );
+        }
+
+        return postRepository.findAll(spec, pageable).map(this::mapToDTO);
+    }
+
     private PostDTO mapToDTO(Post post) {
         return PostDTO
                 .builder()
@@ -100,7 +155,10 @@ public class PostServiceImpl implements PostService {
         post.setCreatedAt(postDTO.getCreatedAt() != null ? postDTO.getCreatedAt() : LocalDateTime.now());
         post.setUpdatedAt(LocalDateTime.now());
         post.setPremium(postDTO.isPremium());
-        post.setStatus(postDTO.getStatus() == 1 ? Post.Status.ACTIVE : Post.Status.INACTIVE);
+        post.setStatus(Post.Status.values()[postDTO.getStatus()]);
+
+
+        //post.setStatus(postDTO.getStatus() == 1 ? Post.Status.ACTIVE : Post.Status.INACTIVE);
         // Set User and Category (only need ID)
         User user = new User();
         user.setUserId(postDTO.getUserId());

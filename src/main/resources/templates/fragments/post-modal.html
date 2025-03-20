@@ -1,0 +1,160 @@
+<div th:fragment="post-modal">
+    <!-- Modal Xem Bài Đăng -->
+    <th:block th:each="postDTO : ${postDTOs}">
+        <div class="modal fade" th:id="'viewPostModal' + ${postDTO.postId}" tabindex="-1"
+             aria-labelledby="viewPostModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header bg-primary text-white">
+                        <h5 class="modal-title" id="viewPostModalLabel" th:text="${postDTO.title}">Tiêu đề bài đăng</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <!-- Image section -->
+                        <div class="mb-4" th:if="${postDTO.imageUrl != null && !postDTO.imageUrl.isEmpty()}">
+                            <h6 class="fw-bold text-primary">Hình ảnh</h6>
+                            <div class="text-center border rounded p-3">
+                                <img th:src="${postDTO.imageUrl}" alt="Post image" class="img-fluid rounded"
+                                     style="max-height: 400px;">
+                            </div>
+                        </div>
+                        <div class="mb-4">
+                            <h6 class="fw-bold text-primary">Nội dung</h6>
+                            <div class="border rounded p-3" style="min-height: 200px;" th:text="${postDTO.content}">
+                                Nội dung bài đăng
+                            </div>
+                        </div>
+                        <hr class="my-4">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <h6 class="fw-bold text-primary">Danh mục</h6>
+                                    <p class="border rounded p-2" th:text="${postDTO.categoryName}">Danh mục</p>
+                                </div>
+                                <div class="mb-3">
+                                    <h6 class="fw-bold text-primary">Người đăng</h6>
+                                    <p class="border rounded p-2" th:text="${postDTO.username}">Tên người dùng</p>
+                                </div>
+                                <div class="mb-3">
+                                    <h6 class="fw-bold text-primary">Loại nội dung</h6>
+                                    <p class="border rounded p-2">
+                                        <span th:if="${postDTO.isPremium}" class="badge bg-warning">Premium</span>
+                                        <span th:unless="${postDTO.isPremium}" class="badge bg-secondary">Free</span>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <h6 class="fw-bold text-primary">Trạng thái</h6>
+                                    <p class="border rounded p-2">
+                                        <span th:if="${postDTO.status == 0}" class="badge bg-success">ACTIVE</span>
+                                        <span th:if="${postDTO.status == 1}" class="badge bg-warning">INACTIVE</span>
+                                        <span th:if="${postDTO.status == 2}" class="badge bg-danger">BANNED</span>
+                                    </p>
+                                </div>
+                                <div class="mb-3">
+                                    <h6 class="fw-bold text-primary">Ngày tạo</h6>
+                                    <p class="border rounded p-2"
+                                       th:text="${#temporals.format(postDTO.createdAt, 'dd/MM/yyyy HH:mm')}">
+                                        Ngày tạo
+                                    </p>
+                                </div>
+                                <div class="mb-3">
+                                    <h6 class="fw-bold text-primary">Ngày cập nhật</h6>
+                                    <p class="border rounded p-2"
+                                       th:text="${postDTO.updatedAt != null ? #temporals.format(postDTO.updatedAt, 'dd/MM/yyyy HH:mm') : '-'}">
+                                        Ngày cập nhật
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                        <button type="button" class="btn btn-primary"
+                                th:attr="data-bs-target='#editPostModal' + ${postDTO.postId}" data-bs-toggle="modal"
+                                data-bs-dismiss="modal">Chỉnh sửa
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" th:id="'editPostModal' + ${postDTO.postId}" tabindex="-1"
+             aria-labelledby="editPostModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <form th:action="@{/admin/posts/{id}(id=${postDTO.postId})}" method="post">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="editPostModalLabel">Sửa Trạng Thái Bài Viết</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <input type="hidden" name="id" th:value="${postDTO.postId}">
+                            <!-- read-only -->
+                            <div class="mb-3">
+                                <label class="form-label">Tiêu Đề</label>
+                                <p class="border rounded p-2" th:text="${postDTO.title}"></p>
+                            </div>
+                            <div class="mb-4" th:if="${postDTO.imageUrl != null && !postDTO.imageUrl.isEmpty()}">
+                                <h6 class="fw-bold text-primary">Hình ảnh</h6>
+                                <div class="text-center border rounded p-3">
+                                    <img th:src="${postDTO.imageUrl}" alt="Post image" class="img-fluid rounded"
+                                         style="max-height: 400px;">
+                                </div>
+                            </div>
+                            <!-- read-only -->
+                            <div class="mb-3">
+                                <label class="form-label">Nội Dung</label>
+                                <div class="border rounded p-3" style="min-height: 100px;"
+                                     th:text="${postDTO.content}"></div>
+                            </div>
+                            <!-- read-only -->
+                            <div class="mb-3">
+                                <label class="form-label">Danh Mục</label>
+                                <p class="border rounded p-2" th:text="${postDTO.categoryName}"></p>
+                            </div>
+                            <!-- editable -->
+                            <div class="mb-3">
+                                <label class="form-label">Trạng Thái</label>
+                                <select class="form-select" name="status" required>
+                                    <option value="0" th:selected="${postDTO.status == 0}">ACTIVE</option>
+                                    <option value="1" th:selected="${postDTO.status == 1}">INACTIVE</option>
+                                    <option value="2" th:selected="${postDTO.status == 2}">BANNED</option>
+                                </select>
+                            </div>
+                            <div class="row mt-4">
+                                <h6 class="mb-3">Thông tin khác</h6>
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label fw-bold">Người Đăng:</label>
+                                    <p class="border rounded p-2" th:text="${postDTO.username}"></p>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label fw-bold">Premium:</label>
+                                    <p class="border rounded p-2">
+                                        <span th:if="${postDTO.isPremium}" class="badge bg-warning">Premium</span>
+                                        <span th:unless="${postDTO.isPremium}" class="badge bg-secondary">Free</span>
+                                    </p>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label fw-bold">Ngày Tạo:</label>
+                                    <p class="border rounded p-2"
+                                       th:text="${#temporals.format(postDTO.createdAt, 'dd/MM/yyyy HH:mm:ss')}"></p>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label fw-bold">Ngày Cập Nhật:</label>
+                                    <p class="border rounded p-2"
+                                       th:text="${postDTO.updatedAt != null ? #temporals.format(postDTO.updatedAt, 'dd/MM/yyyy HH:mm:ss') : '-'}"></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                            <button type="submit" class="btn btn-primary">Lưu thay đổi</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </th:block>
+</div>

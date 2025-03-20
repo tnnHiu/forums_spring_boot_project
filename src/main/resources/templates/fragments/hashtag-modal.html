@@ -1,0 +1,61 @@
+<div th:fragment="hashtag-modal">
+  <!-- Modal Thêm Hashtag -->
+  <div class="modal fade" id="addHashtagModal" tabindex="-1" aria-labelledby="addHashtagModalLabel"
+       aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <form th:action="@{/admin/hashtags/add}" method="post" class="hashtag-form">
+          <div class="modal-header">
+            <h5 class="modal-title" id="addHashtagModalLabel">Thêm Hashtag</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <div class="mb-3">
+              <label class="form-label">Tên Hashtag</label>
+              <input type="text" class="form-control hashtag-input" name="hashtagName" placeholder="Nhập tên hashtag"
+                     pattern="^(#)?[a-zA-Z0-9_]+$" title="Hashtag chỉ được chứa chữ cái, số, dấu gạch dưới, và có thể bắt đầu bằng #"
+                     required>
+              <div class="invalid-feedback">Hashtag chỉ được nhập định dạng abc hoặc #abc</div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+            <button type="submit" class="btn btn-primary">Lưu</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Sửa Hashtag -->
+  <th:block th:each="hashtagDTO : ${hashtagDTOs}">
+    <div class="modal fade" th:id="'editHashtagModal' + ${hashtagDTO.hashtagId}" tabindex="-1"
+         aria-labelledby="editHashtagModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <form th:action="@{/admin/hashtags/update/{id}(id=${hashtagDTO.hashtagId})}" method="post" class="hashtag-form">
+            <div class="modal-header">
+              <h5 class="modal-title">Sửa Hashtag</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <input type="hidden" name="id" th:value="${hashtagDTO.hashtagId}">
+              <div class="mb-3">
+                <label class="form-label">Tên Hashtag</label>
+                <input type="text" class="form-control hashtag-input" name="hashtagName"
+                       th:value="${hashtagDTO.hashtagName}"
+                       pattern="^(#)?[a-zA-Z0-9_]+$" title="Hashtag chỉ được chứa chữ cái, số, dấu gạch dưới, và có thể bắt đầu bằng #"
+                       required>
+                <div class="invalid-feedback">Hashtag chỉ được nhập định dạng abc hoặc #abc</div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+              <button type="submit" class="btn btn-primary">Lưu thay đổi</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </th:block>
+</div>
