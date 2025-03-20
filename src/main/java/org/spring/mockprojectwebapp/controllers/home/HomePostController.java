@@ -37,24 +37,32 @@ public class HomePostController {
     private ResourceLoader resourceLoader;
 
     @GetMapping("/post/{id}")
-    public String showPostDetail(@PathVariable("id") int id, Model model) {
+    public String showPostDetail(@PathVariable("id") int id, Model model, HttpSession session) {
         PostDTO postDTO = postService.findPostById(id);
+        int currentUserId = session.getAttribute("userId") != null ? (int) session.getAttribute("userId") : -1;
         List<UserCommentDTO> firstThreeComments = commentService.getCommentsByPostId(id).stream().limit(3).toList();
         int totalComments = commentService.getCommentsByPostId(id).size();
         model.addAttribute("postDTO", postDTO);
         model.addAttribute("userCommentDTOs", firstThreeComments);
         model.addAttribute("totalComments", totalComments);
+        model.addAttribute("currentUserId", currentUserId);
+
         return "user/post-detail";
     }
 
     @GetMapping("/post/{postId}/load-more-comments")
     public String loadMoreComments(@PathVariable("postId") int postId,
                                    @RequestParam("offset") int offset,
+                                   HttpSession session,
                                    Model model) {
+        int currentUserId = session.getAttribute("userId") != null ? (int) session.getAttribute("userId") : -1;
         List<UserCommentDTO> allComments = commentService.getCommentsByPostId(postId);
         List<UserCommentDTO> moreComments = allComments.stream().skip(offset).limit(3).toList();
+
         model.addAttribute("userCommentDTOs", moreComments);
         model.addAttribute("postId", postId);
+        model.addAttribute("currentUserId", currentUserId);
+
         return "user/post-detail :: commentList";
     }
 
@@ -64,17 +72,25 @@ public class HomePostController {
                                 HttpSession session,
                                 Model model) {
         int userId = (int) session.getAttribute("userId");
+        String userName = (String) session.getAttribute("userName");
+
         UserCommentDTO userCommentDTO = UserCommentDTO.builder()
                 .postId(postId)
                 .userId(userId)
+                .userName(userName)
                 .comment(commentContent)
                 .createdAt(LocalDateTime.now())
                 .commentStatus("ACTIVE")
                 .build();
 
         commentService.saveComment(userCommentDTO);
+
+        PostDTO postDTO = postService.findPostById(postId);
+
         model.addAttribute("userCommentDTOs", List.of(userCommentDTO));
         model.addAttribute("postId", postId);
+        model.addAttribute("currentUserId", userId);
+
         return "user/post-detail :: commentList";
     }
 
