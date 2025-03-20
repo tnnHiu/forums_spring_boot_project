@@ -13,4 +13,5 @@ public interface HashtagRepository extends JpaRepository<Hashtag, Integer> {
     @Query("SELECT CASE WHEN COUNT(h) > 0 THEN TRUE ELSE FALSE END FROM Hashtag h WHERE h.id = :id")
     boolean existsById(@Param("id") Integer id);
     boolean existsByHashtagNameIgnoreCase(String hashtagName);
+    boolean existsByHashtagNameIgnoreCaseAndIdNot(String hashtagName, Integer id);
 }

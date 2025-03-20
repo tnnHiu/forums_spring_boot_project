@@ -2,7 +2,6 @@ package org.spring.mockprojectwebapp.entities;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.springframework.data.annotation.CreatedDate;
 
 import java.time.LocalDateTime;
 

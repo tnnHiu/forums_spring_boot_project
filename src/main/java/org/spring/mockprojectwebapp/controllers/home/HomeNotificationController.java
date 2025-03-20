@@ -1,6 +1,5 @@
 package org.spring.mockprojectwebapp.controllers.home;
 
-import org.slf4j.Logger;
 import org.spring.mockprojectwebapp.dtos.user.CommentNotificationDTO;
 import org.spring.mockprojectwebapp.entities.Comment;
 import org.spring.mockprojectwebapp.entities.Notification;
