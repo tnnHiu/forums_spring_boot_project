@@ -104,55 +104,6 @@
 
 <div th:replace="fragments/toast :: toast"></div>
 
-<script>
-    const scrollToTopBtn = document.getElementById("scrollToTopBtn");
-
-    window.onscroll = function () {
-        if (document.documentElement.scrollTop > 1000) {
-            scrollToTopBtn.style.display = "block";
-        } else {
-            scrollToTopBtn.style.display = "none";
-        }
-    };
-
-    scrollToTopBtn.addEventListener("click", function () {
-        window.scrollTo({
-            top: 0,
-            behavior: "smooth"
-        });
-    });
-
-    document.addEventListener("DOMContentLoaded", function () {
-        const likeButtons = document.querySelectorAll(".like-btn");
-        const saveButtons = document.querySelectorAll(".save-btn");
-        const seeMoreButtons = document.querySelectorAll(".seeMore-btn");
-
-
-        likeButtons.forEach(button => {
-            button.addEventListener("click", function () {
-                this.classList.toggle("liked");
-                const count = this.nextElementSibling;
-                let likes = parseInt(count.textContent.replace(/\D/g, '')) || 0;
-                count.textContent = this.classList.contains("liked") ? (likes + 1) : (likes - 1);
-            });
-        });
-
-        saveButtons.forEach(button => {
-            button.addEventListener("click", function () {
-                this.classList.toggle("saved");
-            });
-        });
-
-        seeMoreButtons.forEach(button => {
-            button.addEventListener("click", function () {
-                window.scrollTo({
-                    top: 750,
-                    behavior: "smooth"
-                });
-            });
-        });
-    });
-</script>
 <script th:src="@{/js/home.js}"></script>
 </body>
 </html>
