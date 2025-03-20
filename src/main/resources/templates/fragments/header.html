@@ -14,7 +14,7 @@
                 </ul>
                 <form class="d-flex me-2" th:action="@{/search}" method="get">
                     <button class="btn btn-outline-light me-2" type="submit"><i class="bi bi-search"></i></button>
-                    <input class="form-control rounded-pill me-auto" type="search" name="q" placeholder="Tìm kiếm">
+                    <input class="form-control rounded-pill me-auto" type="search" name="keyword" placeholder="Tìm kiếm">
                 </form>
                 <!-- Nếu có session đăng nhập thì hiển thị dropdown -->
                 <div sec:authorize="isAuthenticated()">

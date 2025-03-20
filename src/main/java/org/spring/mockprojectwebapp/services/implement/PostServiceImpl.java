@@ -4,6 +4,7 @@ import org.spring.mockprojectwebapp.dtos.admin.PostDTO;
 import org.spring.mockprojectwebapp.entities.Category;
 import org.spring.mockprojectwebapp.entities.Post;
 import org.spring.mockprojectwebapp.entities.User;
+import org.spring.mockprojectwebapp.repositories.CommentRepository;
 import org.spring.mockprojectwebapp.repositories.PostRepository;
 import org.spring.mockprojectwebapp.services.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,9 @@ public class PostServiceImpl implements PostService {
 
     @Autowired
     private PostRepository postRepository;
+
+    @Autowired
+    private CommentRepository commentRepository;
 
     @Override
     public PostDTO savePost(PostDTO postDTO) {
@@ -75,6 +79,7 @@ public class PostServiceImpl implements PostService {
     }
 
     private PostDTO mapToDTO(Post post) {
+        int totalComments = commentRepository.countByPostId(post.getId());
         return PostDTO
                 .builder()
                 .postId(post.getId())
@@ -88,6 +93,7 @@ public class PostServiceImpl implements PostService {
                 .isPremium(post.isPremium())
                 .categoryName(post.getCategory().getCategoryName())
                 .username(post.getUser().getUsername())
+                .totalComments(totalComments)
                 .build();
     }
 

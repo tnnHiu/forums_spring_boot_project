@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" th:href="@{/bootstrap-5.3.3-dist/css/bootstrap.min.css}">
     <script th:src="@{/bootstrap-5.3.3-dist/js/bootstrap.bundle.min.js}"></script>
-<link rel="stylesheet" th:href="@{/css/auth/auth.css}">
+    <link rel="stylesheet" th:href="@{/css/auth/auth.css}">
 </head>
 <body>
 <section class="p-3 p-md-4 p-xl-5">
@@ -54,7 +54,8 @@
                                             <label class="form-check-label text-secondary" for="rememberMe">Ghi nhớ đăng
                                                 nhập</label>
                                         </div>
-                                        <a href="#" class="link-secondary text-decoration-none">Quên mật khẩu</a>
+                                        <!-- Sửa đường dẫn ở đây -->
+                                        <a th:href="@{/forgot-password}" class="link-secondary text-decoration-none">Quên mật khẩu</a>
                                     </div>
                                 </div>
                                 <div class="col-12 text-center">

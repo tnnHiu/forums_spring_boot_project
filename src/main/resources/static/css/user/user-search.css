@@ -96,7 +96,7 @@ body {
 }
 
 .form-control {
-    border-radius: 15px;
+    border-radius: 15px !important;
     padding: calc(var(--spacing-unit) * 0.85) calc(var(--spacing-unit) * 1.25);
     border: 1px solid #d1d5db;
     font-size: 1.1rem;
@@ -242,6 +242,30 @@ body {
 hr {
     border-color: #e5e7eb;
     margin: calc(var(--spacing-unit) * 2.5) 0;
+}
+
+/* Thêm vào file CSS của bạn */
+.home-icon {
+    position: relative;
+    background-color: var(--primary-light); /* Màu cam */
+    color: white;
+    padding: 10px;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    box-shadow: var(--shadow);
+    transition: var(--transition-default);
+    z-index: 1000; /* Đảm bảo icon hiển thị trên các phần tử khác */
+}
+
+.home-icon:hover {
+    background-color: var(--primary-hover); /* Màu cam đậm hơn khi hover */
+    transform: scale(1.1);
+    box-shadow: 0 4px 15px rgba(240, 121, 0, 0.3);
 }
 
 /* Responsive Design */

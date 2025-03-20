@@ -13,6 +13,10 @@
 <div class="container mt-5 mb-5">
     <div class="card shadow-lg">
         <div class="text-bg-primary">
+            <!-- Thêm icon Home ở đây -->
+            <a href="/" class="home-icon">
+                <i class="bi bi-house"></i>
+            </a>
             <h2>Tìm kiếm</h2>
             <p>Khám phá bài viết, hashtag hoặc người dùng</p>
         </div>
@@ -33,9 +37,6 @@
             </form>
 
             <div th:if="${keyword != null and !keyword.isEmpty()}" id="searchResults" class="mt-4">
-                <hr>
-                <h3 class="mb-4">Kết quả tìm kiếm cho: <span th:text="${keyword}"></span></h3>
-
                 <section th:if="${not #lists.isEmpty(postDTOs)}" class="mb-5">
                     <h4>Bài viết</h4>
                     <div class="row g-4">
@@ -73,10 +74,9 @@
                         </div>
                     </div>
                 </section>
-
-                <div th:if="${#lists.isEmpty(postDTOs) and #lists.isEmpty(userSearchDTOs) and #lists.isEmpty(hashtagDTOs)}">
-                    <p class="text-muted text-center">Không tìm thấy kết quả. Vui lòng thử từ khóa khác!</p>
-                </div>
+            </div>
+            <div th:if="${#lists.isEmpty(postDTOs) and #lists.isEmpty(userSearchDTOs) and #lists.isEmpty(hashtagDTOs)}">
+                <h3 class="text-center">Không tìm thấy kết quả</h3>
             </div>
         </div>
     </div>

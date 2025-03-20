@@ -26,4 +26,5 @@ public class PostDTO {
     private String username;
     private int userId;
     private int categoryId;
+    private int totalComments;
 }

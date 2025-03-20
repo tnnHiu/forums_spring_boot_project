@@ -80,6 +80,7 @@ public class UserServiceImpl implements UserService {
         userDTO.setUsername(user.getUsername());
         userDTO.setEmail(user.getEmail());
         userDTO.setStatus(user.getStatus());
+        userDTO.setCreatedAt(user.getCreatedAt());
 
         return userDTO;
     }
