@@ -7,6 +7,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping("/admin")
@@ -34,9 +35,14 @@ public class AdminHashtagController {
     }
 
     @PostMapping("/hashtags/add")
-    public String addHashtag(@ModelAttribute HashtagDTO hashtagDTO) {
-        hashtagService.saveHashtag(hashtagDTO);
-        return "redirect:/admin/hashtags";
+    public String addHashtag(@ModelAttribute HashtagDTO hashtagDTO, Model model, RedirectAttributes redirectAttributes) {
+        try {
+            hashtagService.saveHashtag(hashtagDTO);
+            return "redirect:/admin/hashtags";
+        } catch (RuntimeException e) {
+            redirectAttributes.addFlashAttribute("errorMessage", e.getMessage());
+            return "redirect:/admin/hashtags";
+        }
     }
 
     @PostMapping("/hashtags/update/{id}")

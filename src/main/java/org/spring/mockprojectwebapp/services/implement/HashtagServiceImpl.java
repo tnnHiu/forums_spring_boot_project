@@ -43,13 +43,27 @@ public class HashtagServiceImpl implements HashtagService {
     @Override
     public void saveHashtag(HashtagDTO hashtagDTO) {
         Hashtag hashtag = mapToEntity(hashtagDTO);
+
+        // Format hashtag name (adding # if needed)
+        String hashtagName = hashtag.getHashtagName();
+
+        // Check for duplicates only when creating new hashtag
         if (hashtag.getId() == 0) {
+            // Remove # for checking if exists
+            String nameForCheck = hashtagName.startsWith("#") ? hashtagName.substring(1) : hashtagName;
+            String nameWithHash = "#" + nameForCheck;
+
+            if (hashtagRepository.existsByHashtagNameIgnoreCase(nameWithHash)) {
+                throw new RuntimeException("Hashtag đã tồn tại, vui lòng thử lại.");
+            }
+
             hashtag.setCreatedAt(LocalDateTime.now());
         } else {
             Hashtag existingHashtag = hashtagRepository.findById(hashtag.getId())
                     .orElseThrow(() -> new RuntimeException("Hashtag not found"));
             hashtag.setCreatedAt(existingHashtag.getCreatedAt());
         }
+
         hashtagRepository.save(hashtag);
     }
 

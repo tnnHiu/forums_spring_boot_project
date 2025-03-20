@@ -13,6 +13,15 @@ toggleSidebarButton.addEventListener('click', () => {
 });
 
 document.addEventListener('DOMContentLoaded', function() {
+    // Auto-dismiss error alerts after 5 seconds
+    const errorAlert = document.querySelector('.alert-danger');
+    if (errorAlert) {
+        setTimeout(function() {
+            const alertInstance = new bootstrap.Alert(errorAlert);
+            alertInstance.close();
+        }, 5000); // 5 seconds
+    }
+
     const hashtagInputs = document.querySelectorAll('.hashtag-input');
 
     hashtagInputs.forEach(input => {
