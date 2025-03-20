@@ -7,6 +7,8 @@ import org.spring.mockprojectwebapp.repositories.RoleRepository;
 import org.spring.mockprojectwebapp.repositories.UserRepository;
 import org.spring.mockprojectwebapp.services.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.DisabledException;
+import org.springframework.security.authentication.LockedException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -25,11 +27,15 @@ public class AuthServiceImpl implements AuthService, UserDetailsService {
     RoleRepository roleRepository;
 
     @Override
-    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(String email) {
         User user = userRepository.findByEmail(email);
         return org.springframework.security.core.userdetails.User
-                .withUsername(user.getEmail()).password(user.getPassword())
-                .roles(String.valueOf(user.getRole().getRoleName())).build();
+                .withUsername(user.getEmail())
+                .password(user.getPassword())
+                .roles(String.valueOf(user.getRole().getRoleName()))
+                .accountLocked(user.getStatus() == User.Status.BANNED)
+                .disabled(user.getStatus() == User.Status.INACTIVE)
+                .build();
     }
 
     @Override
@@ -39,7 +45,6 @@ public class AuthServiceImpl implements AuthService, UserDetailsService {
 
     @Override
     public User save(RegisterDTO registerDTO) {
-
         BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
         Role role = roleRepository.getRoleByRoleId(1);
         User user = new User();
@@ -47,7 +52,7 @@ public class AuthServiceImpl implements AuthService, UserDetailsService {
         user.setEmail(registerDTO.getEmail());
         user.setPassword(bCryptPasswordEncoder.encode(registerDTO.getPassword()));
         user.setRole(role);
-        user.setStatus(User.Status.ACTIVE);
+        user.setStatus(User.Status.INACTIVE);
         user.setCreatedAt(LocalDateTime.now());
         return userRepository.save(user);
     }

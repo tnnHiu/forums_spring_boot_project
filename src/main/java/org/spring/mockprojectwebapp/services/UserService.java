@@ -27,4 +27,8 @@ public interface UserService {
     UserDTO findUserById(int userId);
 
     Page<User> getAccounts(String keyword, Pageable pageable);
+
+    void createVerificationToken(User user, String token);
+
+    String validateVerificationToken(String token);
 }
