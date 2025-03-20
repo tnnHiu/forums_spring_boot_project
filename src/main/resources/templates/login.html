@@ -57,17 +57,16 @@
                                             <label class="form-check-label text-secondary" for="rememberMe">Ghi nhớ đăng
                                                 nhập</label>
                                         </div>
-                                        <!-- Sửa đường dẫn ở đây -->
-                                        <a th:href="@{/forgot-password}" class="link-secondary text-decoration-none">Quên mật khẩu</a>
+                                        <a href="/forgot-password" class="link-secondary text-decoration-none">Quên mật khẩu</a>
                                     </div>
                                 </div>
                                 <div class="col-12 text-center">
                                     <button class="btn btn-primary" type="submit">Đăng nhập</button>
                                 </div>
                                 <div class="col-12 text-center">
-                                    <p th:if="${param.error}" class="text-danger mt-2">
-                                        Sai tên đăng nhập hoặc mật khẩu
-                                    </p>
+                                    <p th:if="${errorMessage}" class="text-danger mt-2" th:text="${errorMessage}"></p>
+                                    <p th:if="${statusMessage}" class="text-warning mt-2"
+                                       th:text="${statusMessage}"></p>
                                 </div>
                             </div>
                         </form>
