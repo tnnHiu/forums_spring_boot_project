@@ -202,6 +202,7 @@ body {
     text-overflow: ellipsis;
     box-sizing: border-box;
 }
+
 .hashtag-badge:hover {
     background: var(--primary-hover);
     transform: scale(1.05);
@@ -248,18 +249,23 @@ hr {
     .text-bg-primary {
         padding: calc(var(--spacing-unit) * 2);
     }
+
     .card-body {
         padding: calc(var(--spacing-unit) * 1.5);
     }
+
     .btn-primary {
         padding: calc(var(--spacing-unit) * 0.75) calc(var(--spacing-unit) * 2);
     }
+
     .card-img-top {
         height: 160px;
     }
+
     .user-card {
         min-height: 140px;
     }
+
     .hashtag-badge {
         min-width: 90px;
         font-size: 0.9rem;
@@ -270,16 +276,20 @@ hr {
     .card-body {
         padding: calc(var(--spacing-unit) * 1.2);
     }
+
     .btn-primary {
         width: 100%;
         padding: calc(var(--spacing-unit) * 0.85);
     }
+
     .input-group-text {
         padding: calc(var(--spacing-unit) * 0.6);
     }
+
     .user-card {
         min-height: 130px;
     }
+
     .hashtag-badge {
         min-width: 80px;
         font-size: 0.85rem;

@@ -1,4 +1,4 @@
-package org.spring.mockprojectwebapp.controllers;
+package org.spring.mockprojectwebapp.controllers.auth;
 
 
 import jakarta.validation.Valid;
