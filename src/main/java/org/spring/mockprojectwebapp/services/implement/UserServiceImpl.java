@@ -3,17 +3,19 @@ package org.spring.mockprojectwebapp.services.implement;
 import jakarta.persistence.EntityNotFoundException;
 import org.spring.mockprojectwebapp.dtos.admin.UserDTO;
 import org.spring.mockprojectwebapp.dtos.user.UserSearchDTO;
+import org.spring.mockprojectwebapp.entities.PasswordResetToken;
 import org.spring.mockprojectwebapp.entities.User;
 import org.spring.mockprojectwebapp.entities.VerificationToken;
+import org.spring.mockprojectwebapp.repositories.PasswordResetTokenRepository;
 import org.spring.mockprojectwebapp.repositories.UserRepository;
 import org.spring.mockprojectwebapp.repositories.VerificationTokenRepository;
 import org.spring.mockprojectwebapp.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -29,6 +31,12 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private VerificationTokenRepository verificationTokenRepository;
+
+    @Autowired
+    private PasswordResetTokenRepository passwordResetTokenRepository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     public Page<User> getAccounts(String keyword, Pageable pageable) {
         if (keyword != null && !keyword.isEmpty()) {
@@ -108,6 +116,43 @@ public class UserServiceImpl implements UserService {
         verificationTokenRepository.delete(verificationToken); // Xóa token sau khi xác thực
         return "valid";
     }
+
+    @Override
+    public void createPasswordResetToken(User user, String token) {
+        PasswordResetToken passwordResetToken = new PasswordResetToken();
+        passwordResetToken.setToken(token);
+        passwordResetToken.setUser(user);
+        passwordResetToken.setExpiryDate(calculateExpiryDate(60 * 24)); // 24 hours
+        passwordResetTokenRepository.save(passwordResetToken);
+    }
+
+    @Override
+    public String validatePasswordResetToken(String token) {
+        PasswordResetToken passwordResetToken = passwordResetTokenRepository.findByToken(token);
+        if (passwordResetToken == null) {
+            return "invalid";
+        }
+        if (passwordResetToken.getExpiryDate().before(new Date())) {
+            return "expired";
+        }
+        return "valid";
+    }
+
+    @Override
+    public User getUserByPasswordResetToken(String token) {
+        PasswordResetToken passwordResetToken = passwordResetTokenRepository.findByToken(token);
+        if (passwordResetToken != null) {
+            return passwordResetToken.getUser();
+        }
+        return null;
+    }
+
+    @Override
+    public void changeUserPassword(User user, String newPassword) {
+        user.setPassword(passwordEncoder.encode(newPassword));
+        userRepository.save(user);
+    }
+
 
     // Chuyển đổi từ Entity sang DTO
     @Override

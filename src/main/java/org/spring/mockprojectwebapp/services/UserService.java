@@ -31,4 +31,12 @@ public interface UserService {
     void createVerificationToken(User user, String token);
 
     String validateVerificationToken(String token);
+
+    void createPasswordResetToken(User user, String token);
+
+    String validatePasswordResetToken(String token);
+
+    User getUserByPasswordResetToken(String token);
+
+    void changeUserPassword(User user, String password);
 }

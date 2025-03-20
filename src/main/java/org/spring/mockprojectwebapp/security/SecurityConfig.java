@@ -28,6 +28,9 @@ public class SecurityConfig {
                         .requestMatchers("/post/**").permitAll()
                         .requestMatchers("/post/*/load-more-comments").authenticated()
                         .requestMatchers("/verify-email").permitAll()
+                        .requestMatchers("/forgot-password").permitAll()
+                        .requestMatchers("/reset-password").permitAll()
+                        .requestMatchers("/change-password").authenticated()
                         .anyRequest().authenticated()
                 )
                 .formLogin(form -> form

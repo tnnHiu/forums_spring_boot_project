@@ -9,7 +9,7 @@ import java.util.Date;
 @AllArgsConstructor
 @Getter
 @Setter
-public class VerificationToken {
+public class PasswordResetToken {
 
     private static final int EXPIRATION = 60 * 24;
 
@@ -24,5 +24,4 @@ public class VerificationToken {
     private User user;
 
     private Date expiryDate;
-
 }

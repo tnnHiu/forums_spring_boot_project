@@ -84,11 +84,67 @@ public class AuthController {
     public String verifyEmail(@RequestParam("token") String token, Model model) {
         String result = userService.validateVerificationToken(token);
         if (result.equals("valid")) {
-            model.addAttribute("message", "Your account has been verified successfully.");
+            model.addAttribute("message", "Tài Khoản của bạn đã được xác minh thành công.");
             return "verified";
         } else {
-            model.addAttribute("message", "Invalid verification token.");
+            model.addAttribute("message", "Token xác minh tài khoản không đúng. Vui lòng thử lại.");
             return "verify-email";
         }
+    }
+
+    @GetMapping("/forgot-password")
+    public String showForgotPasswordPage() {
+        return "forgot-password";
+    }
+
+    @PostMapping("/forgot-password")
+    public String processForgotPassword(@RequestParam("email") String email, Model model) {
+        User user = authService.findByEmail(email);
+        if (user == null) {
+            model.addAttribute("errorMessage", "Email không tồn tại.");
+            return "forgot-password";
+        }
+        String token = UUID.randomUUID().toString();
+        userService.createPasswordResetToken(user, token);
+        emailService.sendPasswordResetEmail(user, token);
+        model.addAttribute("message", "Email đặt lại mật khẩu đã được gửi.");
+        return "forgot-password";
+    }
+
+
+    @GetMapping("/reset-password")
+    public String showResetPasswordPage(@RequestParam("token") String token, Model model) {
+        String result = userService.validatePasswordResetToken(token);
+        if (result == null || "invalid".equals(result) || "expired".equals(result)){
+            model.addAttribute("errorMessage", "Token không hợp lệ hoặc đã hết hạn.");
+            return "reset-password";
+        }
+        model.addAttribute("token", token);
+        return "reset-password";
+    }
+
+
+    @PostMapping("/reset-password")
+    public String processResetPassword(@RequestParam("token") String token,
+                                       @RequestParam("password") String password,
+                                       @RequestParam("confirmPassword") String confirmPassword,
+                                       Model model) {
+        if (!password.equals(confirmPassword)) {
+            model.addAttribute("errorMessage", "Mật khẩu không khớp.");
+            return "reset-password";
+        }
+        String result = userService.validatePasswordResetToken(token);
+        if (result == null || "invalid".equals(result) || "expired".equals(result)) {
+            model.addAttribute("errorMessage", "Token không hợp lệ hoặc đã hết hạn.");
+            return "reset-password";
+        }
+        User user = userService.getUserByPasswordResetToken(token);
+        if (user == null) {
+            model.addAttribute("errorMessage", "Người dùng không tồn tại.");
+            return "reset-password";
+        }
+        userService.changeUserPassword(user, password);
+        model.addAttribute("message", "Mật khẩu của bạn đã được đặt lại thành công.");
+        return "login";
     }
 }
