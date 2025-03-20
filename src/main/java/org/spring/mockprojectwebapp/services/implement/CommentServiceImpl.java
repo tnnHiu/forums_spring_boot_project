@@ -1,12 +1,12 @@
 package org.spring.mockprojectwebapp.services.implement;
 
-import org.spring.mockprojectwebapp.dtos.admin.CommentDTO;
 import org.spring.mockprojectwebapp.dtos.user.UserCommentDTO;
 import org.spring.mockprojectwebapp.entities.Comment;
 import org.spring.mockprojectwebapp.repositories.CommentRepository;
 import org.spring.mockprojectwebapp.repositories.PostRepository;
 import org.spring.mockprojectwebapp.repositories.UserRepository;
 import org.spring.mockprojectwebapp.services.CommentService;
+import org.spring.mockprojectwebapp.services.NotificationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +24,8 @@ public class CommentServiceImpl implements CommentService {
 
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private NotificationService notificationService;
 
     @Override
     public List<UserCommentDTO> getCommentsByPostId(int postId) {
@@ -41,6 +43,17 @@ public class CommentServiceImpl implements CommentService {
     public void saveComment(UserCommentDTO userCommentDTO) {
         Comment comment = mapToEntity(userCommentDTO);
         commentRepository.save(comment);
+
+        // Get post author ID to send notification
+        int postAuthorId = comment.getPost().getUser().getUserId();
+        int commentUserId = comment.getUser().getUserId();
+
+        // Don't notify if user is commenting on their own post
+        if (postAuthorId != commentUserId) {
+            String notificationContent = comment.getUser().getUsername() + " đã bình luận về bài viết của bạn.";
+//            notificationService.createCommentNotification(postAuthorId, notificationContent);
+            notificationService.createCommentNotification(postAuthorId, notificationContent, comment.getId());
+        }
     }
 
 

@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Thông báo của bạn</title>
+  <link rel="stylesheet" th:href="@{/bootstrap-5.3.3-dist/css/bootstrap.min.css}">
+  <link rel="stylesheet" th:href="@{/bootstrap-icons-1.11.3/font/bootstrap-icons.min.css}">
+  <link rel="stylesheet" th:href="@{/css/style.css}">
+  <style>
+    .unread {
+      background-color: #f0f7ff;
+    }
+    .notification-icon {
+      font-size: 1.5rem;
+      margin-right: 15px;
+    }
+  </style>
+</head>
+<body>
+<div th:replace="~{fragments/header :: header}"></div>
+
+<div class="container my-5">
+  <h2 class="mb-4">Thông báo</h2>
+
+  <!-- Notification tabs -->
+  <!-- Notification tabs - Full width with icons -->
+  <ul class="nav nav-tabs nav-justified mb-3" id="notificationTabs" role="tablist">
+    <li class="nav-item" role="presentation">
+      <button class="nav-link active d-flex align-items-center justify-content-center" id="all-tab" data-bs-toggle="tab" data-bs-target="#all" type="button" role="tab">
+        <i class="bi bi-collection me-2"></i> Tất cả
+      </button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link d-flex align-items-center justify-content-center" id="posts-tab" data-bs-toggle="tab" data-bs-target="#posts" type="button" role="tab">
+        <i class="bi bi-file-text me-2"></i> Bài viết
+      </button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link d-flex align-items-center justify-content-center" id="comments-tab" data-bs-toggle="tab" data-bs-target="#comments" type="button" role="tab">
+        <i class="bi bi-chat-dots me-2"></i> Bình luận
+      </button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link d-flex align-items-center justify-content-center" id="system-tab" data-bs-toggle="tab" data-bs-target="#system" type="button" role="tab">
+        <i class="bi bi-bell me-2"></i> Hệ thống
+      </button>
+    </li>
+  </ul>
+
+  <!-- Tab content -->
+  <div class="tab-content" id="notificationTabContent">
+    <!-- All notifications -->
+    <div class="tab-pane fade show active" id="all" role="tabpanel">
+      <div th:if="${notifications.isEmpty()}" class="alert alert-info">
+        Bạn không có thông báo nào.
+      </div>
+
+      <div th:unless="${notifications.isEmpty()}" class="list-group">
+        <div th:each="notification : ${notifications}"
+             th:class="${notification.status == 'UNREAD' ? 'list-group-item list-group-item-action unread' : 'list-group-item list-group-item-action'}"
+             th:data-type="${notification.type}">
+          <a th:href="@{/notification/{id}(id=${notification.notificationId})}" class="text-decoration-none">
+            <div class="d-flex align-items-center">
+              <div class="notification-icon">
+                <i th:class="${notification.type == 'POST' ? 'bi bi-file-text' : notification.type == 'COMMENT' ? 'bi bi-chat-dots' : 'bi bi-bell'}"></i>
+              </div>
+              <div class="flex-grow-1">
+                <div class="d-flex justify-content-between">
+                  <div>
+                    <h6 class="mb-1" th:text="${notification.content}">Nội dung thông báo</h6>
+                    <p class="text-muted mb-0" th:if="${notification.commentContent != null}" th:text="${notification.commentContent}">Nội dung comment</p>
+                  </div>
+                  <small th:text="${notification.createdAt}">Thời gian</small>
+                </div>
+              </div>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Post notifications -->
+    <div class="tab-pane fade" id="posts" role="tabpanel">
+      <div class="list-group" id="post-notifications"></div>
+      <div id="no-post-notifications" class="alert alert-info d-none">
+        Bạn không có thông báo về bài viết nào.
+      </div>
+    </div>
+
+    <!-- Comment notifications -->
+    <div class="tab-pane fade" id="comments" role="tabpanel">
+      <div class="list-group" id="comment-notifications"></div>
+      <div id="no-comment-notifications" class="alert alert-info d-none">
+        Bạn không có thông báo về bình luận nào.
+      </div>
+    </div>
+
+    <!-- System notifications -->
+    <div class="tab-pane fade" id="system" role="tabpanel">
+      <div class="list-group" id="system-notifications"></div>
+      <div id="no-system-notifications" class="alert alert-info d-none">
+        Bạn không có thông báo hệ thống nào.
+      </div>
+    </div>
+  </div>
+</div>
+
+<div th:replace="~{fragments/footer :: footer}"></div>
+
+<script th:src="@{/bootstrap-5.3.3-dist/js/bootstrap.bundle.min.js}"></script>
+<script th:src="@{/js/notification.js}"></script>
+</body>
+</html>
