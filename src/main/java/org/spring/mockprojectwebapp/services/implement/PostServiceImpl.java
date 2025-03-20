@@ -4,6 +4,7 @@ import org.spring.mockprojectwebapp.dtos.admin.PostDTO;
 import org.spring.mockprojectwebapp.entities.Category;
 import org.spring.mockprojectwebapp.entities.Post;
 import org.spring.mockprojectwebapp.entities.User;
+import org.spring.mockprojectwebapp.repositories.CommentRepository;
 import org.spring.mockprojectwebapp.repositories.PostRepository;
 import org.spring.mockprojectwebapp.services.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,9 @@ public class PostServiceImpl implements PostService {
 
     @Autowired
     private PostRepository postRepository;
+
+    @Autowired
+    private CommentRepository commentRepository;
 
     @Override
     public PostDTO savePost(PostDTO postDTO) {
@@ -130,6 +134,7 @@ public class PostServiceImpl implements PostService {
     }
 
     private PostDTO mapToDTO(Post post) {
+        int totalComments = commentRepository.countByPostId(post.getId());
         return PostDTO
                 .builder()
                 .postId(post.getId())
@@ -143,6 +148,7 @@ public class PostServiceImpl implements PostService {
                 .isPremium(post.isPremium())
                 .categoryName(post.getCategory().getCategoryName())
                 .username(post.getUser().getUsername())
+                .totalComments(totalComments)
                 .build();
     }
 
@@ -155,10 +161,10 @@ public class PostServiceImpl implements PostService {
         post.setCreatedAt(postDTO.getCreatedAt() != null ? postDTO.getCreatedAt() : LocalDateTime.now());
         post.setUpdatedAt(LocalDateTime.now());
         post.setPremium(postDTO.isPremium());
-        post.setStatus(Post.Status.values()[postDTO.getStatus()]);
+//        post.setStatus(Post.Status.values()[postDTO.getStatus()]);
 
 
-        //post.setStatus(postDTO.getStatus() == 1 ? Post.Status.ACTIVE : Post.Status.INACTIVE);
+        post.setStatus(postDTO.getStatus() == 1 ? Post.Status.ACTIVE : Post.Status.INACTIVE);
         // Set User and Category (only need ID)
         User user = new User();
         user.setUserId(postDTO.getUserId());

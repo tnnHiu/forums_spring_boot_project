@@ -27,6 +27,10 @@ public class SecurityConfig {
                         .requestMatchers("/admin/**").hasRole("ADMIN")
                         .requestMatchers("/post/**").permitAll()
                         .requestMatchers("/post/*/load-more-comments").authenticated()
+                        .requestMatchers("/verify-email").permitAll()
+                        .requestMatchers("/forgot-password").permitAll()
+                        .requestMatchers("/reset-password").permitAll()
+                        .requestMatchers("/change-password").authenticated()
                         .anyRequest().authenticated()
                 )
                 .formLogin(form -> form
@@ -51,6 +55,20 @@ public class SecurityConfig {
                                     }
                                     response.sendRedirect("/");
                                 })
+                        .failureHandler((request, response, exception) -> {
+                            String email = request.getParameter("username");
+                            User user = authService.findByEmail(email);
+                            if(user == null) {
+                                response.sendRedirect("/login?error=true");
+                            }
+                            else if (user.getStatus() == User.Status.INACTIVE) {
+                                response.sendRedirect("/login?status=inactive");
+                            } else if (user.getStatus() == User.Status.BANNED) {
+                                response.sendRedirect("/login?status=banned");
+                            } else {
+                                response.sendRedirect("/login?error=true");
+                            }
+                        })
                 )
                 .logout(logout -> logout
                         .logoutUrl("/logout")

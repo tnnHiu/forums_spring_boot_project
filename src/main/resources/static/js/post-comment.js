@@ -1,35 +1,83 @@
-$(document).ready(function () {
-    console.log("jQuery loaded and ready!");
-    $('#commentForm').submit(function (event) {
-        event.preventDefault();
-        console.log("Form submitted: " + $(this).serialize());
-        $.ajax({
-            url: $(this).attr('action'), type: 'POST', data: $(this).serialize(), success: function (response) {
-                console.log("Response received: ", response);
-                $('#commentList').html(response);
-                $('#textAreaExample').val('');
-            }, error: function (xhr, status, error) {
-                console.error("AJAX error: ", status, error);
-                alert("Có lỗi xảy ra khi gửi bình luận: " + error);
-            }
-        });
-    });
-});
+document.addEventListener('DOMContentLoaded', () => {
+    const commentForm = document.getElementById('commentForm');
+    const commentsContainer = document.getElementById('commentsContainer');
+    const commentInput = document.getElementById('textAreaExample');
+    const loadMoreBtn = document.getElementById('loadMoreBtn');
+    const postIdHidden = document.getElementById('postIdHidden');
+    const totalCommentsHidden = document.getElementById('totalCommentsHidden');
 
-$(document).ready(function () {
-    $('#loadMoreBtn').on('click', function () {
-        let postId = $('input[name="postId"]').val();
-        let offset = parseInt($(this).data('offset'));
-        $.ajax({
-            url: `/post/${postId}/load-more-comments`, type: 'GET', data: {offset: offset}, success: function (data) {
-                $('#commentList').append(data);
-                let newOffset = offset + 3;
-                $('#loadMoreBtn').data('offset', newOffset);
-                let totalComments = parseInt($('#totalCommentsHidden').val());
-                if (newOffset >= totalComments) {
-                    $('#loadMoreWrapper').hide();
-                }
+    if (commentForm) {
+        commentForm.addEventListener('submit', async (event) => {
+            event.preventDefault();
+
+            const formData = new FormData(commentForm);
+
+            try {
+                const response = await fetch(commentForm.action, {
+                    method: 'POST',
+                    body: formData
+                });
+
+                if (!response.ok) throw new Error('Lỗi khi gửi bình luận');
+
+                const html = await response.text();
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(html, 'text/html');
+                const newComments = doc.querySelector('#commentsContainer').innerHTML;
+
+                commentsContainer.insertAdjacentHTML('afterbegin', newComments);
+                commentInput.value = '';
+                totalCommentsHidden.value = parseInt(totalCommentsHidden.value) + 1;
+
+                // Khởi tạo lại các modal Bootstrap
+                const newModals = commentsContainer.querySelectorAll('.modal');
+                newModals.forEach(modal => {
+                    new bootstrap.Modal(modal);
+                });
+
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Có lỗi xảy ra khi gửi bình luận. Vui lòng thử lại.');
             }
         });
-    });
+    }
+
+    if (loadMoreBtn) {
+        loadMoreBtn.addEventListener('click', async () => {
+            const postId = postIdHidden.value;
+            const offset = parseInt(loadMoreBtn.dataset.offset);
+
+            try {
+                const response = await fetch(`/post/${postId}/load-more-comments?offset=${offset}`, {
+                    method: 'GET'
+                });
+
+                if (!response.ok) throw new Error('Lỗi khi tải bình luận');
+
+                const html = await response.text();
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(html, 'text/html');
+                const moreComments = doc.querySelector('#commentsContainer').innerHTML;
+
+                commentsContainer.insertAdjacentHTML('beforeend', moreComments);
+
+                const newOffset = offset + 3;
+                loadMoreBtn.dataset.offset = newOffset;
+
+                const totalComments = parseInt(totalCommentsHidden.value);
+                if (newOffset >= totalComments) {
+                    loadMoreBtn.style.display = 'none';
+                }
+
+                // Khởi tạo lại các modal Bootstrap
+                const newModals = commentsContainer.querySelectorAll('.modal');
+                newModals.forEach(modal => {
+                    new bootstrap.Modal(modal);
+                });
+
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        });
+    }
 });
