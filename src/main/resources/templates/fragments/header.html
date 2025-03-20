@@ -1,5 +1,5 @@
 <div th:fragment="header" xmlns:sec="http://www.w3.org/1999/xhtml">
-    <nav class="navbar navbar-expand-lg p-3" style="background-color: #F07900;">
+    <nav class="navbar navbar-expand-lg p-3" style="background-color: #F07900">
         <div class="container-fluid">
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo03"
                     aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
@@ -8,13 +8,13 @@
             <a class="navbar-brand fw-bold custom-logo" th:href="@{/}">Tasty & Easy</a>
             <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item">
-                        <a class="nav-link active fw-bold custom-home-link" aria-current="page" th:href="@{/}">Trang chủ</a>
-                    </li>
+<!--                    <li class="nav-item">-->
+<!--                        <a class="nav-link active fw-bold custom-home-link" aria-current="page" th:href="@{/}">Trang chủ</a>-->
+<!--                    </li>-->
                 </ul>
                 <form class="d-flex me-2" th:action="@{/search}" method="get">
-                    <button class="btn btn-outline-light me-2" type="submit"><i class="bi bi-search"></i></button>
-                    <input class="form-control rounded-pill me-auto" type="search" name="q" placeholder="Tìm kiếm">
+<!--                    <button class="btn btn-outline-light me-2" type="submit"><i class="bi bi-search"></i></button>-->
+                    <input class="form-control rounded-pill me-auto" type="search" name="keyword" placeholder="Tìm kiếm">
                 </form>
                 <!-- Nút Thông báo -->
                 <a th:href="@{/notification}" class="btn btn-outline-light position-relative me-3">

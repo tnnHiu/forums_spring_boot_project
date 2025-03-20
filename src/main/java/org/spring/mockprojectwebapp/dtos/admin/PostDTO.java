@@ -2,6 +2,8 @@ package org.spring.mockprojectwebapp.dtos.admin;
 
 import lombok.*;
 
+
+
 import java.time.LocalDateTime;
 
 @Builder
@@ -24,4 +26,5 @@ public class PostDTO {
     private String username;
     private int userId;
     private int categoryId;
+    private int totalComments;
 }

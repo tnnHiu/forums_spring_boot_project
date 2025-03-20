@@ -39,44 +39,43 @@ public class HomePostController {
     @GetMapping("/post/{id}")
     public String showPostDetail(@PathVariable("id") int id, Model model) {
         PostDTO postDTO = postService.findPostById(id);
-        if (postDTO == null) {
-            return "redirect:/error";
-        }
-
         List<UserCommentDTO> firstThreeComments = commentService.getCommentsByPostId(id).stream().limit(3).toList();
-
         int totalComments = commentService.getCommentsByPostId(id).size();
-
         model.addAttribute("postDTO", postDTO);
         model.addAttribute("userCommentDTOs", firstThreeComments);
         model.addAttribute("totalComments", totalComments);
-
         return "user/post-detail";
     }
 
     @GetMapping("/post/{postId}/load-more-comments")
-    public String loadMoreComments(@PathVariable("postId") int postId, @RequestParam("offset") int offset, Model model) {
+    public String loadMoreComments(@PathVariable("postId") int postId,
+                                   @RequestParam("offset") int offset,
+                                   Model model) {
         List<UserCommentDTO> allComments = commentService.getCommentsByPostId(postId);
         List<UserCommentDTO> moreComments = allComments.stream().skip(offset).limit(3).toList();
         model.addAttribute("userCommentDTOs", moreComments);
         model.addAttribute("postId", postId);
-        return "fragments/post-comment :: commentList";
+        return "user/post-detail :: commentList";
     }
 
     @PostMapping("/post/create-comment")
     public String createComment(@RequestParam("postId") int postId,
-                                @RequestParam("comment") String commentContent, HttpSession session, Model model) {
-
+                                @RequestParam("comment") String commentContent,
+                                HttpSession session,
+                                Model model) {
         int userId = (int) session.getAttribute("userId");
-
-        UserCommentDTO userCommentDTO = UserCommentDTO.builder().postId(postId).userId(userId).comment(commentContent).createdAt(LocalDateTime.now()).commentStatus("ACTIVE").build();
+        UserCommentDTO userCommentDTO = UserCommentDTO.builder()
+                .postId(postId)
+                .userId(userId)
+                .comment(commentContent)
+                .createdAt(LocalDateTime.now())
+                .commentStatus("ACTIVE")
+                .build();
 
         commentService.saveComment(userCommentDTO);
-
-        List<UserCommentDTO> userCommentDTOs = commentService.getCommentsByPostId(postId);
-        model.addAttribute("userCommentDTOs", userCommentDTOs);
+        model.addAttribute("userCommentDTOs", List.of(userCommentDTO));
         model.addAttribute("postId", postId);
-        return "fragments/post-comment :: commentList";
+        return "user/post-detail :: commentList";
     }
 
     @GetMapping("/new-post")

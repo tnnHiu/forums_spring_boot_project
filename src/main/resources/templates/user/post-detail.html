@@ -35,7 +35,7 @@
                     </button>
                 </div>
             </div>
-            <div th:replace="/fragments/report-post-modal :: reportPostModal"></div>
+            <!--            <div th:replace="/fragments/report-post-modal :: reportPostModal"></div>-->
             <div class="d-flex flex-wrap gap-2 text-muted mb-3">
                 <span><i class="bi bi-folder2 me-1"></i>Danh mục: <span
                         th:text="${postDTO.categoryName}">Món chính</span></span>
@@ -81,8 +81,8 @@
     <div class="card mb-5">
         <div class="card-body">
             <h4 class="fw-bold mb-4"><i class="bi bi-chat-left-text me-2"></i>Bình luận</h4>
-            <!-- Input ẩn chứa postId -->
             <input type="hidden" id="postIdHidden" th:value="${postDTO.getPostId()}"/>
+
             <div class="mb-4" sec:authorize="isAuthenticated()">
                 <div class="d-flex">
                     <img class="rounded-circle me-3" src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(19).webp"
@@ -98,25 +98,51 @@
                     </form>
                 </div>
             </div>
+
             <div class="text-center mb-4" sec:authorize="isAnonymous()">
                 <p>Vui lòng <a th:href="@{/login}" class="text-primary fw-bold">đăng nhập</a> để bình luận.</p>
             </div>
-
-            <div id="commentList"
-                 th:replace="/fragments/post-comment :: commentList(postId=${postDTO.getPostId()})"></div>
-
+            <div th:fragment="commentList" id="commentList">
+                <div id="commentsContainer">
+                    <div th:each="comment : ${userCommentDTOs}" class="mb-3">
+                        <div class="d-flex align-items-center mb-3">
+                            <img class="rounded-circle me-3"
+                                 src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(19).webp"
+                                 alt="avatar" width="50" height="50"/>
+                            <h6 class="fw-bold text-primary mb-0" th:text="${comment.userName}"></h6>
+                        </div>
+                        <p th:text="${comment.comment}"></p>
+                        <div class="d-flex gap-3 text-muted small">
+                            <a href="#!" class="text-decoration-none"><i class="bi bi-hand-thumbs-up me-1"></i>Thích</a>
+                            <a href="#!" class="text-decoration-none"><i class="bi bi-chat-dots me-1"></i>Trả lời</a>
+                            <a href="#!" class="text-decoration-none" data-bs-toggle="modal"
+                               th:data-bs-target="'#reportCommentModal' + ${comment.commentId}"
+                               sec:authorize="isAuthenticated()">
+                                <i class="bi bi-flag me-1"></i>Báo cáo
+                            </a>
+                        </div>
+                        <!--                        <div th:replace="/fragments/report-comment-modal :: reportCommentModal(-->
+                        <!--                            commentId=${comment.commentId},-->
+                        <!--                            postId=${postId})">-->
+                        <!--                        </div>-->
+                        <hr>
+                    </div>
+                    <div th:if="${#lists.isEmpty(userCommentDTOs)}" class="text-muted text-center">
+                        Chưa có bình luận nào.
+                    </div>
+                </div>
+            </div>
             <input type="hidden" id="totalCommentsHidden" th:value="${totalComments}"/>
-
             <div class="mt-4 text-center" sec:authorize="isAuthenticated()" th:if="${totalComments > 3}">
                 <button class="btn btn-outline-primary" id="loadMoreBtn" data-offset="3">Xem thêm bình luận</button>
             </div>
-
             <div class="mt-4 text-center" sec:authorize="isAnonymous()" th:if="${totalComments > 3}">
                 <a th:href="@{/login}" class="btn btn-outline-warning"><i class="bi bi-lock me-2"></i>Đăng nhập để xem
                     thêm bình luận</a>
             </div>
         </div>
     </div>
+
     <!-- Gợi ý bài viết -->
     <div class="card">
         <div class="card-body">
@@ -183,6 +209,16 @@
         </div>
     </div>
 </div>
+
+
+<div th:each="comment : ${userCommentDTOs}" class="mb-3">
+    <div th:replace="/fragments/report-comment-modal :: reportCommentModal(
+                commentId=${comment.commentId},
+                postId=${postDTO.getPostId()})"></div>
+</div>
+
+<div th:replace="/fragments/report-post-modal :: reportPostModal"></div>
+
 <div th:replace="/fragments/footer :: footer"></div>
 </body>
 </html>
