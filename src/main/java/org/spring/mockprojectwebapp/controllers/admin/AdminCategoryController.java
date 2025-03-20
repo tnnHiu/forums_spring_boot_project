@@ -23,12 +23,7 @@ public class AdminCategoryController {
     private CategoryService categoryService;
 
     @GetMapping("/categories")
-    public String showCategoriesPage(
-            @RequestParam(value = "keyword", required = false) String keyword,
-            @RequestParam(value = "page", defaultValue = "0") int page,
-            @RequestParam(value = "size", defaultValue = "8") int size,
-            Model model,
-            HttpServletRequest request) {
+    public String showCategoriesPage(@RequestParam(value = "keyword", required = false) String keyword, @RequestParam(value = "page", defaultValue = "0") int page, @RequestParam(value = "size", defaultValue = "8") int size, Model model, HttpServletRequest request) {
 
         Pageable pageable = PageRequest.of(page, size);
         Page<CategoryDTO> categoryDTOPage = categoryService.getCategories(keyword, pageable);
@@ -46,10 +41,7 @@ public class AdminCategoryController {
     }
 
     @PostMapping("/categories/add")
-    public String addCategory(
-            @ModelAttribute("categoryDTO") CategoryDTO categoryDTO,
-            BindingResult result,
-            Model model) {
+    public String addCategory(@ModelAttribute("categoryDTO") CategoryDTO categoryDTO, BindingResult result, Model model) {
 
         if (result.hasErrors()) {
             model.addAttribute("errorMessage", "Dữ liệu không hợp lệ. Vui lòng kiểm tra lại.");
@@ -76,11 +68,7 @@ public class AdminCategoryController {
     }
 
     @PostMapping("/categories/update/{id}")
-    public String updateCategory(
-            @PathVariable("id") int id,
-            @ModelAttribute("categoryDTO") CategoryDTO categoryDTO,
-            BindingResult result,
-            Model model) {
+    public String updateCategory(@PathVariable("id") int id, @ModelAttribute("categoryDTO") CategoryDTO categoryDTO, BindingResult result, Model model) {
 
         if (result.hasErrors()) {
             model.addAttribute("errorMessage", "Dữ liệu không hợp lệ. Vui lòng kiểm tra lại.");

@@ -28,13 +28,38 @@
             </div>
         </div>
 
-        <!-- Nút thêm -->
-        <button class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#addCategoryModal">+ Thêm</button>
+        <!-- Bộ lọc và tìm kiếm -->
+        <form th:action="@{/admin/posts}" method="get" class="d-flex gap-2 mb-3 flex-wrap">
+            <!-- Ô tìm kiếm theo từ khoá -->
+            <input type="text" name="keyword" class="form-control" style="width: 200px;"
+                   placeholder="Tìm kiếm..." th:value="${keyword}">
 
-        <!-- Thanh tìm kiếm -->
-        <form th:action="@{/admin/categories}" method="get" class="d-flex gap-2 mb-3">
-            <input type="text" name="keyword" class="form-control w-25" placeholder="Tìm kiếm..." th:value="${keyword}">
-            <button type="submit" class="btn btn-primary">Tìm</button>
+            <!-- Bộ lọc Status -->
+            <select name="status" class="form-select" style="width: 150px;">
+                <option value="">Trạng thái</option>
+                <option value="0" th:selected="${status == 0}">ACTIVE</option>
+                <option value="1" th:selected="${status == 1}">INACTIVE</option>
+                <option value="2" th:selected="${status == 2}">BANNED</option>
+            </select>
+
+            <!-- Bộ lọc Category -->
+            <select name="categoryId" class="form-select" style="width: 180px;">
+                <option value="">Danh mục</option>
+                <option th:each="cat : ${categories}"
+                        th:value="${cat.categoryId}"
+                        th:text="${cat.categoryName}"
+                        th:selected="${categoryId == cat.categoryId}"></option>
+            </select>
+
+            <!-- Bộ lọc Premium -->
+            <select name="isPremium" class="form-select" style="width: 150px;">
+                <option value="">Tài khoản</option>
+                <option value="1" th:selected="${isPremium == 1}">Premium</option>
+                <option value="0" th:selected="${isPremium == 0}">Free</option>
+            </select>
+
+            <button type="submit" class="btn btn-primary">Lọc</button>
+            <a th:href="@{/admin/posts}" class="btn btn-outline-secondary">Xóa bộ lọc</a>
         </form>
 
         <!-- Bảng bài viết -->
@@ -73,8 +98,8 @@
                     </form>
                 </td>
             </tr>
-            <tr th:if="${postDTOs.empty}">
-                <td colspan="4" class="text-muted">Không có dữ liệu bài viết.</td>
+            <tr th:if="${postDTOs.isEmpty()}">
+                <td colspan="4" class="text-muted">Không tìm thấy bài viết.</td>
             </tr>
             </tbody>
         </table>
@@ -84,17 +109,17 @@
             <ul class="pagination justify-content-center">
                 <li class="page-item" th:classappend="${currentPage == 0} ? 'disabled'">
                     <a class="page-link"
-                       th:href="@{/admin/categories(page=${currentPage - 1}, keyword=${keyword != null ? keyword : ''})}">Previous</a>
+                       th:href="@{/admin/posts(page=${currentPage - 1}, keyword=${keyword != null ? keyword : ''}, status=${status}, categoryId=${categoryId}, isPremium=${isPremium})}">Previous</a>
                 </li>
                 <li class="page-item" th:each="i : ${#numbers.sequence(0, totalPages - 1)}"
                     th:classappend="${currentPage == i} ? 'active'">
                     <a class="page-link"
-                       th:href="@{/admin/categories(page=${i}, keyword=${keyword != null ? keyword : ''})}"
+                       th:href="@{/admin/posts(page=${i}, keyword=${keyword != null ? keyword : ''}, status=${status}, categoryId=${categoryId}, isPremium=${isPremium})}"
                        th:text="${i + 1}"></a>
                 </li>
                 <li class="page-item" th:classappend="${currentPage == totalPages - 1} ? 'disabled'">
                     <a class="page-link"
-                       th:href="@{/admin/categories(page=${currentPage + 1}, keyword=${keyword != null ? keyword : ''})}">Next</a>
+                       th:href="@{/admin/posts(page=${currentPage + 1}, keyword=${keyword != null ? keyword : ''}, status=${status}, categoryId=${categoryId}, isPremium=${isPremium})}">Next</a>
                 </li>
             </ul>
         </nav>
@@ -102,10 +127,10 @@
 </div>
 
 <!-- Modal -->
-<div th:replace="fragments/category-modal :: category-modal"></div>
-<div th:replace="fragments/toast :: toast"></div>
+<div th:replace="~{fragments/post-modal :: post-modal}"></div>
+<div th:replace="~{fragments/toast :: toast}"></div>
 
 <!-- Scripts -->
-<script th:src="@{/js/admin-category.js}"></script>
+<script th:src="@{/js/admin-post.js}"></script>
 
 </html>

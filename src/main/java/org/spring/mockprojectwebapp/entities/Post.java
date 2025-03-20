@@ -62,6 +62,7 @@ public class Post {
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "post_hashtag", joinColumns = @JoinColumn(name = "post_id"), inverseJoinColumns = @JoinColumn(name = "hashtag_id"))
+    @Column(unique = true)
     Set<Hashtag> hashtags;
 
     public enum Status {
