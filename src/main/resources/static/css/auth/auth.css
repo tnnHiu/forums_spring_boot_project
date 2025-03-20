@@ -1,6 +1,6 @@
 :root {
-    --primary-color: #F07900; /* Màu cam chủ đạo */
-    --primary-hover: #c86200;
+    --primary-color: #c86200; /* Màu cam chủ đạo */
+    --primary-hover: #F07900;
     --text-color: #ffffff;
     --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
@@ -12,7 +12,8 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    margin: 0;
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
 
 .container {
@@ -32,7 +33,7 @@ body {
 }
 
 .text-bg-primary {
-    background: linear-gradient(135deg, var(--primary-color), var(--primary-hover));
+    background: linear-gradient(0deg, var(--primary-color), var(--primary-hover));
     color: var(--text-color);
     padding: 2rem;
 }
@@ -78,7 +79,7 @@ body {
 }
 
 .btn-primary {
-    background: linear-gradient(135deg, var(--primary-color), var(--primary-hover));
+    background-color: var(--primary-color);
     border: none;
     border-radius: 25px;
     padding: 0.75rem 2rem;
@@ -89,9 +90,12 @@ body {
 }
 
 .btn-primary:hover {
-    background: var(--primary-hover);
+    background-color: var(--primary-hover);
     transform: translateY(-2px);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    border-color: var(--primary-hover);
+    --bs-btn-active-bg: #c86200;
+    --bs-btn-active-border-color: #c86200;
 }
 
 .form-check-label {
@@ -153,3 +157,22 @@ hr {
         padding: 1.5rem;
     }
 }
+/*img for login & register*/
+.featured-image {
+    margin-top: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 80%;
+}
+.custom-text {
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: 600;
+}
+
+.custom-description {
+    width: 17rem;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+
