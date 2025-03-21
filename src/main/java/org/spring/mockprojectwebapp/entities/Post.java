@@ -43,8 +43,8 @@ public class Post {
     @Column(name = "description", nullable = false)
     private String description;
 
-    @Lob // Dùng khi đây là trường có dữ liệu lớn
-    @Column(name = "content", nullable = false)
+    @Lob
+    @Column(name = "content", nullable = false, columnDefinition = "TEXT")
     private String content;
 
     @Column(name = "created_at", nullable = false)

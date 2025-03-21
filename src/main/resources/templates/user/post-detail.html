@@ -25,7 +25,7 @@
         </div>
         <div class="card-body">
             <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
-                <h1 class="card-title mb-0" th:text="${postDTO.title}">Bún Bò Huế - Hương Vị Đậm Đà Miền Trung</h1>
+                <h1 class="card-title mb-0" th:text="${postDTO.title}">Title hể</h1>
                 <div class="d-flex gap-2">
                     <button class="btn btn-outline-primary"><i class="bi bi-bookmark"></i> Lưu</button>
                     <button class="btn btn-outline-danger"><i class="bi bi-heart"></i> 25</button>
@@ -42,31 +42,14 @@
                 <span><i class="bi bi-folder2 me-1"></i>Danh mục: <span
                         th:text="${postDTO.categoryName}">Món chính</span></span>
                 <span><i class="bi bi-person-circle me-1"></i>Người đăng:
-                    <span th:text="${postDTO.userId == currentUserId ? 'Bạn' : postDTO.username}">Admin</span>
+                    <span th:text="${postDTO.userId == currentUserId ? 'Bạn' : postDTO.username}"></span>
                 </span>
             </div>
             <hr>
-            <!-- Phần còn lại của bài viết giữ nguyên -->
-            <h5 class="fw-bold text-primary mb-3"><i class="bi bi-card-checklist me-2"></i>Nguyên liệu</h5>
-            <div class="row">
-                <div class="col-md-6">
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item">500g bắp bò</li>
-                        <li class="list-group-item">500g giò heo</li>
-                        <li class="list-group-item">300g chả lụa</li>
-                    </ul>
-                </div>
-                <div class="col-md-6">
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item">200g huyết heo</li>
-                        <li class="list-group-item">500g bún sợi to</li>
-                    </ul>
-                </div>
-            </div>
-            <!-- Các phần khác giữ nguyên -->
+            <div th:text="${postDTO.description}"></div>
+            <div th:text="${postDTO.content}"></div>
         </div>
     </div>
-
     <!-- Bình luận -->
     <div class="card mb-5">
         <div class="card-body">
@@ -116,10 +99,6 @@
                                 <i class="bi bi-flag me-1"></i>Báo cáo
                             </a>
                         </div>
-                        <!--                        <div th:replace="/fragments/report-comment-modal :: reportCommentModal(-->
-                        <!--                            commentId=${comment.commentId},-->
-                        <!--                            postId=${postId})">-->
-                        <!--                        </div>-->
                         <hr>
                     </div>
                     <div th:if="${#lists.isEmpty(userCommentDTOs)}" class="text-muted text-center">

@@ -15,14 +15,15 @@ import java.util.List;
 public interface PostRepository extends JpaRepository<Post, Integer> {
     Post findPostById(int postId);
 
-    @Query("SELECT p FROM Post p WHERE p.title LIKE %:keyword% OR p.content LIKE %:keyword%")
-    Page<Post> findByTitleContainingOrContentContainingIgnoreCase(String keyword, Pageable pageable);
+    @Query("SELECT p FROM Post p WHERE (p.title LIKE %:keyword% OR p.content LIKE %:keyword%) AND p.status = org.spring.mockprojectwebapp.entities.Post.Status.ACTIVE")
+    Page<Post> findByTitleContainingOrContentContainingIgnoreCase(@Param("keyword") String keyword, Pageable pageable);
 
-    @Query("SELECT p FROM Post p ORDER BY p.createdAt DESC LIMIT 10")
+    @Query("SELECT p FROM Post p WHERE p.status = org.spring.mockprojectwebapp.entities.Post.Status.ACTIVE ORDER BY p.createdAt DESC LIMIT 10")
     List<Post> findTop10ByOrderByCreatedAtDesc();
+
     Page<Post> findAll(Specification<Post> spec, Pageable pageable);
 
-    @Query("SELECT p FROM Post p WHERE p.user.userId = :userId")
+    @Query("SELECT p FROM Post p WHERE p.user.userId = :userId AND p.status = org.spring.mockprojectwebapp.entities.Post.Status.ACTIVE")
     List<Post> findPostByUser(@Param("userId") int userId);
 
 }

@@ -58,10 +58,9 @@ public class SecurityConfig {
                         .failureHandler((request, response, exception) -> {
                             String email = request.getParameter("username");
                             User user = authService.findByEmail(email);
-                            if(user == null) {
+                            if (user == null) {
                                 response.sendRedirect("/login?error=true");
-                            }
-                            else if (user.getStatus() == User.Status.INACTIVE) {
+                            } else if (user.getStatus() == User.Status.INACTIVE) {
                                 response.sendRedirect("/login?status=inactive");
                             } else if (user.getStatus() == User.Status.BANNED) {
                                 response.sendRedirect("/login?status=banned");

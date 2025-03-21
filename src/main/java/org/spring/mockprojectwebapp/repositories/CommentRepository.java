@@ -12,8 +12,12 @@ import java.util.List;
 @Repository
 public interface CommentRepository extends JpaRepository<Comment, Integer> {
 
-    @Query("SELECT c FROM Comment c " + "JOIN FETCH c.user u " + "WHERE c.post.id = :postId " + "ORDER BY c.createdAt DESC")
+    @Query("SELECT c FROM Comment c " +
+            "JOIN FETCH c.user u " +
+            "WHERE c.post.id = :postId AND c.status = org.spring.mockprojectwebapp.entities.Comment.Status.ACTIVE " +
+            "ORDER BY c.createdAt DESC")
     List<Comment> findCommentsByPostIdWithUser(@Param("postId") int postId);
 
     int countByPostId(int postId);
 }
+
