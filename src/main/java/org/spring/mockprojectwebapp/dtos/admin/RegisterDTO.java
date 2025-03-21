@@ -22,7 +22,7 @@ public class RegisterDTO {
     @NotEmpty
     private String email;
 
-    @Size(min = 8, max = 20, message = "Password length is 8 - 20")
+    @Size(min = 8, max = 20, message = "Độ dài mật khẩu phải từ 8 đến 20 ký tự")
     private String password;
 
     @NotEmpty

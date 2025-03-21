@@ -116,6 +116,12 @@ body {
     font-size: 0.9rem;
 }
 
+.compact-error {
+    margin-top: 0.25rem;
+    margin-bottom: 0;
+    font-size: 0.875rem;
+}
+
 hr {
     border-color: #ddd;
 }

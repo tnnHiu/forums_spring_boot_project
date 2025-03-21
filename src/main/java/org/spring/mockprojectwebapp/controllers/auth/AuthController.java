@@ -12,6 +12,7 @@ import org.spring.mockprojectwebapp.services.implement.AuthServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
@@ -58,12 +59,43 @@ public class AuthController {
 
     @PostMapping("/register")
     public String register(Model model, @Valid @ModelAttribute RegisterDTO registerDTO, BindingResult result) {
+        // Validate empty fields
+        //boolean hasErrors = false;
+        
+        if (StringUtils.isEmpty(registerDTO.getUsername())) {
+            result.rejectValue("username", "error.username", "Vui lòng nhập họ và tên");
+            //hasErrors = true;
+        }
+        
+        if (StringUtils.isEmpty(registerDTO.getEmail())) {
+            result.rejectValue("email", "error.email", "Vui lòng nhập email");
+            //hasErrors = true;
+        }
+        
+        if (StringUtils.isEmpty(registerDTO.getPassword())) {
+            result.rejectValue("password", "error.password", "Vui lòng nhập mật khẩu");
+            //hasErrors = true;
+        }
+        
+        if (StringUtils.isEmpty(registerDTO.getConfirmPassword())) {
+            result.rejectValue("confirmPassword", "error.confirmPassword", "Vui lòng xác nhận mật khẩu");
+            //hasErrors = true;
+        }
+
         if (!registerDTO.getPassword().equals(registerDTO.getConfirmPassword())) {
-            result.addError(new FieldError("registerDTO", "confirmPassword", "Passwords do not match"));
+            //result.addError(new FieldError("registerDTO", "confirmPassword", "Passwords do not match"));
+            result.rejectValue("confirmPassword", "error.confirmPassword", "Mật khẩu không khớp, vui lòng thử lại");
         }
         if (authService.findByEmail(registerDTO.getEmail()) != null) {
-            result.addError(new FieldError("registerDTO", "email", "Email address already in use"));
+            //result.addError(new FieldError("registerDTO", "email", "Email address already in use"));
+            result.rejectValue("email", "error.email", "Email đã tồn tại, vui lòng thử lại");
         }
+        // if (!registerDTO.getPassword().equals(registerDTO.getConfirmPassword())) {
+        //     result.addError(new FieldError("registerDTO", "confirmPassword", "Passwords do not match"));
+        // }
+        // if (authService.findByEmail(registerDTO.getEmail()) != null) {
+        //     result.addError(new FieldError("registerDTO", "email", "Email address already in use"));
+        // }
         if (result.hasErrors()) {
             return "register";
         }
