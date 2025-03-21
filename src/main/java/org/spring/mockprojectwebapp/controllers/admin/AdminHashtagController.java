@@ -46,10 +46,15 @@ public class AdminHashtagController {
     }
 
     @PostMapping("/hashtags/update/{id}")
-    public String updateHashtag(@PathVariable int id, @ModelAttribute HashtagDTO hashtagDTO) {
-        hashtagDTO.setHashtagId(id);
-        hashtagService.saveHashtag(hashtagDTO);
-        return "redirect:/admin/hashtags";
+    public String updateHashtag(@PathVariable int id, @ModelAttribute HashtagDTO hashtagDTO, RedirectAttributes redirectAttributes) {
+        try {
+            hashtagDTO.setHashtagId(id);
+            hashtagService.saveHashtag(hashtagDTO);
+            return "redirect:/admin/hashtags";
+        } catch (RuntimeException e) {
+            redirectAttributes.addFlashAttribute("errorMessage", e.getMessage());
+            return "redirect:/admin/hashtags";
+        }
     }
 
     @PostMapping("/hashtags/delete/{id}")
