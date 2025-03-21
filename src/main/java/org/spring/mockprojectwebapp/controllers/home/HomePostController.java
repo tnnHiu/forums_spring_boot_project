@@ -27,6 +27,7 @@ public class HomePostController {
 
     @Autowired
     private PostService postService;
+
     @Autowired
     private CategoryService categoryService;
 
@@ -84,7 +85,6 @@ public class HomePostController {
                 .build();
 
         commentService.saveComment(userCommentDTO);
-
         PostDTO postDTO = postService.findPostById(postId);
 
         model.addAttribute("userCommentDTOs", List.of(userCommentDTO));
